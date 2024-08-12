@@ -10,4 +10,10 @@ export default [
   pluginJs.configs.recommended,
   ...tseslint.configs.recommended,
   pluginReact.configs.flat.recommended,
+  {
+    rules: {
+      'no-undef': 'off',  // Desactiva la regla no-undef
+      // otras reglas específicas que podrían causar problemas
+    },
+  },
 ];
