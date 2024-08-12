@@ -31,6 +31,15 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "df54c800-289c-4223-b83f-d48682ff01e5"
+      }
+    },
+    "owner": "daragoucla"
   }
 }
