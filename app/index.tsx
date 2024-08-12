@@ -10,7 +10,7 @@ export default function Index() {
 
       />
       
-      <Text>Donde tus destinos cobran vida.</Text>
+      <Text>Donde tus destinos cobran vida..</Text>
     </View>
   );
 }
