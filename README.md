@@ -1,50 +1,64 @@
-# Welcome to your Expo app 👋
+# SpotSeeker Travel Application
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+SpotSeeker is an App made with React Native  that connects users with a passion for travel, sharing their experiences through photos, and comments, viewing an interactive map of places and preserving memories of their best adventures.
 
-## Get started
+This repository contains the client-side code for SpotSeeker's mobile application. The corresponding server-side code is located at [SpotSeeker Api](https://github.com/spotseeker/api.git).
 
-1. Install dependencies
+This app is built using React Native and can be compiled for either iOS or Android.
 
-   ```bash
-   npm install
+**Prototype Design:** 
+You can access the full version of the prototype made in Figma by clicking: [SporSeeker App](https://www.figma.com/design/phDfVhcOGZF5cRhwb0knjp/SpotSeeker?node-id=0-1&t=ummGEIegPCRMhv3e-1)
+
+
+**Pre requisites**
+
+- [Git](https://git-scm.com/)
+- [Node.js](https://nodejs.org/en)
+- [npm](https://www.npmjs.com/) (Node Package Manager)
+- The local backend is running, and local db is   populated with user test account.
+
+
+**Get started** 
+1. First, make sure you have Expo CLI installed:
+
+```bash
+npm install -g expo-cli
+```
+
+2. Clone the repository
+
+```bash
+git clone https://github.com/spotseeker/app.git
+cd app
+```
+3. Open a terminal in the frontend project, and install dependencies 
+
+ ```bash
+    npm install
    ```
+4. Start the app
 
-2. Start the app
-
-   ```bash
+ ```bash
     npx expo start
    ```
 
-In the output, you'll find options to open the app in a
+5. **Expo Go**
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+After running these commands a new window in your browser will open up with information about the project.
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+To preview the project you need to download Expo Client App on your smartphone. Depending on the phone you have you can do this on the App Store, on the Google Play Store or here.
 
-## Get a fresh project
+Once you have the Expo Client App installed scan the QR Code that you saw when you ran npm start on the terminal. You will have to wait a couple of minutes at first while project bundles and loads for the first time.
 
-When you're ready, run:
+Download the [Expo Go](https://expo.dev/go) app onto your device, then use it to scan the QR code from Terminal and run.
 
-```bash
-npm run reset-project
-```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
 
-## Learn more
 
-To learn more about developing your project with Expo, look at the following resources:
+ **Made With:** 
+ --------------
+![Static Badge](https://img.shields.io/badge/React%20Native-61DBFB?logo=react&labelColor=black) ![Static Badge](https://img.shields.io/badge/NativeWind-61DBFB?logo=tailwindcss&labelColor=black) ![Static Badge](https://img.shields.io/badge/Expo-000020?logo=Expo&labelColor=black) ![Static Badge](https://img.shields.io/badge/Typescript-007acc?logo=typescript&labelColor=black)
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+Creating APK
+-----------------
+A tutorial for building an APK can be found here: https://reactnative.dev/docs/signed-apk-android. You can also build the APK in Android Studio by adding Run/Debug configurations in your Android Studio project. Select the gradle project in the configuration (~/android) and the Gradle task ‘assembleRelease’.
