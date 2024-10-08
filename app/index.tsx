@@ -1,17 +1,23 @@
-import { Text, View, Image } from 'react-native';
-import React from 'react';
-import logo from '../assets/images_app/modelo_logo_icon_V.2..4.png'
+import React, { useState, useEffect } from "react";
+import Loading from "./Loading";
+import { View } from "react-native";
+import SignIn from "./(auth)/Sign-in";
 export default function Index() {
-  return (
-    <View className="flex-1 items-center justify-center bg-white">
-      <Image 
-        className='mr-5'
-        source={logo}
+  const [showSignIn, setShowSignIn] = useState(false);
 
-      />
-      
-      <Text>Donde tus destinos cobran vida..</Text>
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowSignIn(true);
+    }, 2500);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  return !showSignIn ? (
+    <Loading />
+  ) : (
+    <View className="flex-1 justify-center items-center">
+      <SignIn />
     </View>
   );
 }
-
