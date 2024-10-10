@@ -8,6 +8,7 @@ import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import logo from "../assets/images_app/modelo_logo_icon_V.2..4.png";
+import logoBig from "../assets/images_app/Group 1.png";
 import shy from "../assets/images_app/shy.png";
 import { Image } from "react-native";
 type Props = {
@@ -233,6 +234,17 @@ const LogoIcon = ({ width = 200, height = 200, mr }: pngProps) => {
   );
 };
 
+const LogoBigIcon =({width= 241,  height= 399,mr}:pngProps) =>
+  {
+    return (
+      <Image
+        source={logoBig}
+        style={{ width: width, height: height, margin: mr }} 
+      />
+    );
+  };
+
+
 const ShyIcon = ({ size = 100 }: Props) => {
   return (
     <Image
@@ -245,6 +257,7 @@ const ShyIcon = ({ size = 100 }: Props) => {
 export default {
   ShyIcon,
   LogoIcon,
+  LogoBigIcon,
   LogOutIcon,
   ArrowIcon,
   RefreshIcon,
