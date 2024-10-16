@@ -5,43 +5,37 @@ import { router } from "expo-router";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Icons from "@/components/Icons";
 import Screen from "@/components/Screen";
-import { EmailSchema } from "@/Schemas/UserSchema";
+import { OTPSchema } from "@/Schemas/UserSchema";
 import CustomInputs from "@/components/CustomInputs";
 import CustomButton from "@/components/CustomButton";
 import { Link } from "expo-router";
 
 export default function RecoveryFunction(){
-    const { EmailIcon } = Icons
+    const { HappyIcon } = Icons
     const { control, handleSubmit } = useForm({
-        resolver: zodResolver(EmailSchema),
+        resolver: zodResolver(OTPSchema),
       });
 
     return (
         <ScrollView>
             <Screen>
                 <View className="flex justify-center items-center">
-                    <Text className="text-helper font-pbold text-[20px]">
-                        Introduce tu dirección de
-                    </Text>
                     <Text className="text-helper font-pbold text-[20px] mb-5">
-                        correo electrónico
+                        Introduce el código
                     </Text>
-                    <EmailIcon/>
+                    <HappyIcon/>
                     <Text className="text-lightc font-pbold text-[16px] mt-5">
-                        Para recuperar tu contraseña
+                        Hemos enviado el código a tu correo
                     </Text>
                     <Text className="text-lightc font-pbold text-[16px]">
-                        necesitarás el correo electrónico
+                        por favor verificalo
                     </Text>
-                    <Text className="text-lightc font-pbold text-[16px]">
-                        vinculado a tu cuenta
-                    </Text>
-                    <CustomInputs variant="email" control={control} name="email">
-                      Correo vinculado
+                    <CustomInputs variant="default" control={control} name="otp">
+                      Código
                     </CustomInputs>
                 </View>
                 <View className="flex flex-row justify-around mt-20">
-                    <Link href={"/Sign-in"} asChild>
+                    <Link href={"/Recovery-password"} asChild>
                         <CustomButton
                             width={130}
                             height={47}
@@ -57,7 +51,7 @@ export default function RecoveryFunction(){
                         onPress={
                             handleSubmit((data) => {
                                 if (data){
-                                    router.push("/Validate-otp")
+                                    router.push("/Reset-password")
                                 }
                             })
                         }
