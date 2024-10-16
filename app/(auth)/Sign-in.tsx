@@ -33,9 +33,11 @@ export default function SignIn() {
             </CustomInputs>
           </View>
           <View className="flex justify-end items-end p-5">
-            <Text className="font-psemibold text-helper underline pb-5">
-              Recuperar mi clave
-            </Text>
+            <Link asChild href={"/Recovery-password"}>
+              <Text className="font-psemibold text-helper underline pb-5">
+                Recuperar mi clave
+              </Text>
+            </Link>
             <CustomButton
               width={326}
               height={47}
