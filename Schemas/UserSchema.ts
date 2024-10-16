@@ -18,3 +18,10 @@ export const RegisterStep1 = z.object({
     .string({ required_error: "Campo requerido" })
     .min(3, { message: "minimo 3 caracteres" }),
 });
+
+export const EmailSchema = z.object({
+  email: z
+    .string()
+    .email({ message: "Introduzca un correo valido" })
+    .min(1, { message: "Campo requerido por favor introduzca correo" })
+})
