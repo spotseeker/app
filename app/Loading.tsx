@@ -14,6 +14,8 @@ export default function Loading() {
     >
       <View className="mt-[-100px] ">
         <LogoIcon width={241} height={375} mr={25} />
+      </View>
+      <View className="flex justify-center items-center">
         <Text className="text-coloricon  text-[16px] font-pbold mt-[-50px]">
           Donde tus destinos cobran vida.
         </Text>

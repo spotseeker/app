@@ -24,7 +24,7 @@ export default function SignIn() {
             </Text>
             <LogoIcon width={200} height={200} mr={15} />
           </View>
-          <View className="flex justify-center items-center">
+          <View className="flex justify-center items-center ">
             <CustomInputs variant="email" control={control} name="username">
               Introduce usuario
             </CustomInputs>
@@ -32,10 +32,12 @@ export default function SignIn() {
               Introduce contraseña
             </CustomInputs>
           </View>
-          <View className="flex justify-end items-end p-5">
+          <View className="flex justify-end items-end px-5">
             <Text className="font-psemibold text-helper underline pb-5">
               Recuperar mi clave
             </Text>
+          </View>
+          <View className="flex justify-center items-center">
             <CustomButton
               width={326}
               height={47}
