@@ -1,5 +1,11 @@
 import React, { useEffect } from "react";
-import { View, Text, SafeAreaView, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  SafeAreaView,
+  ScrollView,
+  BackHandler,
+} from "react-native";
 import CustomButton from "@/components/CustomButton";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -73,6 +79,25 @@ export default function SignupScreens({
       setStep(1);
     }
   }, [step]);
+
+  // Manejar el gesto de retroceso
+  useEffect(() => {
+    const backAction = () => {
+      if (step > 1) {
+        setStep(step - 1);
+        return true; // Prevenir el comportamiento por defecto
+      }
+      return false; // Permitir el comportamiento por defecto
+    };
+
+    const subscription = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction
+    );
+
+    return () => subscription.remove();
+  }, [step]);
+
   return (
     <SafeAreaView className="h-full">
       <ScrollView>

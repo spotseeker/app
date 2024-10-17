@@ -111,9 +111,9 @@ const Step3 = ({ control }: StepsProps) => {
               onPress={removeImage}
               style={{
                 position: "absolute",
-                bottom: 0, // Posición hacia abajo
-                right: 0, // Posición hacia la derecha
-                zIndex: 1, // Asegura que el icono esté por encima
+                bottom: 0,
+                right: 0,
+                zIndex: 1,
                 backgroundColor: "rgba(0, 0, 0, 0.6)",
                 borderRadius: 50,
               }}
@@ -139,7 +139,7 @@ const Step4 = ({ control }: StepsProps) => {
   return (
     <View className="flex justify-center my-5 items-center">
       <CustomInputs variant="password" control={control} name="password">
-        Introduce tu contrasñea
+        Introduce tu contraseña
       </CustomInputs>
       <CustomInputs variant="password" control={control} name="confirm">
         Confirma tu contraseña
