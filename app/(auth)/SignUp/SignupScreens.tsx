@@ -55,7 +55,7 @@ export default function SignupScreens({
         return z.object({});
     }
   };
-  const { control, handleSubmit } = useForm({
+  const { control, handleSubmit, reset } = useForm({
     resolver: zodResolver(getSchemaForStep(step)),
     mode: "onChange",
   });
@@ -70,11 +70,13 @@ export default function SignupScreens({
 
   useEffect(() => {
     if (step == 0) {
+      reset();
       router.push("/Sign-in");
       setStep(step + 1);
     }
 
     if (step > 5) {
+      reset();
       router.push("/Sign-in");
       setStep(1);
     }

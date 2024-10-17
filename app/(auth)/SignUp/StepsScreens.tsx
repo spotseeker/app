@@ -27,6 +27,8 @@ const Step1 = ({ control }: StepsProps) => {
 const Step2 = ({ control }: StepsProps) => {
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
+  const [dateError, setDateError] = useState("Seleccionar fecha por favor");
+
   return (
     <View className="flex justify-center my-5 items-center">
       <CustomInputs variant="default" control={control} name="firstname">
@@ -52,8 +54,10 @@ const Step2 = ({ control }: StepsProps) => {
           control={control}
           name="birthdate"
           setShow={setShow}
+          setDateError={setDateError}
         />
       )}
+      {dateError ? <Text>{dateError}</Text> : null}
     </View>
   );
 };
@@ -87,7 +91,7 @@ const Step3 = ({ control }: StepsProps) => {
   };
 
   const removeImage = () => {
-    setImage(null); // Elimina la imagen
+    setImage(null);
   };
   return (
     <>
