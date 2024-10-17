@@ -1,9 +1,10 @@
 import CustomInputs from "@/components/CustomInputs";
 import DatePicker from "@/components/DatePicker";
 import Icons from "@/components/Icons";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Control } from "react-hook-form";
-import { View, Text, Pressable } from "react-native";
+import { View, Text, Pressable, Image } from "react-native";
+import * as ImagePicker from "expo-image-picker";
 type StepsProps = {
   control: Control;
 };
@@ -28,7 +29,7 @@ const Step2 = ({ control }: StepsProps) => {
   const [show, setShow] = useState(false);
   return (
     <View className="flex justify-center my-5 items-center">
-      <CustomInputs variant="default" control={control} name="namee">
+      <CustomInputs variant="default" control={control} name="firstname">
         Introduce tu nombre
       </CustomInputs>
       <CustomInputs variant="default" control={control} name="lastname">
@@ -58,7 +59,36 @@ const Step2 = ({ control }: StepsProps) => {
 };
 
 const Step3 = ({ control }: StepsProps) => {
-  const { ImageIcon2 } = Icons;
+  const { ImageIcon2, EditIcon, TrashIcon } = Icons;
+  const [image, setImage] = useState<string | null>(null);
+
+  useEffect(() => {
+    (async () => {
+      const { status } = await ImagePicker.requestCameraPermissionsAsync();
+      if (status !== "granted") {
+        alert("Lo sentimos, necesitamos permisos para acceder a tu cámara!");
+      }
+    })();
+  }, []);
+
+  const pickImage = async () => {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
+    }
+  };
+
+  const removeImage = () => {
+    setImage(null); // Elimina la imagen
+  };
   return (
     <>
       <View className="flex content-start items-start mt-10">
@@ -68,11 +98,29 @@ const Step3 = ({ control }: StepsProps) => {
       </View>
 
       <View className="flex justify-center my-5 items-center">
-        <Pressable>
-          <ImageIcon2 size={60} />
-        </Pressable>
+        {image ? (
+          <View className="flex flex-row justify-center items-center">
+            <Image
+              source={{ uri: image }}
+              style={{ width: 100, height: 100, borderRadius: 50 }}
+            />
+            <View className="flex flex-column justify-center items-center ">
+              <Pressable onPress={pickImage}>
+                <EditIcon color="#ee5d6c" size={30} />
+              </Pressable>
+              <Pressable onPress={removeImage}>
+                <TrashIcon size={30} />
+              </Pressable>
+            </View>
+          </View>
+        ) : (
+          <Pressable onPress={pickImage}>
+            <ImageIcon2 />
+          </Pressable>
+        )}
+
         <CustomInputs variant="description" name="aboutme" control={control}>
-          Cuentanos acerca de ti
+          Cuéntanos acerca de ti
         </CustomInputs>
       </View>
     </>

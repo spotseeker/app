@@ -17,7 +17,7 @@ export const RegisterSchema = z.object({
   username: z
     .string({ required_error: "Campo requerido" })
     .min(1, { message: "Campo obligatorio" }),
-  namee: z
+  firstname: z
     .string({ required_error: "Campo requerido" })
     .min(1, { message: "Campo obligatorio" }),
   lastname: z

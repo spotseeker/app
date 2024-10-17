@@ -29,7 +29,7 @@ export default function SignupScreens({
         return RegisterSchema.pick({ email: true, username: true });
       case 2:
         return RegisterSchema.pick({
-          namee: true,
+          firstname: true,
           lastname: true,
           birthdate: true,
         });
@@ -117,7 +117,7 @@ export default function SignupScreens({
                       : {}),
                     ...(step === 2
                       ? {
-                          namee: data.namee,
+                          firstname: data.firstname,
                           lastname: data.lastname,
                           birthdate: data.birthdate,
                         }

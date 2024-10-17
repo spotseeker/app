@@ -4,12 +4,12 @@ import SignupScreens from "./SignUp/SignupScreens";
 import { UserData } from "@/Schemas/UserSchema";
 
 export default function SignUp() {
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(3);
 
   const [formData, setFormData] = useState<UserData>({
     email: "",
     username: "",
-    namee: "",
+    firstname: "",
     lastname: "",
     aboutme: "",
     birthdate: new Date(),
