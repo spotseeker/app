@@ -46,7 +46,7 @@ export default function SignupScreens({
           (data) => data.password === data.confirm,
           {
             message: "Contraseñas no coinciden",
-            path: ["confirm"], // path of error
+            path: ["confirm"],
           }
         );
       case 5:
@@ -80,14 +80,13 @@ export default function SignupScreens({
     }
   }, [step]);
 
-  // Manejar el gesto de retroceso
   useEffect(() => {
     const backAction = () => {
       if (step > 1) {
         setStep(step - 1);
-        return true; // Prevenir el comportamiento por defecto
+        return true;
       }
-      return false; // Permitir el comportamiento por defecto
+      return false;
     };
 
     const subscription = BackHandler.addEventListener(
