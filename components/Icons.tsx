@@ -192,8 +192,8 @@ const ZoomOutIcon = ({ size = 25 }: Props) => {
   return <Feather name="zoom-out" size={size} color="black" />;
 };
 
-const CrossDeleteIcon = ({ size = 25 }: Props) => {
-  return <Entypo name="cross" size={size} color="black" />;
+const CrossDeleteIcon = ({ size = 25, color = "black" }: Props) => {
+  return <Entypo name="cross" size={size} color={color} />;
 };
 
 const CancelIcon = ({ size = 25 }: Props) => {

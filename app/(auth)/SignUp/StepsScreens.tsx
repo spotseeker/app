@@ -59,7 +59,7 @@ const Step2 = ({ control }: StepsProps) => {
 };
 
 const Step3 = ({ control }: StepsProps) => {
-  const { ImageIcon2, EditIcon, TrashIcon } = Icons;
+  const { ImageIcon2, CrossDeleteIcon } = Icons;
   const [image, setImage] = useState<string | null>(null);
 
   useEffect(() => {
@@ -100,18 +100,26 @@ const Step3 = ({ control }: StepsProps) => {
       <View className="flex justify-center my-5 items-center">
         {image ? (
           <View className="flex flex-row justify-center items-center">
-            <Image
-              source={{ uri: image }}
-              style={{ width: 100, height: 100, borderRadius: 50 }}
-            />
-            <View className="flex flex-column justify-center items-center ">
-              <Pressable onPress={pickImage}>
-                <EditIcon color="#ee5d6c" size={30} />
-              </Pressable>
-              <Pressable onPress={removeImage}>
-                <TrashIcon size={30} />
-              </Pressable>
-            </View>
+            <Pressable onPress={pickImage}>
+              <Image
+                source={{ uri: image }}
+                style={{ width: 100, height: 100, borderRadius: 50 }}
+              />
+            </Pressable>
+
+            <Pressable
+              onPress={removeImage}
+              style={{
+                position: "absolute",
+                bottom: 0, // Posición hacia abajo
+                right: 0, // Posición hacia la derecha
+                zIndex: 1, // Asegura que el icono esté por encima
+                backgroundColor: "rgba(0, 0, 0, 0.6)",
+                borderRadius: 50,
+              }}
+            >
+              <CrossDeleteIcon size={25} color="#ee5d6c" />
+            </Pressable>
           </View>
         ) : (
           <Pressable onPress={pickImage}>
