@@ -4,7 +4,7 @@ import Icons from "@/components/Icons";
 import { LinearGradient } from "expo-linear-gradient";
 import CustomButton from "@/components/CustomButton";
 import Screen from "@/components/Screen";
-
+import { router } from "expo-router";
 
 
 export default function Welcome(){
@@ -33,6 +33,7 @@ export default function Welcome(){
               width={326}
               height={47}
               variant="primary"
+              onPress={() => router.push("/(tabs)/profile")}
             >
              Continuar
             </CustomButton>

@@ -91,6 +91,15 @@ const ImageIcon2 = ({ size = 60 }: Props) => {
   );
 };
 
+const PostsIcon=({size=10}:Props)=>{
+  return( 
+    <Ionicons name="images-outline"
+    //{shown? "images":"image-outline"}
+    size={size}
+    color={themeIconColor}/>
+  );
+}
+
 const HeartIcon = ({ shown, size = 25 }: Props) => {
   return (
     <Ionicons
@@ -101,12 +110,12 @@ const HeartIcon = ({ shown, size = 25 }: Props) => {
   );
 };
 
-const StarIcon = ({ shown, size = 25 }: Props) => {
+const StarIcon = ({ shown, size = 25}: Props) => {
   return (
     <Ionicons
       name={shown ? "star" : "star-outline"}
       size={size}
-      color={shown ? "#fb9062" : "black"}
+      color={shown ? "#fb9062" : themeIconColor}
     />
   );
 };
@@ -287,6 +296,7 @@ export default {
   CheckIcon,
   ImageIcon1,
   ImageIcon2,
+  PostsIcon,
   HeartIcon,
   StarIcon,
   StarHalfIcon,
