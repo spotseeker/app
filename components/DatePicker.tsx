@@ -3,6 +3,7 @@ import DateTimePicker, {
   DateTimePickerEvent,
 } from "@react-native-community/datetimepicker";
 import { Control, useController } from "react-hook-form";
+import { Platform, View, TouchableOpacity, Text } from "react-native";
 
 type DatePickerProps = {
   setDate: (date: Date) => void;
@@ -10,6 +11,7 @@ type DatePickerProps = {
   control: Control;
   name: string;
   setDateError: (errors: string) => void;
+  show: boolean;
 };
 
 function DatePicker({
@@ -18,53 +20,88 @@ function DatePicker({
   control,
   name,
   setDateError,
+  show,
 }: DatePickerProps) {
   const { field, fieldState } = useController({
     control,
     name,
-    defaultValue: new Date(), // Establecer el valor por defecto a la fecha actual o a una fecha específica
+    defaultValue: new Date(),
   });
   const { error } = fieldState;
+
   const onChange = (event: DateTimePickerEvent, selectedDate?: Date) => {
     if (event.type === "set") {
-      // Verificar si se ha seleccionado una fecha
-      setShow(false); // Cerrar el DatePicker
+      setShow(false);
       if (selectedDate) {
-        field.onChange(selectedDate); // Actualizar el valor del campo en el formulario
+        field.onChange(selectedDate);
         setDate(selectedDate);
-        setDateError(""); // Limpiar el error al seleccionar una fecha válida
+        setDateError("");
       } else {
-        setDateError("No se seleccionó una fecha válida."); // Mensaje de error si no se selecciona una fecha
+        setDateError("No se seleccionó una fecha válida.");
       }
     } else {
-      // Si se cierra el picker sin seleccionar una fecha, se establece el error.
-      setShow(false); // Cerrar el DatePicker
+      setShow(false);
       if (!field.value) {
-        setDateError("Por favor, selecciona una fecha."); // Mensaje de error si no hay fecha
+        setDateError("Por favor, selecciona una fecha.");
       }
     }
   };
 
   useEffect(() => {
-    // Verificar si hay un error y establecer el mensaje de error correspondiente
     if (error) {
       setDateError(error.message as string);
     } else {
-      setDateError(""); // Limpiar el error si es válido
+      setDateError("");
     }
   }, [fieldState.error, setDateError]);
 
   return (
-    <>
+    <View>
       <DateTimePicker
         testID="dateTimePicker"
-        value={field.value || new Date()} // Usar el valor del campo o la fecha actual si está vacío
+        value={field.value || new Date()}
         mode="date"
         display="spinner"
         is24Hour={true}
         onChange={onChange}
+        style={{ height: 120, marginTop: -10 }}
       />
-    </>
+
+      {show && Platform.OS === "ios" && (
+        <View className="flex flex-row justify-around">
+          <TouchableOpacity
+            style={{
+              backgroundColor: "#11182711",
+              paddingHorizontal: 20,
+              borderRadius: 20,
+              marginHorizontal: 20,
+            }}
+          >
+            <Text
+              style={{ color: "#075985", fontSize: 14, fontWeight: "500" }}
+              onPress={() => setShow(false)}
+            >
+              Cancelar
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              backgroundColor: "#11182711",
+              paddingHorizontal: 20,
+              borderRadius: 20,
+              marginHorizontal: 20,
+            }}
+          >
+            <Text
+              style={{ color: "#075985", fontSize: 14, fontWeight: "500" }}
+              onPress={() => onChange}
+            >
+              Confirmar
+            </Text>
+          </TouchableOpacity>
+        </View>
+      )}
+    </View>
   );
 }
 

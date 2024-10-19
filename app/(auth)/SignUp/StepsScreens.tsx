@@ -10,13 +10,14 @@ type StepsProps = {
 };
 const Step1 = ({ control }: StepsProps) => {
   return (
-    <View className="flex justify-center my-5 items-center">
+    <View className="flex justify-center my-[70px] items-center">
       <CustomInputs variant="email" control={control} name="email">
         Introduce tu correo
       </CustomInputs>
       <CustomInputs variant="email" control={control} name="username">
         Introduce tu nombre de usuario
       </CustomInputs>
+
       <Text className="font-psemibold text-helper text-center text-[10px]">
         El nombre de usuario es unico, lo puedes cambiar en cualquier momento
       </Text>
@@ -30,7 +31,7 @@ const Step2 = ({ control }: StepsProps) => {
   const [dateError, setDateError] = useState("Seleccionar fecha por favor");
 
   return (
-    <View className="flex justify-center my-5 items-center">
+    <View className="flex justify-center my-[50px] items-center">
       <CustomInputs variant="default" control={control} name="firstname">
         Introduce tu nombre
       </CustomInputs>
@@ -50,6 +51,7 @@ const Step2 = ({ control }: StepsProps) => {
 
       {show && (
         <DatePicker
+          show={show}
           setDate={setDate}
           control={control}
           name="birthdate"
@@ -101,7 +103,7 @@ const Step3 = ({ control }: StepsProps) => {
         </Text>
       </View>
 
-      <View className="flex justify-center my-5 items-center">
+      <View className="flex justify-center my-[50px] items-center">
         {image ? (
           <View className="flex flex-row justify-center items-center">
             <Pressable onPress={pickImage}>
@@ -141,7 +143,7 @@ const Step3 = ({ control }: StepsProps) => {
 
 const Step4 = ({ control }: StepsProps) => {
   return (
-    <View className="flex justify-center my-5 items-center">
+    <View className="flex justify-center my-[50px] items-center">
       <CustomInputs variant="password" control={control} name="password">
         Introduce tu contraseña
       </CustomInputs>
@@ -154,7 +156,7 @@ const Step4 = ({ control }: StepsProps) => {
 
 const Step5 = ({ control }: StepsProps) => {
   return (
-    <View className="flex justify-center my-10 items-center">
+    <View className="flex justify-center my-[50px] items-center">
       <Text className="font-psemibold text-lightc text-center text-[18px] mb-5">
         Hemos enviado el codigo a tu correo por favor verificalo
       </Text>
