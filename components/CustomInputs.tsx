@@ -7,7 +7,7 @@ const StyledPressable = styled(Pressable);
 
 type CustomInputs = {
   children: ReactNode;
-  variant: "default" | "email" | "edit" | "search" | "password" | "description";
+  variant: "default" | "email" | "edit" | "search" | "password" | "description" | "number";
   name: string;
   control: Control;
 };
@@ -44,29 +44,29 @@ function CustomInputs({ children, variant, name, control }: CustomInputs) {
 
   return (
     <View className="p-[20px]">
-      <Text className="text-lightc font-psemibold text-[14px] pb-[5px]">
-        {children}
-      </Text>
-
-      <View
-        className={`flex flex-row  border border-gray-400 rounded-md ${
-          variant == "description"
-            ? "w-[338px] h-[140px]"
-            : "w-[338px] h-[48px]"
-        }`}
-      >
-        <TextInput
-          className="flex-auto p-[11px] text-wrap"
-          placeholder={`${children}`}
-          secureTextEntry={variant === "password" && shownPassword}
-          multiline={variant == "description"}
-          textAlignVertical="top"
-          value={field.value}
-          onChangeText={field.onChange}
-        />
-        {renderIcon()}
-      </View>
-      {error?.message && <Text>{error.message}</Text>}
+    <Text className="text-lightc font-psemibold text-[14px] pb-[5px]">
+      {children}
+    </Text>
+    <View
+      className={`flex flex-row  border border-gray-400 rounded-md ${
+        variant == "description"
+          ? "w-[338px] h-[140px]"
+          : "w-[338px] h-[48px]"
+      }`}
+    >
+      <TextInput
+        className="flex-auto p-[11px] text-wrap"
+        placeholder={`${children}`}
+        secureTextEntry={variant === "password" && shownPassword}
+        multiline={variant == "description"}
+        inputMode={variant == "number" ? "numeric":"text"}
+        textAlignVertical="top"
+        value={field.value}
+        onChangeText={field.onChange}
+      />
+      {renderIcon()}
+    </View>
+    {error?.message && <Text>{error.message}</Text>}
     </View>
   );
 }
