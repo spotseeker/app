@@ -8,11 +8,10 @@ import Screen from "@/components/Screen";
 import { OTPSchema } from "@/Schemas/UserSchema";
 import CustomInputs from "@/components/CustomInputs";
 import CustomButton from "@/components/CustomButton";
-import { Link } from "expo-router";
 
 export default function RecoveryFunction(){
     const { HappyIcon } = Icons
-    const { control, handleSubmit } = useForm({
+    const { control, handleSubmit, reset } = useForm({
         resolver: zodResolver(OTPSchema),
       });
 
@@ -30,20 +29,22 @@ export default function RecoveryFunction(){
                     <Text className="text-lightc font-pbold text-[16px]">
                         por favor verificalo
                     </Text>
-                    <CustomInputs variant="default" control={control} name="otp">
+                    <CustomInputs variant="number" control={control} name="otp">
                       Código
                     </CustomInputs>
                 </View>
                 <View className="flex flex-row justify-around mt-20">
-                    <Link href={"/Recovery-password"} asChild>
-                        <CustomButton
-                            width={130}
-                            height={47}
-                            variant="secondary"
-                        >
-                            Cancelar
-                        </CustomButton>
-                    </Link>
+                    <CustomButton
+                        width={130}
+                        height={47}
+                        variant="secondary"
+                        onPress={() => {
+                            reset()
+                            router.back()
+                        }}
+                    >
+                        Cancelar
+                    </CustomButton>
                     <CustomButton
                         width={130}
                         height={47}
@@ -51,6 +52,7 @@ export default function RecoveryFunction(){
                         onPress={
                             handleSubmit((data) => {
                                 if (data){
+                                    reset()
                                     router.push("/Reset-password")
                                 }
                             })

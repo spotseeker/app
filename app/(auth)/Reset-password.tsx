@@ -8,11 +8,10 @@ import Screen from "@/components/Screen";
 import { ResetPasswordSchema } from "@/Schemas/UserSchema";
 import CustomInputs from "@/components/CustomInputs";
 import CustomButton from "@/components/CustomButton";
-import { Link } from "expo-router";
 
 export default function RecoveryFunction(){
     const { LockIcon } = Icons
-    const { control, handleSubmit } = useForm({
+    const { control, handleSubmit, reset } = useForm({
         resolver: zodResolver(ResetPasswordSchema),
       });
 
@@ -35,15 +34,17 @@ export default function RecoveryFunction(){
                     </CustomInputs>
                 </View>
                 <View className="flex flex-row justify-around mt-20">
-                    <Link href={"/Sign-in"} asChild>
-                        <CustomButton
-                            width={130}
-                            height={47}
-                            variant="secondary"
-                        >
-                            Cancelar
-                        </CustomButton>
-                    </Link>
+                    <CustomButton
+                        width={130}
+                        height={47}
+                        variant="secondary"
+                        onPress={() => {
+                            reset()
+                            router.replace("/Sign-in")
+                        }}
+                    >
+                        Cancelar
+                    </CustomButton>
                     <CustomButton
                         width={130}
                         height={47}
@@ -51,6 +52,7 @@ export default function RecoveryFunction(){
                         onPress={
                             handleSubmit((data) => {
                                 if (data){
+                                    reset()
                                     router.push("/Sign-in")
                                 }
                             })
