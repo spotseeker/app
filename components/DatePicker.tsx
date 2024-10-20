@@ -47,16 +47,16 @@ function DatePicker({
     }
   };
 
-  const datePickerIOS = () => {
-    const selectedDate = field.value; // Obtén la fecha seleccionada
+  const confirmIOSDate = () => {
+    const selectedDate = field.value;
     if (selectedDate) {
-      field.onChange(selectedDate); // Actualiza el valor del campo
-      setDate(selectedDate); // Actualiza el estado de la fecha
-      setDateError(""); // Limpia cualquier error
+      field.onChange(selectedDate);
+      setDate(selectedDate);
+      setShow(false);
+      setDateError("");
     } else {
       setDateError("Por favor, selecciona una fecha.");
     }
-    setShow(false); // Cierra el picker
   };
 
   useEffect(() => {
@@ -75,7 +75,7 @@ function DatePicker({
         mode="date"
         display="spinner"
         is24Hour={true}
-        onChange={Platform.OS === "android" ? onChange : () => ""}
+        onChange={onChange}
         style={{
           height: 120,
           marginTop: -10,
@@ -107,7 +107,7 @@ function DatePicker({
               borderRadius: 20,
               marginHorizontal: 20,
             }}
-            onPress={datePickerIOS}
+            onPress={confirmIOSDate}
           >
             <Text style={{ color: "#075985", fontSize: 14, fontWeight: "500" }}>
               Confirmar
