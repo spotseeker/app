@@ -63,8 +63,12 @@ function DatePicker({
         mode="date"
         display="spinner"
         is24Hour={true}
-        onChange={onChange}
-        style={{ height: 120, marginTop: -10 }}
+        onChange={Platform.OS === "ios" ? () => "" : onChange}
+        style={{
+          height: 120,
+          marginTop: -10,
+          backgroundColor: `${Platform.OS === "ios" ? "#11182711" : ""}`,
+        }}
       />
 
       {show && Platform.OS === "ios" && (
