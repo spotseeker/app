@@ -61,7 +61,7 @@ function DatePicker({
         testID="dateTimePicker"
         value={field.value || new Date()}
         mode="date"
-        display={`${Platform.OS === "ios" ? "default" : "spinner"}`}
+        display="spinner"
         is24Hour={true}
         onChange={onChange}
         style={{ height: 120, marginTop: -10 }}
