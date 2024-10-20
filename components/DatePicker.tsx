@@ -47,6 +47,18 @@ function DatePicker({
     }
   };
 
+  const datePickerIOS = () => {
+    const selectedDate = field.value; // Obtén la fecha seleccionada
+    if (selectedDate) {
+      field.onChange(selectedDate); // Actualiza el valor del campo
+      setDate(selectedDate); // Actualiza el estado de la fecha
+      setDateError(""); // Limpia cualquier error
+    } else {
+      setDateError("Por favor, selecciona una fecha.");
+    }
+    setShow(false); // Cierra el picker
+  };
+
   useEffect(() => {
     if (error) {
       setDateError(error.message as string);
@@ -63,16 +75,16 @@ function DatePicker({
         mode="date"
         display="spinner"
         is24Hour={true}
-        onChange={Platform.OS === "ios" ? () => "" : onChange}
+        onChange={Platform.OS === "android" ? onChange : () => ""}
         style={{
           height: 120,
           marginTop: -10,
-          backgroundColor: `${Platform.OS === "ios" ? "#11182711" : ""}`,
         }}
+        textColor="black"
       />
 
       {show && Platform.OS === "ios" && (
-        <View className="flex flex-row justify-around">
+        <View className="flex flex-row justify-around my-[10px]">
           <TouchableOpacity
             style={{
               backgroundColor: "#11182711",
@@ -95,11 +107,9 @@ function DatePicker({
               borderRadius: 20,
               marginHorizontal: 20,
             }}
+            onPress={datePickerIOS}
           >
-            <Text
-              style={{ color: "#075985", fontSize: 14, fontWeight: "500" }}
-              onPress={() => onChange}
-            >
+            <Text style={{ color: "#075985", fontSize: 14, fontWeight: "500" }}>
               Confirmar
             </Text>
           </TouchableOpacity>
