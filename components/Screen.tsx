@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import { Dimensions, View } from "react-native";
+import { Dimensions, View, KeyboardAvoidingView, Platform } from "react-native";
 type ScreenProp = {
   children: ReactNode;
 };
@@ -11,7 +11,11 @@ function Screen({ children }: ScreenProp) {
         minHeight: Dimensions.get("window").height - 100,
       }}
     >
-      {children}
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      >
+        {children}
+      </KeyboardAvoidingView>
     </View>
   );
 }

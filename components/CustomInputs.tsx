@@ -14,7 +14,8 @@ type CustomInputs = {
     | "search"
     | "password"
     | "description"
-    | "date";
+    | "date"
+    | "number";
   name: string;
   control: Control;
   date?: Date;
@@ -77,6 +78,7 @@ function CustomInputs({
           placeholder={`${children}`}
           secureTextEntry={variant === "password" && shownPassword}
           multiline={variant == "description"}
+          inputMode={variant == "number" ? "numeric":"text"}
           textAlignVertical="top"
           value={
             variant == "date"
