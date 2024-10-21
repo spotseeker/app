@@ -15,14 +15,27 @@ type Props = {
   color?: string;
   shown?: boolean;
   size?: number;
+  height?:number;
 };
 
 const themeIconColor = "#ee5d6c";
+const themeIconColor2 ="#FB9062";
 
 const PersonIcon = ({ color, size = 25 }: Props) => {
   return (
     <Ionicons
       name="person-outline"
+      size={size}
+      color={color}
+      style={{ padding: 11 }}
+    />
+  );
+};
+
+const MenuIcon = ({ color=themeIconColor, size = 25 }: Props) => {
+  return (
+    <Ionicons
+      name="menu-outline"
       size={size}
       color={color}
       style={{ padding: 11 }}
@@ -96,7 +109,7 @@ const PostsIcon=({size=10}:Props)=>{
     <Ionicons name="images-outline"
     //{shown? "images":"image-outline"}
     size={size}
-    color={themeIconColor}/>
+    color={themeIconColor2}/>
   );
 }
 
@@ -115,7 +128,7 @@ const StarIcon = ({ shown, size = 25}: Props) => {
     <Ionicons
       name={shown ? "star" : "star-outline"}
       size={size}
-      color={shown ? "#fb9062" : themeIconColor}
+      color={shown ? "#fb9062" : themeIconColor2}
     />
   );
 };
@@ -139,13 +152,13 @@ const NotificationsIcon = ({ size = 25 }: Props) => {
 };
 
 const HomeIcon = ({ size = 30 }: Props) => {
-  return <Ionicons name="home" size={size} color={themeIconColor} />;
+  return <Ionicons name="home-outline" size={size} color={themeIconColor} />;
 };
 
 const MapMarkerIcon = ({ size = 25 }: Props) => {
   return (
     <MaterialCommunityIcons
-      name="map-marker"
+      name="map-marker-outline"
       size={size}
       color={themeIconColor}
     />
@@ -179,6 +192,14 @@ const ArchiveIcon = ({ size = 25 }: Props) => {
       size={size}
       color="#eeaf61"
     />
+  );
+};
+
+const ArchiveIcon2 =({ color=themeIconColor2 , size = 25}: Props) =>{
+  return(
+  <Ionicons name="file-tray-outline" 
+  size={size} 
+  color={color}/>
   );
 };
 
@@ -220,6 +241,15 @@ const ArrowIcon = ({ shown, size = 25 }: Props) => {
       name={!shown ? "right" : "down"}
       size={size}
       color={themeIconColor}
+    />
+  );
+};
+const ArrowBack =({ color =themeIconColor,size = 25 }: Props) => {
+  return (
+    <Ionicons
+      name="chevron-back-outline"
+      size={size}
+      color={color}
     />
   );
 };
@@ -278,6 +308,7 @@ export default {
   HashTagIcon,
   SendIcon,
   ArchiveIcon,
+  ArchiveIcon2,
   TrashIcon,
   FourLinesIcon,
   PlusIcon,
@@ -300,4 +331,6 @@ export default {
   HeartIcon,
   StarIcon,
   StarHalfIcon,
+  MenuIcon,
+  ArrowBack
 };

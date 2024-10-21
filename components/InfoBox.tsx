@@ -25,24 +25,24 @@ const InfoBox: React.FC<InfoBoxProps> = ({
 }) => {
     return (
     
-        <View style={[{ padding: 20 }, containerStyles]}>
-            <Text style={[{ color: Colors.text, fontWeight: '900', textAlign: 'center', textDecorationLine: 'underline' }, titleStyles]}>
+        <View style={[{ padding: 20 }, containerStyles,titleStyles]}>
+            <Text  className='text-lightc font-bold' style={[{ color: Colors.text, fontWeight: '900', textAlign: 'center', textDecorationLine: 'underline' }, titleStyles]}>
                 {title}
             </Text>
-            <Text style={{ textAlign: 'center', color:Colors.text, fontWeight: '600', fontSize: 20, marginTop: 8 }}>
+            <Text className='text-lightc font-plight' style={{ textAlign: 'center', color:Colors.text, fontWeight: '600', fontSize: 20, marginTop: 8 }}>
                 {subtitle}
             </Text>
-            <Text style={{ textAlign: 'center', color:Colors.text, fontWeight: '400', fontSize: 20, marginTop: 8 }}>
+            <Text className='text-lightc font-plight'style={{ textAlign: 'center', color:Colors.text, fontWeight: '100', fontSize: 20, marginTop: 8 }}>
                 {info}
             </Text>
             <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 24 }}>
-                <Text style={{ textAlign: 'center', color:Colors.text, fontWeight: '600', fontSize: 18, marginRight: '10%', marginLeft:'-5%' }}>
+                <Text className='text-lightc font-pbold' style={{ textAlign: 'center', color:Colors.text, fontWeight: '100', fontSize: 16, marginRight: '10%', marginLeft:'-2%' }}>
                     {posts}{"\n"}Publicaciones
                 </Text>
-                <Text style={{ textAlign: 'center', color:Colors.text, fontWeight: '600', fontSize: 18, marginRight: '10%' }}>
+                <Text  className='text-lightc font-pbold' style={{ textAlign: 'center', color:Colors.text, fontWeight: '100', fontSize: 16, marginRight: '10%' }}>
                     {followers}{"\n"}Seguidores
                 </Text>
-                <Text style={{ textAlign: 'center', color:Colors.text, fontWeight: '600', fontSize: 18 }}>
+                <Text  className='text-lightc font-pbold' style={{ textAlign: 'center', color:Colors.text, fontWeight: '100', fontSize: 16 }}>
                     {following}{"\n"}Siguiendo
                 </Text>
                

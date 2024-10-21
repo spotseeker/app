@@ -1,26 +1,15 @@
 import React from 'react';
-import { View, Text, Image, ScrollView} from "react-native";
-import Screen from "@/components/Screen";
+import { View, Text, Image, ScrollView, StyleSheet} from "react-native";
 import InfoBox from "@/components/InfoBox";
+import Screen from '@/components/Screen';
 import { Avatar } from '@kolking/react-native-avatar';
 import Icons from "@/components/Icons";
 import {Colors} from "@/constants/Colors"
 import BackgroundImage from '@/assets/images_app/Rectangle 9 (1).png';
 import ProfileImg from '@/assets/images_app/image_profile.png'
-
-
- type UserTypes = {
-  userData: {
-    username: string;
-    fullName: string;
-    description: string;
-    followers: number;
-    following: number;
-    posts: number;
-    profileImage: object;
-  };
-}
-const Profile: React.FC<UserTypes> = () => {
+import { SafeAreaView } from 'react-native-safe-area-context';
+ 
+const Profile = () => {
   const userData = {
     username: 'Ricardodlpj',
     fullName: 'Ricardo Jimenez',
@@ -30,99 +19,104 @@ const Profile: React.FC<UserTypes> = () => {
     posts: 34,
     //profileImage: ProfileImg | uri|object
   };
-  const { ArchiveIcon,PostsIcon,StarIcon } = Icons;
+  const { ArchiveIcon2,PostsIcon,StarIcon } = Icons;
   const textLight="text-lightc font-pbold text-[14px]"
   return (
-     <ScrollView contentContainerStyle={{paddingBottom: '-50%'}}>
-        {/* Imagen de fondo con altura controlada */}
-      <View className="h-60 w-full absolute">
-        <Image 
-          source={BackgroundImage} 
-          style={{ height: '100%', width: '100%' }} 
-          resizeMode="cover" // Mantiene la proporción de la imagen y cubre toda el área
-        />
-      </View>
-        <Screen>
-
-          <View className="text-lightc font-pbold text-[17px]" style={{ alignItems: 'center', marginTop:'10%' }}>
-            {/* Avatar */}
-            <View style={{
-              borderWidth: 5,
-              borderColor: 'white',
-              borderRadius: 80,
-              width: 100,
-              height: 100,
-              justifyContent: 'center',
-              alignItems: 'center',
-              backgroundColor: 'white',
-              overflow: 'hidden',
-            }}>
-              <Avatar source={ProfileImg} color={Colors.text} radius={80} size={80} />
-            </View>
-
-                      {/* InfoBox */}
-        <View style={{
-                          marginTop: "2%", 
-                      }}>
-              <InfoBox
-                title={userData.username}
-                subtitle={userData.fullName}
-                info={userData.description}
-                containerStyles={{ padding: 16, backgroundColor: 'transparent', borderRadius: 0}}
-                titleStyles={{ fontSize: 18 }} 
-                followers={userData.followers} 
-                following={userData.following} 
-                posts={userData.posts}
+    <SafeAreaView className=' h-full my-[-25]'>
+    <ScrollView>
+    <View className="h-60 w-full my-[-80] absolute">
+                <Image 
+                  source={BackgroundImage} 
+                  style={{ height: '100%', width: '100%'}} 
+                  resizeMode="cover" // Mantiene la proporción de la imagen y cubre toda el área
                 />
-            <View style={{ 
-              flexDirection: 'row',
-              justifyContent: 'space-around', 
-              marginTop: '-10%', 
-              width: '100%',
-              shadowColor: 'black',
-              shadowOffset: { width: 0, height: 2 },
-              shadowOpacity: 0.25,
-              shadowRadius: 4,
-               }}>
-              <View style={{
-                width:'33%', 
-                display: 'flex', 
-                flexDirection: 'column', 
-                gap: 10, justifyContent: 'center', 
-                alignItems:'center'
-                }}>
-                  <PostsIcon size={40}/>
-                  <Text className={textLight} style={{alignSelf:'center'}}>Todas</Text>
               </View>
-              <View style={{width:'33%', display: 'flex', flexDirection: 'column', gap: 10, justifyContent: 'center', alignItems:'center'}}>
-                  <StarIcon size={40}/>
-                  <Text  className={textLight} style={{alignSelf:'center'}}>Favoritas</Text>
-              </View>
-              <View style={{width:'33%', display: 'flex', flexDirection: 'column', gap: 10, justifyContent: 'center', alignItems:'center'}}> 
-                  <ArchiveIcon size={40}/>
-                  <Text className={textLight} style={{alignSelf:'center'}}>Archivadas</Text>
+      <Screen>
+            <View className="flex justify-center w-full h-full mt-[-300] items-center ">
+              {/* Avatar */}
+              <View style={styles.avatarContainer}>
+                <Avatar source={ProfileImg} color={Colors.text} radius={80} size={80} />
               </View>
 
+                        {/* InfoBox */}
+          <View style={{
+                            marginTop: "5%", 
+                        }}>
+                <InfoBox
+                  title={userData.username}
+                  subtitle={userData.fullName}
+                  info={userData.description}
+                  containerStyles={{ padding: 16, backgroundColor: 'transparent', borderRadius: 0}}
+                  titleStyles={{ fontSize: 18 }} 
+                  followers={userData.followers} 
+                  following={userData.following} 
+                  posts={userData.posts}
+                  />
             </View>
-                  
+              <View style={styles.iconTabContainer}>
+                <View style={styles.iconStyles}>
+                    <PostsIcon size={40}/>
+                    <Text className={textLight} style={{alignSelf:'center'}}>Todas</Text>
+                </View>
+                <View style={styles.iconStyles}>
+                    <StarIcon size={40}/>
+                    <Text  className={textLight} style={{alignSelf:'center'}}>Favoritas</Text>
+                </View>
+                <View style={styles.iconStyles}> 
+                    <ArchiveIcon2 size={40}/>
+                    <Text className={textLight} style={{alignSelf:'center'}}>Archivadas</Text>
+                </View>
+
+              
+                    
+              </View>
+              <View
+              style={{
+                  height: 1,
+                  width: '200%', 
+                  marginLeft:'-20%',
+                  backgroundColor: '#cccc', 
+                  elevation: 5, 
+                  marginVertical: 20, // Espaciado vertical (Aplica en android ver doc)
+                }} >
+            
+              </View>
             </View>
-            <View
-            style={{
-                height: 1,
-                width: '200%', 
-                marginLeft:'-20%',
-                backgroundColor: '#cccc', 
-                elevation: 5, 
-                marginVertical: 20, // Espaciado vertical (Aplica en android ver doc)
-              }} >
-           
-            </View>
-          </View>
-        </Screen>
-      </ScrollView>
+            </Screen>
+    </ScrollView>
+    </SafeAreaView>
 
   );
 }
 export default Profile
+
+const styles = StyleSheet.create({
+  iconTabContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around', 
+    marginTop: '-3%', 
+    width:'100%',
+    shadowColor: 'black',
+    shadowRadius: 4,
+    height:80
+
+  },
+  iconStyles:{
+    width:'33%', display: 'flex', flexDirection: 'column', gap: 10, justifyContent: 'center', alignItems:'center'
+  },
+  avatarContainer:{
+    marginTop:100,
+    borderWidth: 5,
+    borderColor: 'white',
+    borderRadius: 50,
+    width: 100,
+    height: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'white',
+    overflow: 'hidden',
+  }
+
+})
 
 
