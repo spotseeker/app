@@ -3,6 +3,7 @@ import { Text } from "react-native";
 import Screen from "@/components/Screen";
 import Icons from "@/components/Icons";
 import CustomButton from "@/components/CustomButton";
+import { Link } from "expo-router";
 export default function SignUp() {
   const { ShyIcon, CameraIcon, HappyIcon, HomeIcon } = Icons;
   const [registerStep, setRegisterStep] = useState("step1");
@@ -46,6 +47,12 @@ export default function SignUp() {
       >
         paso4
       </CustomButton>
+
+      <Link asChild href={"/Welcome"}>
+              <Text className="font-psemibold text-helper underline p-5">
+                ir
+              </Text>
+            </Link>
     </Screen>
   );
 }
