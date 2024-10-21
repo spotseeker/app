@@ -26,7 +26,7 @@ const InfoBox: React.FC<InfoBoxProps> = ({
     return (
     
         <View style={[{ padding: 20 }, containerStyles,titleStyles]}>
-            <Text  className='text-lightc font-bold' style={[{ color: Colors.text, fontWeight: '900', textAlign: 'center', textDecorationLine: 'underline' }, titleStyles]}>
+            <Text  className='text-lightc font-bold' style={[{ color: Colors.text, fontWeight: '900', textAlign: 'center', marginTop:'-5%' }, titleStyles]}>
                 {title}
             </Text>
             <Text className='text-lightc font-plight' style={{ textAlign: 'center', color:Colors.text, fontWeight: '600', fontSize: 20, marginTop: 8 }}>

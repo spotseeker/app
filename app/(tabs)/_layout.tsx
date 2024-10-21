@@ -27,14 +27,14 @@ const Stack = createNativeStackNavigator();
         name="Home"
         options={{headerShown: false,
           title: '',
-          tabBarIcon: ({ color }) => <HomeIcon color={color}  size={35}/>,
+          tabBarIcon: ({ color }) => <HomeIcon color={color}  size={38}/>,
         }}
       />
         <Tabs.Screen
         name="MapView"
         options={{headerShown: false,
           title: '',
-          tabBarIcon: ({ color }) => <MapMarkerIcon color={color}  size={35}/>,
+          tabBarIcon: ({ color }) => <MapMarkerIcon color={color}  size={38}/>,
         }}
       />
 
@@ -42,7 +42,7 @@ const Stack = createNativeStackNavigator();
         name="post"
         options={{ headerShown: false,
           title: '',
-          tabBarIcon: ({ color }) => <PlusIcon color={color}  size={35}/>,
+          tabBarIcon: ({ color }) => <PlusIcon color={color}  size={38}/>,
         }}
       />
 
@@ -50,7 +50,7 @@ const Stack = createNativeStackNavigator();
         name="Search"
         options={{ headerShown:false,
           title: '',
-          tabBarIcon: ({ color,size=50}) => <SearchIcon color={color} size={size} />,
+          tabBarIcon: ({ color}) => <SearchIcon color={color} size={38} />,
         }}
       />
       
@@ -58,7 +58,7 @@ const Stack = createNativeStackNavigator();
         name="profile"
         options={{ headerShown:false,
           title: '',
-          tabBarIcon: ({ color }) => <Avatar source={ProfileImg} color={color} radius={35} size={35}/>,
+          tabBarIcon: ({ color }) => <Avatar source={ProfileImg} color={color} radius={50} size={50}/>,
         }}
       />
 

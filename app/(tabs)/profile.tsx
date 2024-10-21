@@ -14,15 +14,15 @@ const Profile = () => {
     username: 'Ricardodlpj',
     fullName: 'Ricardo Jimenez',
     description: 'Estudiante de Ing. Informática | UCLA',
-    followers: 150,
-    following: 200,
-    posts: 34,
+    followers: 3,
+    following: 3,
+    posts: 6,
     //profileImage: ProfileImg | uri|object
   };
   const { ArchiveIcon2,PostsIcon,StarIcon } = Icons;
   const textLight="text-lightc font-pbold text-[14px]"
   return (
-    <SafeAreaView className=' h-full my-[-25]'>
+    <SafeAreaView className=' h-full my-[-25]' style={{backgroundColor:'white'}}>
     <ScrollView>
     <View className="h-60 w-full my-[-80] absolute">
                 <Image 
@@ -32,10 +32,10 @@ const Profile = () => {
                 />
               </View>
       <Screen>
-            <View className="flex justify-center w-full h-full mt-[-300] items-center ">
+            <View className="flex justify-center w-full h-full mt-[-300] items-center " >
               {/* Avatar */}
               <View style={styles.avatarContainer}>
-                <Avatar source={ProfileImg} color={Colors.text} radius={80} size={80} />
+                <Avatar source={ProfileImg} color={Colors.text} radius={100} size={100} />
               </View>
 
                         {/* InfoBox */}
@@ -53,16 +53,16 @@ const Profile = () => {
                   posts={userData.posts}
                   />
             </View>
-              <View style={styles.iconTabContainer}>
+              <View  className= 'left-[-2%]' style={styles.iconTabContainer}>
                 <View style={styles.iconStyles}>
                     <PostsIcon size={40}/>
-                    <Text className={textLight} style={{alignSelf:'center'}}>Todas</Text>
+                    <Text className={textLight} style={{alignSelf:'center'}}>Publicaciones</Text>
                 </View>
-                <View style={styles.iconStyles}>
+                <View className='left-[20%]'style={styles.iconStyles}>
                     <StarIcon size={40}/>
                     <Text  className={textLight} style={{alignSelf:'center'}}>Favoritas</Text>
                 </View>
-                <View style={styles.iconStyles}> 
+                <View className='right-[-30%]' style={styles.iconStyles}> 
                     <ArchiveIcon2 size={40}/>
                     <Text className={textLight} style={{alignSelf:'center'}}>Archivadas</Text>
                 </View>
@@ -98,7 +98,8 @@ const styles = StyleSheet.create({
     width:'100%',
     shadowColor: 'black',
     shadowRadius: 4,
-    height:80
+    height:80,
+    
 
   },
   iconStyles:{
@@ -108,9 +109,9 @@ const styles = StyleSheet.create({
     marginTop:100,
     borderWidth: 5,
     borderColor: 'white',
-    borderRadius: 50,
-    width: 100,
-    height: 100,
+    borderRadius: 60,
+    width: 120,
+    height: 120,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'white',
