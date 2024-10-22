@@ -100,7 +100,7 @@ const ImageIcon1 = ({ size = 25 }: Props) => {
 
 const ImageIcon2 = ({ size = 60 }: Props) => {
   return (
-    <MaterialCommunityIcons name="image-outline" size={size} color="#eeaf61" />
+    <MaterialCommunityIcons name="image-outline" size={size} color="#fb9062" />
   );
 };
 
@@ -223,8 +223,8 @@ const ZoomOutIcon = ({ size = 25 }: Props) => {
   return <Feather name="zoom-out" size={size} color="black" />;
 };
 
-const CrossDeleteIcon = ({ size = 25 }: Props) => {
-  return <Entypo name="cross" size={size} color="black" />;
+const CrossDeleteIcon = ({ size = 25, color = "black" }: Props) => {
+  return <Entypo name="cross" size={size} color={color} />;
 };
 
 const CancelIcon = ({ size = 25 }: Props) => {
@@ -287,13 +287,25 @@ const LogoBigIcon =({width= 241,  height= 399,mr}:pngProps) =>
 const ShyIcon = ({ size = 100 }: Props) => {
   return (
     <Image
-      className="mr-"
+      className=""
       source={shy}
       style={{ width: size, height: size }} // Cambia los valores según lo que necesites
     />
   );
 };
+
+const CalendarIcon = () => {
+  return (
+    <AntDesign
+      name="calendar"
+      size={24}
+      color={themeIconColor}
+      style={{ padding: 11 }}
+    />
+  );
+};
 export default {
+  CalendarIcon,
   ShyIcon,
   LogoIcon,
   LogoBigIcon,

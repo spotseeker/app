@@ -7,19 +7,35 @@ const StyledPressable = styled(Pressable);
 
 type CustomInputs = {
   children: ReactNode;
-  variant: "default" | "email" | "edit" | "search" | "password" | "description";
+  variant:
+    | "default"
+    | "email"
+    | "edit"
+    | "search"
+    | "password"
+    | "description"
+    | "date"
+    | "number";
   name: string;
   control: Control;
+  date?: Date;
 };
 
-function CustomInputs({ children, variant, name, control }: CustomInputs) {
+function CustomInputs({
+  children,
+  variant,
+  name,
+  control,
+  date,
+}: CustomInputs) {
   const { field, fieldState } = useController({
     control,
     defaultValue: "",
     name,
   });
   const { error } = fieldState;
-  const { PersonIcon, SearchIcon, EditIcon, PasswordIcon } = Icons;
+  const { PersonIcon, SearchIcon, EditIcon, PasswordIcon, CalendarIcon } =
+    Icons;
   const [shownPassword, setShownPassword] = useState(true);
 
   const renderIcon = () => {
@@ -28,6 +44,8 @@ function CustomInputs({ children, variant, name, control }: CustomInputs) {
         return <PersonIcon color="#ee5d6c" />;
       case "search":
         return <SearchIcon color="#ee5d6c" />;
+      case "date":
+        return <CalendarIcon />;
       case "edit":
         return <EditIcon color="#ee5d6c" />;
       case "password":
@@ -43,7 +61,7 @@ function CustomInputs({ children, variant, name, control }: CustomInputs) {
   };
 
   return (
-    <View className="p-[20px]">
+    <View className="py-[15px]">
       <Text className="text-lightc font-psemibold text-[14px] pb-[5px]">
         {children}
       </Text>
@@ -51,8 +69,8 @@ function CustomInputs({ children, variant, name, control }: CustomInputs) {
       <View
         className={`flex flex-row  border border-gray-400 rounded-md ${
           variant == "description"
-            ? "w-[338px] h-[140px]"
-            : "w-[338px] h-[48px]"
+            ? "w-[330px] h-[140px]"
+            : "w-[330px] h-[48px]"
         }`}
       >
         <TextInput
@@ -60,9 +78,17 @@ function CustomInputs({ children, variant, name, control }: CustomInputs) {
           placeholder={`${children}`}
           secureTextEntry={variant === "password" && shownPassword}
           multiline={variant == "description"}
+          inputMode={variant == "number" ? "numeric":"text"}
           textAlignVertical="top"
-          value={field.value}
+          value={
+            variant == "date"
+              ? date
+                ? date.toLocaleDateString()
+                : ""
+              : field.value
+          }
           onChangeText={field.onChange}
+          editable={variant == "date" ? false : true}
         />
         {renderIcon()}
       </View>

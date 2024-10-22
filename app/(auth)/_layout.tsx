@@ -16,6 +16,24 @@ const AuthLayout = () => {
             headerShown: false,
           }}
         />
+        <Stack.Screen
+          name="Recovery-password"
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="Validate-otp"
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="Reset-password"
+          options={{
+            headerShown: false,
+          }}
+        />
       </Stack>
     </>
   );

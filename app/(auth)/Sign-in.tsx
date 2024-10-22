@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Text, SafeAreaView, ScrollView } from "react-native";
+import { router } from "expo-router";
 import Icons from "@/components/Icons";
 import CustomButton from "@/components/CustomButton";
 import CustomInputs from "@/components/CustomInputs";
@@ -11,7 +12,7 @@ import { Link } from "expo-router";
 
 export default function SignIn() {
   const { LogoIcon } = Icons;
-  const { control, handleSubmit } = useForm({
+  const { control, handleSubmit, reset } = useForm({
     resolver: zodResolver(LoginSchema),
   });
   return (
@@ -24,7 +25,7 @@ export default function SignIn() {
             </Text>
             <LogoIcon width={200} height={200} mr={15} />
           </View>
-          <View className="flex justify-center items-center">
+          <View className="flex justify-center items-center ">
             <CustomInputs variant="email" control={control} name="username">
               Introduce usuario
             </CustomInputs>
@@ -33,14 +34,21 @@ export default function SignIn() {
             </CustomInputs>
           </View>
           <View className="flex justify-end items-end p-5">
-            <Text className="font-psemibold text-helper underline pb-5">
-              Recuperar mi clave
-            </Text>
+            <Link asChild href={"/Recovery-password"}>
+              <Text className="font-psemibold text-helper underline pb-5">
+                Recuperar mi clave
+              </Text>
+            </Link>
             <CustomButton
               width={326}
               height={47}
               variant="primary"
-              onPress={handleSubmit((data) => console.log(data))}
+              onPress={
+                handleSubmit(() => {
+                  reset()
+                  router.push("/(tabs)/Home")
+                })
+              }
             >
               Ingresar
             </CustomButton>

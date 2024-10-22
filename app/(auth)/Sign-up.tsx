@@ -1,58 +1,31 @@
 import React, { useState } from "react";
-import { Text } from "react-native";
 import Screen from "@/components/Screen";
-import Icons from "@/components/Icons";
-import CustomButton from "@/components/CustomButton";
-import { Link } from "expo-router";
+import SignupScreens from "./SignUp/SignupScreens";
+import { UserData } from "@/Schemas/UserSchema";
+
 export default function SignUp() {
-  const { ShyIcon, CameraIcon, HappyIcon, HomeIcon } = Icons;
-  const [registerStep, setRegisterStep] = useState("step1");
+  const [step, setStep] = useState(5);
+
+  const [formData, setFormData] = useState<UserData>({
+    email: "",
+    username: "",
+    firstname: "",
+    lastname: "",
+    aboutme: "",
+    birthdate: new Date(),
+    password: "",
+    confirm: "",
+    code: "",
+  });
 
   return (
     <Screen>
-      <Text>Flijo de registro</Text>
-      {registerStep === "step1" && <ShyIcon />}
-      {registerStep === "step2" && <CameraIcon />}
-      {registerStep === "step3" && <HappyIcon />}
-      {registerStep === "step4" && <HomeIcon />}
-      <CustomButton
-        width={140}
-        height={40}
-        variant="primary"
-        onPress={() => setRegisterStep("step1")}
-      >
-        paso1
-      </CustomButton>
-      <CustomButton
-        width={140}
-        height={40}
-        variant="primary"
-        onPress={() => setRegisterStep("step2")}
-      >
-        paso2
-      </CustomButton>
-      <CustomButton
-        width={140}
-        height={40}
-        variant="primary"
-        onPress={() => setRegisterStep("step3")}
-      >
-        paso3
-      </CustomButton>
-      <CustomButton
-        width={140}
-        height={40}
-        variant="primary"
-        onPress={() => setRegisterStep("step4")}
-      >
-        paso4
-      </CustomButton>
-
-      <Link asChild href={"/Welcome"}>
-              <Text className="font-psemibold text-helper underline p-5">
-                ir
-              </Text>
-            </Link>
+      <SignupScreens
+        setUserData={setFormData}
+        userData={formData}
+        step={step}
+        setStep={setStep}
+      />
     </Screen>
   );
 }

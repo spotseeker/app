@@ -12,9 +12,9 @@ export default function Welcome(){
   return(
     <LinearGradient
     colors={[
-       'rgba(106, 13, 131,1)', 
+       'rgba(106, 13, 131,1)',
        'rgba(206, 73, 147, 1)',
-       'rgba(251, 144, 98, 0.9)', 
+       'rgba(251, 144, 98, 0.9)',
        'rgba(255, 255, 255, 1)'
      ]}
      start={{ x: 0, y: 0 }} // De arriba...
@@ -33,16 +33,16 @@ export default function Welcome(){
               width={326}
               height={47}
               variant="primary"
-              onPress={() => router.push("/(tabs)/(userNavigation)/UserProfile")}
+              onPress={() => router.push("/(tabs)/Home")}
             >
              Continuar
             </CustomButton>
           </View>
         </Screen>
-       
+
       </ScrollView>
-    </SafeAreaView> 
+    </SafeAreaView>
      </LinearGradient>
   );
- 
+
 }
