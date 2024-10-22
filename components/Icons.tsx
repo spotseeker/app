@@ -8,20 +8,34 @@ import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import logo from "../assets/images_app/modelo_logo_icon_V.2..4.png";
+import logoBig from "../assets/images_app/Group 1.png";
 import shy from "../assets/images_app/shy.png";
 import { Image } from "react-native";
 type Props = {
   color?: string;
   shown?: boolean;
   size?: number;
+  height?:number;
 };
 
 const themeIconColor = "#ee5d6c";
+const themeIconColor2 ="#FB9062";
 
 const PersonIcon = ({ color, size = 25 }: Props) => {
   return (
     <Ionicons
       name="person-outline"
+      size={size}
+      color={color}
+      style={{ padding: 11 }}
+    />
+  );
+};
+
+const MenuIcon = ({ color=themeIconColor, size = 25 }: Props) => {
+  return (
+    <Ionicons
+      name="menu-outline"
       size={size}
       color={color}
       style={{ padding: 11 }}
@@ -90,6 +104,15 @@ const ImageIcon2 = ({ size = 60 }: Props) => {
   );
 };
 
+const PostsIcon=({size=10}:Props)=>{
+  return( 
+    <Ionicons name="images-outline"
+    //{shown? "images":"image-outline"}
+    size={size}
+    color={themeIconColor2}/>
+  );
+}
+
 const HeartIcon = ({ shown, size = 25 }: Props) => {
   return (
     <Ionicons
@@ -100,12 +123,12 @@ const HeartIcon = ({ shown, size = 25 }: Props) => {
   );
 };
 
-const StarIcon = ({ shown, size = 25 }: Props) => {
+const StarIcon = ({ shown, size = 25}: Props) => {
   return (
     <Ionicons
       name={shown ? "star" : "star-outline"}
       size={size}
-      color={shown ? "#fb9062" : "black"}
+      color={shown ? "#fb9062" : themeIconColor2}
     />
   );
 };
@@ -129,13 +152,13 @@ const NotificationsIcon = ({ size = 25 }: Props) => {
 };
 
 const HomeIcon = ({ size = 30 }: Props) => {
-  return <Ionicons name="home" size={size} color={themeIconColor} />;
+  return <Ionicons name="home-outline" size={size} color={themeIconColor} />;
 };
 
 const MapMarkerIcon = ({ size = 25 }: Props) => {
   return (
     <MaterialCommunityIcons
-      name="map-marker"
+      name="map-marker-outline"
       size={size}
       color={themeIconColor}
     />
@@ -169,6 +192,14 @@ const ArchiveIcon = ({ size = 25 }: Props) => {
       size={size}
       color="#eeaf61"
     />
+  );
+};
+
+const ArchiveIcon2 =({ color=themeIconColor2 , size = 25}: Props) =>{
+  return(
+  <Ionicons name="file-tray-outline" 
+  size={size} 
+  color={color}/>
   );
 };
 
@@ -213,6 +244,15 @@ const ArrowIcon = ({ shown, size = 25 }: Props) => {
     />
   );
 };
+const ArrowBack =({ color =themeIconColor,size = 25 }: Props) => {
+  return (
+    <Ionicons
+      name="chevron-back-outline"
+      size={size}
+      color={color}
+    />
+  );
+};
 
 const LogOutIcon = ({ size = 25 }: Props) => {
   return <Feather name="log-out" size={size} color="#FF0000" />;
@@ -232,6 +272,17 @@ const LogoIcon = ({ width = 200, height = 200, mr }: pngProps) => {
     />
   );
 };
+
+const LogoBigIcon =({width= 241,  height= 399,mr}:pngProps) =>
+  {
+    return (
+      <Image
+        source={logoBig}
+        style={{ width: width, height: height, margin: mr }} 
+      />
+    );
+  };
+
 
 const ShyIcon = ({ size = 100 }: Props) => {
   return (
@@ -257,6 +308,7 @@ export default {
   CalendarIcon,
   ShyIcon,
   LogoIcon,
+  LogoBigIcon,
   LogOutIcon,
   ArrowIcon,
   RefreshIcon,
@@ -268,6 +320,7 @@ export default {
   HashTagIcon,
   SendIcon,
   ArchiveIcon,
+  ArchiveIcon2,
   TrashIcon,
   FourLinesIcon,
   PlusIcon,
@@ -286,7 +339,10 @@ export default {
   CheckIcon,
   ImageIcon1,
   ImageIcon2,
+  PostsIcon,
   HeartIcon,
   StarIcon,
   StarHalfIcon,
+  MenuIcon,
+  ArrowBack
 };

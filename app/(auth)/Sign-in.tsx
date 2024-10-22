@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Text, SafeAreaView, ScrollView } from "react-native";
+import { router } from "expo-router";
 import Icons from "@/components/Icons";
 import CustomButton from "@/components/CustomButton";
 import CustomInputs from "@/components/CustomInputs";
@@ -11,7 +12,7 @@ import { Link } from "expo-router";
 
 export default function SignIn() {
   const { LogoIcon } = Icons;
-  const { control, handleSubmit } = useForm({
+  const { control, handleSubmit, reset } = useForm({
     resolver: zodResolver(LoginSchema),
   });
   return (
@@ -42,7 +43,12 @@ export default function SignIn() {
               width={326}
               height={47}
               variant="primary"
-              onPress={handleSubmit((data) => console.log(data))}
+              onPress={
+                handleSubmit(() => {
+                  reset()
+                  router.push("/(tabs)/Home")
+                })
+              }
             >
               Ingresar
             </CustomButton>
