@@ -27,14 +27,16 @@ function CustomButton({
         colors={
           variant === "primary" ? ["#FB9062", "#EE5D6C"] : ["#FFFFFF", "#FFFFFF"]
         }
+        className={`${
+          variant == "primary" ? "" : "border-2 border-helper"
+        }`}
         style={{ flex: 1, borderRadius: 10 }}
       >
         <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
           <Text
-            style={{
-              color: variant === "primary" ? "white" : "black",
-              fontWeight: "600",
-            }}
+            className={`${
+              variant == "primary" ? "text-white" : "text-helper"
+            } font-semibold`}
           >
             {children}
           </Text>
