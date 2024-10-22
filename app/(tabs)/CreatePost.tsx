@@ -7,7 +7,7 @@ export default function Home() {
         <SafeAreaView>
         <View>
             <Text className="text-lightc font-pbold text-[14px]">
-                Pagina del Home
+             Crear Post
             </Text>
         </View>
         </SafeAreaView>

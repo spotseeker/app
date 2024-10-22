@@ -33,7 +33,7 @@ export default function Welcome(){
               width={326}
               height={47}
               variant="primary"
-              onPress={() => router.push("/(tabs)/profile")}
+              onPress={() => router.push("/(tabs)/(userNavigation)/UserProfile")}
             >
              Continuar
             </CustomButton>
