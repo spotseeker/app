@@ -1,28 +1,26 @@
-import React from "react";
-import { View, Text, SafeAreaView, ScrollView } from "react-native";
-import { router } from "expo-router";
-import Icons from "@/src/components/Icons";
-import CustomButton from "@/src/components/CustomButton";
-import CustomInputs from "@/src/components/CustomInputs";
-import { LoginSchema } from "@/src/Schemas/UserSchema";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import Screen from "@/src/components/Screen";
-import { Link } from "expo-router";
+import React from 'react'
+import { View, Text, SafeAreaView, ScrollView } from 'react-native'
+import { router } from 'expo-router'
+import Icons from '@/src/components/Icons'
+import CustomButton from '@/src/components/CustomButton'
+import CustomInputs from '@/src/components/CustomInputs'
+import { LoginSchema } from '@/src/Schemas/UserSchema'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+import Screen from '@/src/components/Screen'
+import { Link } from 'expo-router'
 
 export default function SignIn() {
-  const { LogoIcon } = Icons;
+  const { LogoIcon } = Icons
   const { control, handleSubmit, reset } = useForm({
-    resolver: zodResolver(LoginSchema),
-  });
+    resolver: zodResolver(LoginSchema)
+  })
   return (
     <SafeAreaView className="h-full">
       <ScrollView>
         <Screen>
           <View className="flex justify-center items-center">
-            <Text className="text-lightc font-pbold text-[14px]">
-              ¡Hola de nuevo viajero!
-            </Text>
+            <Text className="text-lightc font-pbold text-[14px]">¡Hola de nuevo viajero!</Text>
             <LogoIcon width={200} height={200} mr={15} />
           </View>
           <View className="flex justify-center items-center ">
@@ -34,21 +32,17 @@ export default function SignIn() {
             </CustomInputs>
           </View>
           <View className="flex justify-end items-end p-5">
-            <Link asChild href={"/Recovery-password"}>
-              <Text className="font-psemibold text-helper underline pb-5">
-                Recuperar mi clave
-              </Text>
+            <Link asChild href={'/Recovery-password'}>
+              <Text className="font-psemibold text-helper underline pb-5">Recuperar mi clave</Text>
             </Link>
             <CustomButton
               width={326}
               height={47}
               variant="primary"
-              onPress={
-                handleSubmit(() => {
-                  reset()
-                  router.push("/(tabs)/Home")
-                })
-              }
+              onPress={handleSubmit(() => {
+                reset()
+                router.push('/(tabs)/Home')
+              })}
             >
               Ingresar
             </CustomButton>
@@ -56,14 +50,12 @@ export default function SignIn() {
           <View className="flex flex-row space-x-[-20px] justify-center items-center">
             <Text className="font-psemibold p-5">¿No posees cuenta?</Text>
 
-            <Link asChild href={"/Sign-up"}>
-              <Text className="font-psemibold text-helper underline p-5">
-                Registrate Aqui
-              </Text>
+            <Link asChild href={'/Sign-up'}>
+              <Text className="font-psemibold text-helper underline p-5">Registrate Aqui</Text>
             </Link>
           </View>
         </Screen>
       </ScrollView>
     </SafeAreaView>
-  );
+  )
 }

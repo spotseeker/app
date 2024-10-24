@@ -1,60 +1,60 @@
-import React from 'react';
-import { TouchableOpacity } from 'react-native';
-import { Tabs, router } from 'expo-router';
-import Icons from "@/src/components/Icons";
-import { Avatar } from '@kolking/react-native-avatar';
-import {Colors} from '@/src/constants/Colors'
+import React from 'react'
+import { TouchableOpacity } from 'react-native'
+import { Tabs, router } from 'expo-router'
+import Icons from '@/src/components/Icons'
+import { Avatar } from '@kolking/react-native-avatar'
+import { Colors } from '@/src/constants/Colors'
 import ProfileImg from '@/src/assets/images_app/image_profile.png'
 
-
- export default function TabLayout() {
- const { SearchIcon, HomeIcon, PlusIcon, MapMarkerIcon, MenuIcon, ArrowBack} = Icons;
+export default function TabLayout() {
+  const { SearchIcon, HomeIcon, PlusIcon, MapMarkerIcon, MenuIcon, ArrowBack } = Icons
   return (
-    <Tabs screenOptions={{
-      headerShown:false,
-      tabBarInactiveTintColor:Colors.tabIconDefault,
-      tabBarActiveTintColor:'#EE5D6C',
-      tabBarStyle: {
-      paddingBottom: 10,
-      height: 90,
-      borderColor:'#EE5D6C',
-      borderTopWidth:3.5
-      },
-    }}
-    >
-      <Tabs.Screen name='Home'
-      options={{
+    <Tabs
+      screenOptions={{
         headerShown: false,
-        title: '',
-        tabBarIcon: ({ color }) => <HomeIcon color={color}  size={38}/>,
+        tabBarInactiveTintColor: Colors.tabIconDefault,
+        tabBarActiveTintColor: '#EE5D6C',
+        tabBarStyle: {
+          paddingBottom: 10,
+          height: 90,
+          borderColor: '#EE5D6C',
+          borderTopWidth: 3.5
+        }
       }}
-    />
+    >
+      <Tabs.Screen
+        name="Home"
+        options={{
+          headerShown: false,
+          title: '',
+          tabBarIcon: ({ color }) => <HomeIcon color={color} size={38} />
+        }}
+      />
 
-       <Tabs.Screen
+      <Tabs.Screen
         name="MapView"
         options={{
           headerShown: false,
           title: '',
-          tabBarIcon: ({ color }) => <MapMarkerIcon color={color}  size={38}/>,
+          tabBarIcon: ({ color }) => <MapMarkerIcon color={color} size={38} />
         }}
       />
 
-
-       <Tabs.Screen
+      <Tabs.Screen
         name="CreatePost"
         options={{
           headerShown: false,
           title: '',
-          tabBarIcon: ({ color }) => <PlusIcon color={color}  size={38}/>,
+          tabBarIcon: ({ color }) => <PlusIcon color={color} size={38} />
         }}
       />
 
-       <Tabs.Screen
+      <Tabs.Screen
         name="Search"
         options={{
           headerShown: false,
           title: '',
-          tabBarIcon: ({ color}) => <SearchIcon color={color} size={38} />,
+          tabBarIcon: ({ color }) => <SearchIcon color={color} size={38} />
         }}
       />
 
@@ -65,20 +65,19 @@ import ProfileImg from '@/src/assets/images_app/image_profile.png'
           title: 'Mi perfil',
           headerTintColor: '#FB9062',
           headerTitleStyle: {
-            fontWeight: 'bold',
+            fontWeight: 'bold'
           },
-          headerRight: () => (
-            <MenuIcon size={35} />
-          ),
+          headerRight: () => <MenuIcon size={35} />,
           headerLeft: () => (
-            <TouchableOpacity onPress={() => router.push("/(tabs)/Home")}>
+            <TouchableOpacity onPress={() => router.push('/(tabs)/Home')}>
               <ArrowBack size={35} />
             </TouchableOpacity>
           ),
-          tabBarIcon: ({ color }) => <Avatar source={ProfileImg} color={color} radius={50} size={50}/>,
+          tabBarIcon: ({ color }) => (
+            <Avatar source={ProfileImg} color={color} radius={50} size={50} />
+          )
         }}
       />
-
     </Tabs>
-  );
+  )
 }

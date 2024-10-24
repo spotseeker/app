@@ -1,103 +1,89 @@
-import React, { useEffect } from "react";
-import {
-  View,
-  Text,
-  SafeAreaView,
-  ScrollView,
-  BackHandler,
-} from "react-native";
-import CustomButton from "@/src/components/CustomButton";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import Screen from "@/src/components/Screen";
-import { RegisterSchema, UserData } from "@/src/Schemas/UserSchema";
-import Icons from "@/src/components/Icons";
-import StepsScreens from "./StepsScreens";
-import { useRouter } from "expo-router";
-import { z } from "zod";
+import React, { useEffect } from 'react'
+import { View, Text, SafeAreaView, ScrollView, BackHandler } from 'react-native'
+import CustomButton from '@/src/components/CustomButton'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+import Screen from '@/src/components/Screen'
+import { RegisterSchema, UserData } from '@/src/Schemas/UserSchema'
+import Icons from '@/src/components/Icons'
+import StepsScreens from './StepsScreens'
+import { useRouter } from 'expo-router'
+import { z } from 'zod'
 
 type registerProps = {
-  step: number;
-  setStep: (step: number) => void;
-  userData: UserData;
-  setUserData: (user: UserData) => void;
-};
+  step: number
+  setStep: (step: number) => void
+  userData: UserData
+  setUserData: (user: UserData) => void
+}
 
-export default function SignupScreens({
-  step,
-  setStep,
-  setUserData,
-  userData,
-}: registerProps) {
+export default function SignupScreens({ step, setStep, setUserData, userData }: registerProps) {
   const getSchemaForStep = (step: number) => {
     switch (step) {
       case 1:
-        return RegisterSchema.pick({ email: true, username: true });
+        return RegisterSchema.pick({ email: true, username: true })
       case 2:
         return RegisterSchema.pick({
           firstname: true,
           lastname: true,
-          birthdate: true,
-        });
+          birthdate: true
+        })
       case 3:
-        return RegisterSchema.pick({ aboutme: true });
+        return RegisterSchema.pick({ aboutme: true })
       case 4:
         return RegisterSchema.pick({ password: true, confirm: true }).refine(
           (data) => data.password === data.confirm,
           {
-            message: "Contraseñas no coinciden",
-            path: ["confirm"],
+            message: 'Contraseñas no coinciden',
+            path: ['confirm']
           }
-        );
+        )
       case 5:
-        return RegisterSchema.pick({ code: true });
+        return RegisterSchema.pick({ code: true })
       default:
-        return z.object({});
+        return z.object({})
     }
-  };
+  }
   const { control, handleSubmit, reset } = useForm({
     resolver: zodResolver(getSchemaForStep(step)),
-    mode: "onChange",
-  });
+    mode: 'onChange'
+  })
 
-  const { Step1, Step2, Step3, Step4, Step5 } = StepsScreens;
-  const { ShyIcon } = Icons;
-  const router = useRouter();
+  const { Step1, Step2, Step3, Step4, Step5 } = StepsScreens
+  const { ShyIcon } = Icons
+  const router = useRouter()
 
   const handleOnPress = () => {
-    setStep(step - 1);
-  };
+    setStep(step - 1)
+  }
 
   useEffect(() => {
     if (step == 0) {
-      reset();
-      router.push("/Sign-in");
-      setStep(step + 1);
+      reset()
+      router.push('/Sign-in')
+      setStep(step + 1)
     }
 
     if (step > 5) {
-      reset();
-      router.push("/Sign-in");
-      setStep(1);
+      reset()
+      router.push('/Sign-in')
+      setStep(1)
     }
-  }, [step]);
+  }, [step])
 
   useEffect(() => {
     const backAction = () => {
       if (step > 1) {
-        setStep(step - 1);
-        return true;
+        setStep(step - 1)
+        return true
       }
-      return false;
-    };
+      return false
+    }
 
-    const subscription = BackHandler.addEventListener(
-      "hardwareBackPress",
-      backAction
-    );
+    const subscription = BackHandler.addEventListener('hardwareBackPress', backAction)
 
-    return () => subscription.remove();
-  }, [step]);
+    return () => subscription.remove()
+  }, [step])
 
   return (
     <SafeAreaView className="h-full">
@@ -106,13 +92,13 @@ export default function SignupScreens({
           <View className="flex justify-center items-center ">
             <Text
               className={`text-helper font-pbold text-[30px] ${
-                step == 1 ? "text-center" : "text-justify"
+                step == 1 ? 'text-center' : 'text-justify'
               }`}
             >
-              {step == 1 && "¿Cómo te identificamos?"}
-              {step == 2 && "¿Cómo te llamas?"}
-              {step == 3 && "Prepara tu perfil"}
-              {step == 5 && "Confirma tu correo"}
+              {step == 1 && '¿Cómo te identificamos?'}
+              {step == 2 && '¿Cómo te llamas?'}
+              {step == 3 && 'Prepara tu perfil'}
+              {step == 5 && 'Confirma tu correo'}
             </Text>
             {step == 4 && <ShyIcon />}
           </View>
@@ -123,12 +109,7 @@ export default function SignupScreens({
           {step === 5 && <Step5 control={control} />}
           {step >= 1 && step <= 5 && (
             <View className="flex flex-row space-x-[-20px] justify-between items-center ">
-              <CustomButton
-                width={130}
-                height={47}
-                variant="secondary"
-                onPress={handleOnPress}
-              >
+              <CustomButton width={130} height={47} variant="secondary" onPress={handleOnPress}>
                 Volver
               </CustomButton>
               <CustomButton
@@ -138,26 +119,22 @@ export default function SignupScreens({
                 onPress={handleSubmit((data) => {
                   const updatedUserData: UserData = {
                     ...userData,
-                    ...(step === 1
-                      ? { email: data.email, username: data.username }
-                      : {}),
+                    ...(step === 1 ? { email: data.email, username: data.username } : {}),
                     ...(step === 2
                       ? {
                           firstname: data.firstname,
                           lastname: data.lastname,
-                          birthdate: data.birthdate,
+                          birthdate: data.birthdate
                         }
                       : {}),
                     ...(step === 3 ? { aboutme: data.aboutme } : {}),
-                    ...(step === 4
-                      ? { password: data.password, confirm: data.confirm }
-                      : {}),
-                    ...(step === 5 ? { code: data.code } : {}),
-                  };
+                    ...(step === 4 ? { password: data.password, confirm: data.confirm } : {}),
+                    ...(step === 5 ? { code: data.code } : {})
+                  }
 
-                  setUserData(updatedUserData);
-                  console.log(updatedUserData);
-                  setStep(step + 1);
+                  setUserData(updatedUserData)
+                  console.log(updatedUserData)
+                  setStep(step + 1)
                 })}
               >
                 Siguiente
@@ -167,5 +144,5 @@ export default function SignupScreens({
         </Screen>
       </ScrollView>
     </SafeAreaView>
-  );
+  )
 }

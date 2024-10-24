@@ -1,12 +1,12 @@
-import { View, Text } from "react-native";
-import React from "react";
-import { LinearGradient } from "expo-linear-gradient";
-import Icons from "@/src/components/Icons";
+import { View, Text } from 'react-native'
+import React from 'react'
+import { LinearGradient } from 'expo-linear-gradient'
+import Icons from '@/src/components/Icons'
 export default function Loading() {
-  const { LogoIcon } = Icons;
+  const { LogoIcon } = Icons
   return (
     <LinearGradient
-      colors={["rgba(251, 144, 98, 0.1)", "rgba(251, 144, 98, 1)"]} // Color blanco arriba y #FB9062 abajo
+      colors={['rgba(251, 144, 98, 0.1)', 'rgba(251, 144, 98, 1)']} // Color blanco arriba y #FB9062 abajo
       start={{ x: 0, y: 0 }} // De abajo...
       end={{ x: 0, y: 1 }} // ... hacia arriba
       locations={[0.4, 1]}
@@ -21,5 +21,5 @@ export default function Loading() {
         </Text>
       </View>
     </LinearGradient>
-  );
+  )
 }

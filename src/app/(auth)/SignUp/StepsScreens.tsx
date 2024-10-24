@@ -1,13 +1,13 @@
-import CustomInputs from "@/src/components/CustomInputs";
-import DatePicker from "@/src/components/DatePicker";
-import Icons from "@/src/components/Icons";
-import React, { useEffect, useState } from "react";
-import { Control } from "react-hook-form";
-import { View, Text, Pressable, Image } from "react-native";
-import * as ImagePicker from "expo-image-picker";
+import CustomInputs from '@/src/components/CustomInputs'
+import DatePicker from '@/src/components/DatePicker'
+import Icons from '@/src/components/Icons'
+import React, { useEffect, useState } from 'react'
+import { Control } from 'react-hook-form'
+import { View, Text, Pressable, Image } from 'react-native'
+import * as ImagePicker from 'expo-image-picker'
 type StepsProps = {
-  control: Control;
-};
+  control: Control
+}
 const Step1 = ({ control }: StepsProps) => {
   return (
     <View className="flex justify-center my-[70px] items-center">
@@ -22,13 +22,13 @@ const Step1 = ({ control }: StepsProps) => {
         El nombre de usuario es unico, lo puedes cambiar en cualquier momento
       </Text>
     </View>
-  );
-};
+  )
+}
 
 const Step2 = ({ control }: StepsProps) => {
-  const [date, setDate] = useState(new Date());
-  const [show, setShow] = useState(false);
-  const [dateError, setDateError] = useState("Seleccionar fecha por favor");
+  const [date, setDate] = useState(new Date())
+  const [show, setShow] = useState(false)
+  const [dateError, setDateError] = useState('Seleccionar fecha por favor')
 
   return (
     <View className="flex justify-center my-[50px] items-center">
@@ -39,12 +39,7 @@ const Step2 = ({ control }: StepsProps) => {
         Introduce tu apellido
       </CustomInputs>
       <Pressable onPress={() => setShow(true)}>
-        <CustomInputs
-          variant="date"
-          control={control}
-          name="birthdateString"
-          date={date}
-        >
+        <CustomInputs variant="date" control={control} name="birthdateString" date={date}>
           Introduce tu fecha de nacimiento
         </CustomInputs>
       </Pressable>
@@ -61,40 +56,40 @@ const Step2 = ({ control }: StepsProps) => {
       )}
       {dateError ? <Text>{dateError}</Text> : null}
     </View>
-  );
-};
+  )
+}
 
 const Step3 = ({ control }: StepsProps) => {
-  const { ImageIcon2, CrossDeleteIcon } = Icons;
-  const [image, setImage] = useState<string | null>(null);
+  const { ImageIcon2, CrossDeleteIcon } = Icons
+  const [image, setImage] = useState<string | null>(null)
 
   useEffect(() => {
-    (async () => {
-      const { status } = await ImagePicker.requestCameraPermissionsAsync();
-      if (status !== "granted") {
-        alert("Lo sentimos, necesitamos permisos para acceder a tu cámara!");
+    ;(async () => {
+      const { status } = await ImagePicker.requestCameraPermissionsAsync()
+      if (status !== 'granted') {
+        alert('Lo sentimos, necesitamos permisos para acceder a tu cámara!')
       }
-    })();
-  }, []);
+    })()
+  }, [])
 
   const pickImage = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
       aspect: [4, 3],
-      quality: 1,
-    });
+      quality: 1
+    })
 
-    console.log(result);
+    console.log(result)
 
     if (!result.canceled) {
-      setImage(result.assets[0].uri);
+      setImage(result.assets[0].uri)
     }
-  };
+  }
 
   const removeImage = () => {
-    setImage(null);
-  };
+    setImage(null)
+  }
   return (
     <>
       <View className="flex content-start items-start mt-10">
@@ -116,12 +111,12 @@ const Step3 = ({ control }: StepsProps) => {
             <Pressable
               onPress={removeImage}
               style={{
-                position: "absolute",
+                position: 'absolute',
                 bottom: 0,
                 right: 0,
                 zIndex: 1,
-                backgroundColor: "rgba(0, 0, 0, 0.6)",
-                borderRadius: 50,
+                backgroundColor: 'rgba(0, 0, 0, 0.6)',
+                borderRadius: 50
               }}
             >
               <CrossDeleteIcon size={25} color="#ee5d6c" />
@@ -138,8 +133,8 @@ const Step3 = ({ control }: StepsProps) => {
         </CustomInputs>
       </View>
     </>
-  );
-};
+  )
+}
 
 const Step4 = ({ control }: StepsProps) => {
   return (
@@ -151,8 +146,8 @@ const Step4 = ({ control }: StepsProps) => {
         Confirma tu contraseña
       </CustomInputs>
     </View>
-  );
-};
+  )
+}
 
 const Step5 = ({ control }: StepsProps) => {
   return (
@@ -164,7 +159,7 @@ const Step5 = ({ control }: StepsProps) => {
         Introduce el codigo
       </CustomInputs>
     </View>
-  );
-};
+  )
+}
 
-export default { Step1, Step2, Step3, Step4, Step5 };
+export default { Step1, Step2, Step3, Step4, Step5 }

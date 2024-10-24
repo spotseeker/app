@@ -1,5 +1,5 @@
-import { Stack } from "expo-router";
-import React from "react";
+import { Stack } from 'expo-router'
+import React from 'react'
 const AuthLayout = () => {
   return (
     <>
@@ -7,36 +7,36 @@ const AuthLayout = () => {
         <Stack.Screen
           name="Sign-in"
           options={{
-            headerShown: false,
+            headerShown: false
           }}
         />
         <Stack.Screen
           name="Sign-up"
           options={{
-            headerShown: false,
+            headerShown: false
           }}
         />
         <Stack.Screen
           name="Recovery-password"
           options={{
-            headerShown: false,
+            headerShown: false
           }}
         />
         <Stack.Screen
           name="Validate-otp"
           options={{
-            headerShown: false,
+            headerShown: false
           }}
         />
         <Stack.Screen
           name="Reset-password"
           options={{
-            headerShown: false,
+            headerShown: false
           }}
         />
       </Stack>
     </>
-  );
-};
+  )
+}
 
-export default AuthLayout;
+export default AuthLayout
