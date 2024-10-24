@@ -3,16 +3,16 @@ import { View, Text, ScrollView } from "react-native";
 import { useForm } from "react-hook-form";
 import { router } from "expo-router";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Icons from "@/components/Icons";
-import Screen from "@/components/Screen";
-import { ResetPasswordSchema } from "@/Schemas/UserSchema";
-import CustomInputs from "@/components/CustomInputs";
-import CustomButton from "@/components/CustomButton";
+import Icons from "@/src/components/Icons";
+import Screen from "@/src/components/Screen";
+import { OTPSchema } from "@/src/Schemas/UserSchema";
+import CustomInputs from "@/src/components/CustomInputs";
+import CustomButton from "@/src/components/CustomButton";
 
 export default function RecoveryFunction(){
-    const { LockIcon } = Icons
+    const { HappyIcon } = Icons
     const { control, handleSubmit, reset } = useForm({
-        resolver: zodResolver(ResetPasswordSchema),
+        resolver: zodResolver(OTPSchema),
       });
 
     return (
@@ -20,17 +20,17 @@ export default function RecoveryFunction(){
             <Screen>
                 <View className="flex justify-center items-center">
                     <Text className="text-helper font-pbold text-[20px] mb-5">
-                        ¡Hora de cambiar la contraseña!
+                        Introduce el código
                     </Text>
-                    <LockIcon/>
+                    <HappyIcon/>
                     <Text className="text-lightc font-pbold text-[16px] mt-5">
-                        Introduce la nueva contraseña
+                        Hemos enviado el código a tu correo
                     </Text>
-                    <CustomInputs variant="password" control={control} name="newPassword">
-                      Contraseña
-                    </CustomInputs>
-                    <CustomInputs variant="password" control={control} name="confirmNewPassword">
-                      Repite Contraseña
+                    <Text className="text-lightc font-pbold text-[16px]">
+                        por favor verificalo
+                    </Text>
+                    <CustomInputs variant="number" control={control} name="otp">
+                      Código
                     </CustomInputs>
                 </View>
                 <View className="flex flex-row justify-around mt-20">
@@ -40,7 +40,7 @@ export default function RecoveryFunction(){
                         variant="secondary"
                         onPress={() => {
                             reset()
-                            router.replace("/Sign-in")
+                            router.back()
                         }}
                     >
                         Cancelar
@@ -53,12 +53,12 @@ export default function RecoveryFunction(){
                             handleSubmit((data) => {
                                 if (data){
                                     reset()
-                                    router.push("/Sign-in")
+                                    router.push("/Reset-password")
                                 }
                             })
                         }
                     >
-                        Actualizar
+                        Siguiente
                     </CustomButton>
                 </View>
             </Screen>

@@ -1,9 +1,9 @@
 import React from "react";
 import { View, Text, SafeAreaView, ScrollView } from "react-native";
-import Icons from "@/components/Icons";
+import Icons from "@/src/components/Icons";
 import { LinearGradient } from "expo-linear-gradient";
-import CustomButton from "@/components/CustomButton";
-import Screen from "@/components/Screen";
+import CustomButton from "@/src/components/CustomButton";
+import Screen from "@/src/components/Screen";
 import { router } from "expo-router";
 
 

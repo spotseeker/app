@@ -6,12 +6,12 @@ import {
   ScrollView,
   BackHandler,
 } from "react-native";
-import CustomButton from "@/components/CustomButton";
+import CustomButton from "@/src/components/CustomButton";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import Screen from "@/components/Screen";
-import { RegisterSchema, UserData } from "@/Schemas/UserSchema";
-import Icons from "@/components/Icons";
+import Screen from "@/src/components/Screen";
+import { RegisterSchema, UserData } from "@/src/Schemas/UserSchema";
+import Icons from "@/src/components/Icons";
 import StepsScreens from "./StepsScreens";
 import { useRouter } from "expo-router";
 import { z } from "zod";

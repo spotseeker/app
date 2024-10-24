@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, Text, Image, ScrollView, StyleSheet} from "react-native";
-import InfoBox from "@/components/InfoBox";
-import Screen from '@/components/Screen';
+import InfoBox from "@/src/components/InfoBox";
+import Screen from '@/src/components/Screen';
 import { Avatar } from '@kolking/react-native-avatar';
-import Icons from "@/components/Icons";
-import {Colors} from "@/constants/Colors"
+import Icons from "@/src/components/Icons";
+import {Colors} from "@/src/constants/Colors"
 import BackgroundImage from '@/assets/images_app/Rectangle 9 (1).png';
 import ProfileImg from '@/assets/images_app/image_profile.png'
 import { SafeAreaView } from 'react-native-safe-area-context';

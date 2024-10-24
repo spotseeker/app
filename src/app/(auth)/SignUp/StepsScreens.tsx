@@ -1,6 +1,6 @@
-import CustomInputs from "@/components/CustomInputs";
-import DatePicker from "@/components/DatePicker";
-import Icons from "@/components/Icons";
+import CustomInputs from "@/src/components/CustomInputs";
+import DatePicker from "@/src/components/DatePicker";
+import Icons from "@/src/components/Icons";
 import React, { useEffect, useState } from "react";
 import { Control } from "react-hook-form";
 import { View, Text, Pressable, Image } from "react-native";

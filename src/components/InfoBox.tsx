@@ -24,7 +24,7 @@ const InfoBox: React.FC<InfoBoxProps> = ({
     titleStyles,
 }) => {
     return (
-    
+
         <View style={[{ padding: 20 }, containerStyles,titleStyles]}>
             <Text  className='text-lightc font-bold' style={[{ color: Colors.text, fontWeight: '900', textAlign: 'center', marginTop:'-5%' }, titleStyles]}>
                 {title}
@@ -45,18 +45,18 @@ const InfoBox: React.FC<InfoBoxProps> = ({
                 <Text  className='text-lightc font-pbold' style={{ textAlign: 'center', color:Colors.text, fontWeight: '100', fontSize: 14, marginLeft:'5%' ,marginRight:'10%'}}>
                     {following}{"\n"}Siguiendo
                 </Text>
-               
-            </View> 
+
+            </View>
             {/* Línea horizontal divisoria  efecto sombreado*/}
-            <View 
+            <View
               style={{
                 height: 1,
-                width: '200%', 
+                width: '200%',
                 marginLeft:'-20%',
-                backgroundColor: '#cccc', 
+                backgroundColor: '#cccc',
                 elevation: 5, // (Para android ver doc)
                 marginVertical: 20,
-              }} 
+              }}
             />
         </View>
     );

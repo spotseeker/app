@@ -1,13 +1,13 @@
 import React from "react";
 import { View, Text, SafeAreaView, ScrollView } from "react-native";
 import { router } from "expo-router";
-import Icons from "@/components/Icons";
-import CustomButton from "@/components/CustomButton";
-import CustomInputs from "@/components/CustomInputs";
-import { LoginSchema } from "@/Schemas/UserSchema";
+import Icons from "@/src/components/Icons";
+import CustomButton from "@/src/components/CustomButton";
+import CustomInputs from "@/src/components/CustomInputs";
+import { LoginSchema } from "@/src/Schemas/UserSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import Screen from "@/components/Screen";
+import Screen from "@/src/components/Screen";
 import { Link } from "expo-router";
 
 export default function SignIn() {

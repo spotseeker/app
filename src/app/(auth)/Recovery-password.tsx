@@ -3,34 +3,40 @@ import { View, Text, ScrollView } from "react-native";
 import { useForm } from "react-hook-form";
 import { router } from "expo-router";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Icons from "@/components/Icons";
-import Screen from "@/components/Screen";
-import { OTPSchema } from "@/Schemas/UserSchema";
-import CustomInputs from "@/components/CustomInputs";
-import CustomButton from "@/components/CustomButton";
+import Icons from "@/src/components/Icons";
+import Screen from "@/src/components/Screen";
+import { EmailSchema } from "@/src/Schemas/UserSchema";
+import CustomInputs from "@/src/components/CustomInputs";
+import CustomButton from "@/src/components/CustomButton";
 
 export default function RecoveryFunction(){
-    const { HappyIcon } = Icons
+    const { EmailIcon } = Icons
     const { control, handleSubmit, reset } = useForm({
-        resolver: zodResolver(OTPSchema),
+        resolver: zodResolver(EmailSchema),
       });
 
     return (
         <ScrollView>
             <Screen>
                 <View className="flex justify-center items-center">
-                    <Text className="text-helper font-pbold text-[20px] mb-5">
-                        Introduce el código
+                    <Text className="text-helper font-pbold text-[20px]">
+                        Introduce tu dirección de
                     </Text>
-                    <HappyIcon/>
+                    <Text className="text-helper font-pbold text-[20px] mb-5">
+                        correo electrónico
+                    </Text>
+                    <EmailIcon/>
                     <Text className="text-lightc font-pbold text-[16px] mt-5">
-                        Hemos enviado el código a tu correo
+                        Para recuperar tu contraseña
                     </Text>
                     <Text className="text-lightc font-pbold text-[16px]">
-                        por favor verificalo
+                        necesitarás el correo electrónico
                     </Text>
-                    <CustomInputs variant="number" control={control} name="otp">
-                      Código
+                    <Text className="text-lightc font-pbold text-[16px]">
+                        vinculado a tu cuenta
+                    </Text>
+                    <CustomInputs variant="email" control={control} name="email">
+                      Correo vinculado
                     </CustomInputs>
                 </View>
                 <View className="flex flex-row justify-around mt-20">
@@ -53,7 +59,7 @@ export default function RecoveryFunction(){
                             handleSubmit((data) => {
                                 if (data){
                                     reset()
-                                    router.push("/Reset-password")
+                                    router.push("/Validate-otp")
                                 }
                             })
                         }

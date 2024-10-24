@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import Screen from "@/components/Screen";
+import Screen from "@/src/components/Screen";
 import SignupScreens from "./SignUp/SignupScreens";
-import { UserData } from "@/Schemas/UserSchema";
+import { UserData } from "@/src/Schemas/UserSchema";
 
 export default function SignUp() {
   const [step, setStep] = useState(5);

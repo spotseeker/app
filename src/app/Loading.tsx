@@ -1,7 +1,7 @@
 import { View, Text } from "react-native";
 import React from "react";
 import { LinearGradient } from "expo-linear-gradient";
-import Icons from "@/components/Icons";
+import Icons from "@/src/components/Icons";
 export default function Loading() {
   const { LogoIcon } = Icons;
   return (

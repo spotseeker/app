@@ -1,9 +1,9 @@
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import { Tabs, router } from 'expo-router';
-import Icons from "@/components/Icons";
+import Icons from "@/src/components/Icons";
 import { Avatar } from '@kolking/react-native-avatar';
-import {Colors} from '@/constants/Colors'
+import {Colors} from '@/src/constants/Colors'
 import ProfileImg from '@/assets/images_app/image_profile.png'
 
 

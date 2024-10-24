@@ -3,40 +3,34 @@ import { View, Text, ScrollView } from "react-native";
 import { useForm } from "react-hook-form";
 import { router } from "expo-router";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Icons from "@/components/Icons";
-import Screen from "@/components/Screen";
-import { EmailSchema } from "@/Schemas/UserSchema";
-import CustomInputs from "@/components/CustomInputs";
-import CustomButton from "@/components/CustomButton";
+import Icons from "@/src/components/Icons";
+import Screen from "@/src/components/Screen";
+import { ResetPasswordSchema } from "@/src/Schemas/UserSchema";
+import CustomInputs from "@/src/components/CustomInputs";
+import CustomButton from "@/src/components/CustomButton";
 
 export default function RecoveryFunction(){
-    const { EmailIcon } = Icons
+    const { LockIcon } = Icons
     const { control, handleSubmit, reset } = useForm({
-        resolver: zodResolver(EmailSchema),
+        resolver: zodResolver(ResetPasswordSchema),
       });
 
     return (
         <ScrollView>
             <Screen>
                 <View className="flex justify-center items-center">
-                    <Text className="text-helper font-pbold text-[20px]">
-                        Introduce tu dirección de
-                    </Text>
                     <Text className="text-helper font-pbold text-[20px] mb-5">
-                        correo electrónico
+                        ¡Hora de cambiar la contraseña!
                     </Text>
-                    <EmailIcon/>
+                    <LockIcon/>
                     <Text className="text-lightc font-pbold text-[16px] mt-5">
-                        Para recuperar tu contraseña
+                        Introduce la nueva contraseña
                     </Text>
-                    <Text className="text-lightc font-pbold text-[16px]">
-                        necesitarás el correo electrónico
-                    </Text>
-                    <Text className="text-lightc font-pbold text-[16px]">
-                        vinculado a tu cuenta
-                    </Text>
-                    <CustomInputs variant="email" control={control} name="email">
-                      Correo vinculado
+                    <CustomInputs variant="password" control={control} name="newPassword">
+                      Contraseña
+                    </CustomInputs>
+                    <CustomInputs variant="password" control={control} name="confirmNewPassword">
+                      Repite Contraseña
                     </CustomInputs>
                 </View>
                 <View className="flex flex-row justify-around mt-20">
@@ -46,7 +40,7 @@ export default function RecoveryFunction(){
                         variant="secondary"
                         onPress={() => {
                             reset()
-                            router.back()
+                            router.replace("/Sign-in")
                         }}
                     >
                         Cancelar
@@ -59,12 +53,12 @@ export default function RecoveryFunction(){
                             handleSubmit((data) => {
                                 if (data){
                                     reset()
-                                    router.push("/Validate-otp")
+                                    router.push("/Sign-in")
                                 }
                             })
                         }
                     >
-                        Siguiente
+                        Actualizar
                     </CustomButton>
                 </View>
             </Screen>
