@@ -159,6 +159,7 @@ export default function SignupScreens({
                   console.log(updatedUserData);
                   setStep(step + 1);
                 })}
+                
               >
                 Siguiente
               </CustomButton>
