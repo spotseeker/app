@@ -22,9 +22,9 @@ const Profile = () => {
   const { ArchiveIcon2, PostsIcon, StarIcon } = Icons;
   const textLight="text-lightc font-pbold text-[14px]"
   return (
-    <SafeAreaView className='h-full my-[-45]' style={{backgroundColor:'white'}}>
+    <SafeAreaView className='h-full mt-[-35]' style={{backgroundColor:'white'}}>
     <ScrollView>
-    <View className="h-60 w-full my-[-80] absolute">
+    <View className="h-60 w-full my-[-20%] absolute">
                 <Image
                   source={BackgroundImage}
                   style={{ height: '100%', width: '100%'}}
@@ -32,7 +32,7 @@ const Profile = () => {
                 />
               </View>
       <Screen>
-            <View className="flex justify-center w-full h-full mt-[-200] items-center " >
+            <View className="flex justify-center w-full h-full mt-[-40%] items-center " >
               {/* Avatar */}
               <View style={styles.avatarContainer}>
                 <Avatar source={ProfileImg} color={Colors.text} radius={100} size={100} />
@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
   iconTabContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginTop: '-3%',
+    marginTop: '-5%',
     width:'100%',
     shadowColor: 'black',
     shadowRadius: 4,
