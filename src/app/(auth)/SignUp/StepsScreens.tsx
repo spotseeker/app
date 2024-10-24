@@ -1,4 +1,4 @@
-import CustomInputs from '@/src/components/CustomInputs'
+import Input from '@/src/components/Input'
 import DatePicker from '@/src/components/DatePicker'
 import Icons from '@/src/components/Icons'
 import React, { useEffect, useState } from 'react'
@@ -11,12 +11,12 @@ type StepsProps = {
 const Step1 = ({ control }: StepsProps) => {
   return (
     <View className="flex justify-center my-[70px] items-center">
-      <CustomInputs variant="email" control={control} name="email">
+      <Input variant="email" control={control} name="email">
         Introduce tu correo
-      </CustomInputs>
-      <CustomInputs variant="email" control={control} name="username">
+      </Input>
+      <Input variant="email" control={control} name="username">
         Introduce tu nombre de usuario
-      </CustomInputs>
+      </Input>
 
       <Text className="font-psemibold text-helper text-center text-[10px]">
         El nombre de usuario es unico, lo puedes cambiar en cualquier momento
@@ -32,16 +32,16 @@ const Step2 = ({ control }: StepsProps) => {
 
   return (
     <View className="flex justify-center my-[50px] items-center">
-      <CustomInputs variant="default" control={control} name="firstname">
+      <Input variant="default" control={control} name="firstname">
         Introduce tu nombre
-      </CustomInputs>
-      <CustomInputs variant="default" control={control} name="lastname">
+      </Input>
+      <Input variant="default" control={control} name="lastname">
         Introduce tu apellido
-      </CustomInputs>
+      </Input>
       <Pressable onPress={() => setShow(true)}>
-        <CustomInputs variant="date" control={control} name="birthdateString" date={date}>
+        <Input variant="date" control={control} name="birthdateString" date={date}>
           Introduce tu fecha de nacimiento
-        </CustomInputs>
+        </Input>
       </Pressable>
 
       {show && (
@@ -128,9 +128,9 @@ const Step3 = ({ control }: StepsProps) => {
           </Pressable>
         )}
 
-        <CustomInputs variant="description" name="aboutme" control={control}>
+        <Input variant="description" name="aboutme" control={control}>
           Cuéntanos acerca de ti
-        </CustomInputs>
+        </Input>
       </View>
     </>
   )
@@ -139,12 +139,12 @@ const Step3 = ({ control }: StepsProps) => {
 const Step4 = ({ control }: StepsProps) => {
   return (
     <View className="flex justify-center my-[50px] items-center">
-      <CustomInputs variant="password" control={control} name="password">
+      <Input variant="password" control={control} name="password">
         Introduce tu contraseña
-      </CustomInputs>
-      <CustomInputs variant="password" control={control} name="confirm">
+      </Input>
+      <Input variant="password" control={control} name="confirm">
         Confirma tu contraseña
-      </CustomInputs>
+      </Input>
     </View>
   )
 }
@@ -155,9 +155,9 @@ const Step5 = ({ control }: StepsProps) => {
       <Text className="font-psemibold text-lightc text-center text-[18px] mb-5">
         Hemos enviado el codigo a tu correo por favor verificalo
       </Text>
-      <CustomInputs variant="default" control={control} name="code">
+      <Input variant="default" control={control} name="code">
         Introduce el codigo
-      </CustomInputs>
+      </Input>
     </View>
   )
 }

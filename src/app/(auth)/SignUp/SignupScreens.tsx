@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
 import { View, Text, SafeAreaView, ScrollView, BackHandler } from 'react-native'
-import CustomButton from '@/src/components/CustomButton'
+import Button from '@/src/components/Button'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import Screen from '@/src/components/Screen'
-import { RegisterSchema, UserData } from '@/src/Schemas/UserSchema'
+import { RegisterSchema, UserData } from '@/src/schemas/UserSchema'
 import Icons from '@/src/components/Icons'
 import StepsScreens from './StepsScreens'
 import { useRouter } from 'expo-router'
@@ -109,10 +109,10 @@ export default function SignupScreens({ step, setStep, setUserData, userData }: 
           {step === 5 && <Step5 control={control} />}
           {step >= 1 && step <= 5 && (
             <View className="flex flex-row space-x-[-20px] justify-between items-center ">
-              <CustomButton width={130} height={47} variant="secondary" onPress={handleOnPress}>
+              <Button width={130} height={47} variant="secondary" onPress={handleOnPress}>
                 Volver
-              </CustomButton>
-              <CustomButton
+              </Button>
+              <Button
                 width={130}
                 height={47}
                 variant="primary"
@@ -138,7 +138,7 @@ export default function SignupScreens({ step, setStep, setUserData, userData }: 
                 })}
               >
                 Siguiente
-              </CustomButton>
+              </Button>
             </View>
           )}
         </Screen>

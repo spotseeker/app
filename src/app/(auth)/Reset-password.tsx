@@ -5,9 +5,9 @@ import { router } from 'expo-router'
 import { zodResolver } from '@hookform/resolvers/zod'
 import Icons from '@/src/components/Icons'
 import Screen from '@/src/components/Screen'
-import { ResetPasswordSchema } from '@/src/Schemas/UserSchema'
-import CustomInputs from '@/src/components/CustomInputs'
-import CustomButton from '@/src/components/CustomButton'
+import { ResetPasswordSchema } from '@/src/schemas/UserSchema'
+import Input from '@/src/components/Input'
+import Button from '@/src/components/Button'
 
 export default function RecoveryFunction() {
   const { LockIcon } = Icons
@@ -26,15 +26,15 @@ export default function RecoveryFunction() {
           <Text className="text-lightc font-pbold text-[16px] mt-5">
             Introduce la nueva contraseña
           </Text>
-          <CustomInputs variant="password" control={control} name="newPassword">
+          <Input variant="password" control={control} name="newPassword">
             Contraseña
-          </CustomInputs>
-          <CustomInputs variant="password" control={control} name="confirmNewPassword">
+          </Input>
+          <Input variant="password" control={control} name="confirmNewPassword">
             Repite Contraseña
-          </CustomInputs>
+          </Input>
         </View>
         <View className="flex flex-row justify-around mt-20">
-          <CustomButton
+          <Button
             width={130}
             height={47}
             variant="secondary"
@@ -44,8 +44,8 @@ export default function RecoveryFunction() {
             }}
           >
             Cancelar
-          </CustomButton>
-          <CustomButton
+          </Button>
+          <Button
             width={130}
             height={47}
             variant="primary"
@@ -57,7 +57,7 @@ export default function RecoveryFunction() {
             })}
           >
             Actualizar
-          </CustomButton>
+          </Button>
         </View>
       </Screen>
     </ScrollView>

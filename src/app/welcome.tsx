@@ -2,7 +2,7 @@ import React from 'react'
 import { View, Text, SafeAreaView, ScrollView } from 'react-native'
 import Icons from '@/src/components/Icons'
 import { LinearGradient } from 'expo-linear-gradient'
-import CustomButton from '@/src/components/CustomButton'
+import Button from '@/src/components/Button'
 import Screen from '@/src/components/Screen'
 import { router } from 'expo-router'
 
@@ -28,14 +28,14 @@ export default function Welcome() {
                 Empieza a compartir tus Aventuras En
               </Text>
               <LogoBigIcon width={241} height={399} mr={29} />
-              <CustomButton
+              <Button
                 width={326}
                 height={47}
                 variant="primary"
                 onPress={() => router.push('/(tabs)/Home')}
               >
                 Continuar
-              </CustomButton>
+              </Button>
             </View>
           </Screen>
         </ScrollView>

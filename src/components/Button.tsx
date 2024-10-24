@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react'
 import { View, Text, TouchableOpacity } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 
-type CustomButtonProps = {
+type ButtonProps = {
   children: ReactNode
   onPress?: () => void
   variant: 'primary' | 'secondary' | 'gray'
@@ -10,7 +10,7 @@ type CustomButtonProps = {
   height: number
 }
 
-function CustomButton({ children, onPress, variant, width, height }: CustomButtonProps) {
+function Button({ children, onPress, variant, width, height }: ButtonProps) {
   return (
     <TouchableOpacity
       onPress={onPress}
@@ -32,4 +32,4 @@ function CustomButton({ children, onPress, variant, width, height }: CustomButto
   )
 }
 
-export default CustomButton
+export default Button

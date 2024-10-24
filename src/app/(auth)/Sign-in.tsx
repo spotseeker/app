@@ -2,9 +2,9 @@ import React from 'react'
 import { View, Text, SafeAreaView, ScrollView } from 'react-native'
 import { router } from 'expo-router'
 import Icons from '@/src/components/Icons'
-import CustomButton from '@/src/components/CustomButton'
-import CustomInputs from '@/src/components/CustomInputs'
-import { LoginSchema } from '@/src/Schemas/UserSchema'
+import Button from '@/src/components/Button'
+import Input from '@/src/components/Input'
+import { LoginSchema } from '@/src/schemas/UserSchema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import Screen from '@/src/components/Screen'
@@ -24,18 +24,18 @@ export default function SignIn() {
             <LogoIcon width={200} height={200} mr={15} />
           </View>
           <View className="flex justify-center items-center ">
-            <CustomInputs variant="email" control={control} name="username">
+            <Input variant="email" control={control} name="username">
               Introduce usuario
-            </CustomInputs>
-            <CustomInputs variant="password" control={control} name="password">
+            </Input>
+            <Input variant="password" control={control} name="password">
               Introduce contraseña
-            </CustomInputs>
+            </Input>
           </View>
           <View className="flex justify-end items-end p-5">
             <Link asChild href={'/Recovery-password'}>
               <Text className="font-psemibold text-helper underline pb-5">Recuperar mi clave</Text>
             </Link>
-            <CustomButton
+            <Button
               width={326}
               height={47}
               variant="primary"
@@ -45,7 +45,7 @@ export default function SignIn() {
               })}
             >
               Ingresar
-            </CustomButton>
+            </Button>
           </View>
           <View className="flex flex-row space-x-[-20px] justify-center items-center">
             <Text className="font-psemibold p-5">¿No posees cuenta?</Text>

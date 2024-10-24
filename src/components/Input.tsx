@@ -5,7 +5,7 @@ import { styled } from 'nativewind'
 import { Control, useController } from 'react-hook-form'
 const StyledPressable = styled(Pressable)
 
-type CustomInputs = {
+type Input = {
   children: ReactNode
   variant: 'default' | 'email' | 'edit' | 'search' | 'password' | 'description' | 'date' | 'number'
   name: string
@@ -13,7 +13,7 @@ type CustomInputs = {
   date?: Date
 }
 
-function CustomInputs({ children, variant, name, control, date }: CustomInputs) {
+function Input({ children, variant, name, control, date }: Input) {
   const { field, fieldState } = useController({
     control,
     defaultValue: '',
@@ -72,4 +72,4 @@ function CustomInputs({ children, variant, name, control, date }: CustomInputs) 
   )
 }
 
-export default CustomInputs
+export default Input

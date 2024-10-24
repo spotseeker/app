@@ -5,9 +5,9 @@ import { router } from 'expo-router'
 import { zodResolver } from '@hookform/resolvers/zod'
 import Icons from '@/src/components/Icons'
 import Screen from '@/src/components/Screen'
-import { EmailSchema } from '@/src/Schemas/UserSchema'
-import CustomInputs from '@/src/components/CustomInputs'
-import CustomButton from '@/src/components/CustomButton'
+import { EmailSchema } from '@/src/schemas/UserSchema'
+import Input from '@/src/components/Input'
+import Button from '@/src/components/Button'
 
 export default function RecoveryFunction() {
   const { EmailIcon } = Icons
@@ -29,12 +29,12 @@ export default function RecoveryFunction() {
             necesitarás el correo electrónico
           </Text>
           <Text className="text-lightc font-pbold text-[16px]">vinculado a tu cuenta</Text>
-          <CustomInputs variant="email" control={control} name="email">
+          <Input variant="email" control={control} name="email">
             Correo vinculado
-          </CustomInputs>
+          </Input>
         </View>
         <View className="flex flex-row justify-around mt-20">
-          <CustomButton
+          <Button
             width={130}
             height={47}
             variant="secondary"
@@ -44,8 +44,8 @@ export default function RecoveryFunction() {
             }}
           >
             Cancelar
-          </CustomButton>
-          <CustomButton
+          </Button>
+          <Button
             width={130}
             height={47}
             variant="primary"
@@ -57,7 +57,7 @@ export default function RecoveryFunction() {
             })}
           >
             Siguiente
-          </CustomButton>
+          </Button>
         </View>
       </Screen>
     </ScrollView>
