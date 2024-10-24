@@ -105,7 +105,7 @@ const ImageIcon2 = ({ size = 60 }: Props) => {
 };
 
 const PostsIcon=({size=10}:Props)=>{
-  return( 
+  return(
     <Ionicons name="images-outline"
     //{shown? "images":"image-outline"}
     size={size}
@@ -197,8 +197,8 @@ const ArchiveIcon = ({ size = 25 }: Props) => {
 
 const ArchiveIcon2 =({ color=themeIconColor2 , size = 25}: Props) =>{
   return(
-  <Ionicons name="file-tray-outline" 
-  size={size} 
+  <Ionicons name="file-tray-outline"
+  size={size}
   color={color}/>
   );
 };
@@ -278,7 +278,7 @@ const LogoBigIcon =({width= 241,  height= 399,mr}:pngProps) =>
     return (
       <Image
         source={logoBig}
-        style={{ width: width, height: height, margin: mr }} 
+        style={{ width: width, height: height, margin: mr }}
       />
     );
   };

@@ -7,7 +7,6 @@ const tintColorLight = '#EE5D6C';
 const Orange='#FB9062';
 
 export const Colors = {
-   
     text: Orange,
     secondaryText:'#11181C',
     background: '#fff',
@@ -15,7 +14,7 @@ export const Colors = {
     icon: '#EE5D6C',
     tabIconDefault: '#EE5D6C',
     tabIconSelected: tintColorLight,
-    
+
   };
 
    /* dark: {
