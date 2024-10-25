@@ -157,7 +157,7 @@ const Step5 = ({ control }: StepsProps) => {
       <Text className="font-psemibold text-lightc text-center text-[18px] mb-5">
         Hemos enviado el codigo a tu correo por favor verificalo
       </Text>
-      <Input variant="default" control={control} name="code">
+      <Input variant="number" control={control} name="code">
         Introduce el codigo
       </Input>
     </View>
