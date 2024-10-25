@@ -1,5 +1,5 @@
-import React from 'react'
-import { View, Text, Image, ScrollView, StyleSheet } from 'react-native'
+import React, { useEffect } from 'react'
+import { View, Text, Image, ScrollView, StyleSheet, TouchableOpacity } from 'react-native'
 import InfoBox from '@/src/components/InfoBox'
 import Screen from '@/src/components/Screen'
 import { Avatar } from '@kolking/react-native-avatar'
@@ -8,6 +8,7 @@ import { Colors } from '@/src/constants/Colors'
 import BackgroundImage from '@/src/assets/images_app/Rectangle 9 (1).png'
 import ProfileImg from '@/src/assets/images_app/image_profile.png'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { router, useNavigation } from 'expo-router'
 
 const Profile = () => {
   const userData = {
@@ -19,7 +20,24 @@ const Profile = () => {
     posts: 6
     //profileImage: ProfileImg | uri|object
   }
-  const { ArchiveIcon2, PostsIcon, StarIcon } = Icons
+  const { ArchiveIcon2, PostsIcon, StarIcon, MenuIcon, ArrowBack } = Icons
+  const navigation = useNavigation();
+  useEffect(() => {
+    navigation.setOptions({
+      headerShown: true,
+      title: 'Mi perfil',
+      headerTintColor: '#FB9062',
+      headerTitleStyle: {
+        fontWeight: 'bold'
+      },
+      headerRight: () => <MenuIcon size={35} />,
+      headerLeft: () => (
+        <TouchableOpacity onPress={() => router.push('/(tabs)/Home')}>
+          <ArrowBack size={35} />
+        </TouchableOpacity>
+      ),
+    });
+  }, [navigation]);
   const textLight = 'text-lightc font-pbold text-[14px]'
   return (
     <SafeAreaView className="h-full my-[-45]" style={{ backgroundColor: 'white' }}>

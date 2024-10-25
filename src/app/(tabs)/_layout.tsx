@@ -1,13 +1,12 @@
 import React from 'react'
-import { TouchableOpacity } from 'react-native'
-import { Tabs, router } from 'expo-router'
+import { Tabs } from 'expo-router'
 import Icons from '@/src/components/Icons'
 import { Avatar } from '@kolking/react-native-avatar'
 import { Colors } from '@/src/constants/Colors'
 import ProfileImg from '@/src/assets/images_app/image_profile.png'
 
 export default function TabLayout() {
-  const { SearchIcon, HomeIcon, PlusIcon, MapMarkerIcon, MenuIcon, ArrowBack } = Icons
+  const { SearchIcon, HomeIcon, PlusIcon, MapMarkerIcon } = Icons
   return (
     <Tabs
       screenOptions={{
@@ -61,18 +60,8 @@ export default function TabLayout() {
       <Tabs.Screen
         name="Profile"
         options={{
-          headerShown: true,
-          title: 'Mi perfil',
-          headerTintColor: '#FB9062',
-          headerTitleStyle: {
-            fontWeight: 'bold'
-          },
-          headerRight: () => <MenuIcon size={35} />,
-          headerLeft: () => (
-            <TouchableOpacity onPress={() => router.push('/(tabs)/Home')}>
-              <ArrowBack size={35} />
-            </TouchableOpacity>
-          ),
+          headerShown: false,
+          title: '',
           tabBarIcon: ({ color }) => (
             <Avatar source={ProfileImg} color={color} radius={50} size={50} />
           )
