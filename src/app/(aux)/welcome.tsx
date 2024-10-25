@@ -8,11 +8,11 @@ import { router, useNavigation } from 'expo-router'
 
 export default function Welcome() {
   const navigation = useNavigation();
-
   useEffect(() => {
     navigation.setOptions({ headerShown: false });
   }, [navigation]);
   const { LogoBigIcon } = Icons
+
   return (
     <LinearGradient
       colors={[

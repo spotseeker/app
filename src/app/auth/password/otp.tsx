@@ -1,36 +1,36 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { View, Text, ScrollView } from 'react-native'
 import { useForm } from 'react-hook-form'
-import { router } from 'expo-router'
+import { router, useNavigation } from 'expo-router'
 import { zodResolver } from '@hookform/resolvers/zod'
 import Icons from '@/src/components/Icons'
 import Screen from '@/src/components/Screen'
-import { EmailSchema } from '@/src/schemas/UserSchema'
+import { OTPSchema } from '@/src/schemas/UserSchema'
 import Input from '@/src/components/Input'
 import Button from '@/src/components/Button'
 
-export default function RecoveryPassword() {
-  const { EmailIcon } = Icons
+export default function ValidateOTP() {
+  const navigation = useNavigation();
+  useEffect(() => {
+    navigation.setOptions({ headerShown: false });
+  }, [navigation]);
+  const { HappyIcon } = Icons
   const { control, handleSubmit, reset } = useForm({
-    resolver: zodResolver(EmailSchema)
+    resolver: zodResolver(OTPSchema)
   })
 
   return (
     <ScrollView>
       <Screen>
         <View className="flex justify-center items-center">
-          <Text className="text-helper font-pbold text-[20px]">Introduce tu dirección de</Text>
-          <Text className="text-helper font-pbold text-[20px] mb-5">correo electrónico</Text>
-          <EmailIcon />
+          <Text className="text-helper font-pbold text-[20px] mb-5">Introduce el código</Text>
+          <HappyIcon />
           <Text className="text-lightc font-pbold text-[16px] mt-5">
-            Para recuperar tu contraseña
+            Hemos enviado el código a tu correo
           </Text>
-          <Text className="text-lightc font-pbold text-[16px]">
-            necesitarás el correo electrónico
-          </Text>
-          <Text className="text-lightc font-pbold text-[16px]">vinculado a tu cuenta</Text>
-          <Input variant="email" control={control} name="email">
-            Correo vinculado
+          <Text className="text-lightc font-pbold text-[16px]">por favor verificalo</Text>
+          <Input variant="number" control={control} name="otp">
+            Código
           </Input>
         </View>
         <View className="flex flex-row justify-around mt-20">
@@ -52,7 +52,7 @@ export default function RecoveryPassword() {
             onPress={handleSubmit((data) => {
               if (data) {
                 reset()
-                router.push('/auth/otp')
+                router.push('/auth/password/reset')
               }
             })}
           >

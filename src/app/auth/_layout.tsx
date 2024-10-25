@@ -17,24 +17,6 @@ const AuthLayout = () => {
             headerShown: false
           }}
         />
-        <Stack.Screen
-          name="password"
-          options={{
-            headerShown: false
-          }}
-        />
-        <Stack.Screen
-          name="otp"
-          options={{
-            headerShown: false
-          }}
-        />
-        <Stack.Screen
-          name="reset"
-          options={{
-            headerShown: false
-          }}
-        />
       </Stack>
     </>
   )

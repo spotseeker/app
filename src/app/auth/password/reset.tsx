@@ -1,32 +1,40 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { View, Text, ScrollView } from 'react-native'
 import { useForm } from 'react-hook-form'
-import { router } from 'expo-router'
+import { router, useNavigation } from 'expo-router'
 import { zodResolver } from '@hookform/resolvers/zod'
 import Icons from '@/src/components/Icons'
 import Screen from '@/src/components/Screen'
-import { OTPSchema } from '@/src/schemas/UserSchema'
+import { ResetPasswordSchema } from '@/src/schemas/UserSchema'
 import Input from '@/src/components/Input'
 import Button from '@/src/components/Button'
 
-export default function ValidateOTP() {
-  const { HappyIcon } = Icons
+export default function ResetPassword() {
+  const navigation = useNavigation();
+  useEffect(() => {
+    navigation.setOptions({ headerShown: false });
+  }, [navigation]);
+  const { LockIcon } = Icons
   const { control, handleSubmit, reset } = useForm({
-    resolver: zodResolver(OTPSchema)
+    resolver: zodResolver(ResetPasswordSchema)
   })
 
   return (
     <ScrollView>
       <Screen>
         <View className="flex justify-center items-center">
-          <Text className="text-helper font-pbold text-[20px] mb-5">Introduce el código</Text>
-          <HappyIcon />
-          <Text className="text-lightc font-pbold text-[16px] mt-5">
-            Hemos enviado el código a tu correo
+          <Text className="text-helper font-pbold text-[20px] mb-5">
+            ¡Hora de cambiar la contraseña!
           </Text>
-          <Text className="text-lightc font-pbold text-[16px]">por favor verificalo</Text>
-          <Input variant="number" control={control} name="otp">
-            Código
+          <LockIcon />
+          <Text className="text-lightc font-pbold text-[16px] mt-5">
+            Introduce la nueva contraseña
+          </Text>
+          <Input variant="password" control={control} name="newPassword">
+            Contraseña
+          </Input>
+          <Input variant="password" control={control} name="confirmNewPassword">
+            Repite Contraseña
           </Input>
         </View>
         <View className="flex flex-row justify-around mt-20">
@@ -36,7 +44,7 @@ export default function ValidateOTP() {
             variant="secondary"
             onPress={() => {
               reset()
-              router.back()
+              router.replace('/auth/login')
             }}
           >
             Cancelar
@@ -48,11 +56,11 @@ export default function ValidateOTP() {
             onPress={handleSubmit((data) => {
               if (data) {
                 reset()
-                router.push('/auth/reset')
+                router.push('/(tabs)/Home')
               }
             })}
           >
-            Siguiente
+            Actualizar
           </Button>
         </View>
       </Screen>
