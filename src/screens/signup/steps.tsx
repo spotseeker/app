@@ -5,9 +5,11 @@ import React, { useEffect, useState } from 'react'
 import { Control } from 'react-hook-form'
 import { View, Text, Pressable, Image } from 'react-native'
 import * as ImagePicker from 'expo-image-picker'
+
 type StepsProps = {
   control: Control
 }
+
 const Step1 = ({ control }: StepsProps) => {
   return (
     <View className="flex justify-center my-[70px] items-center">

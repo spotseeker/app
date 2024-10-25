@@ -10,7 +10,7 @@ import { useForm } from 'react-hook-form'
 import Screen from '@/src/components/Screen'
 import { Link } from 'expo-router'
 
-export default function SignIn() {
+export default function Login() {
   const { LogoIcon } = Icons
   const { control, handleSubmit, reset } = useForm({
     resolver: zodResolver(LoginSchema)
@@ -32,7 +32,7 @@ export default function SignIn() {
             </Input>
           </View>
           <View className="flex justify-end items-end p-5">
-            <Link asChild href={'/Recovery-password'}>
+            <Link asChild href={'/auth/password'}>
               <Text className="font-psemibold text-helper underline pb-5">Recuperar mi clave</Text>
             </Link>
             <Button
@@ -50,7 +50,7 @@ export default function SignIn() {
           <View className="flex flex-row space-x-[-20px] justify-center items-center">
             <Text className="font-psemibold p-5">¿No posees cuenta?</Text>
 
-            <Link asChild href={'/Sign-up'}>
+            <Link asChild href={'/auth/signup'}>
               <Text className="font-psemibold text-helper underline p-5">Registrate Aqui</Text>
             </Link>
           </View>

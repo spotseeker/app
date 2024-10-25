@@ -1,35 +1,36 @@
 import { Stack } from 'expo-router'
 import React from 'react'
+
 const AuthLayout = () => {
   return (
     <>
       <Stack>
         <Stack.Screen
-          name="Sign-in"
+          name="login"
           options={{
             headerShown: false
           }}
         />
         <Stack.Screen
-          name="Sign-up"
+          name="signup"
           options={{
             headerShown: false
           }}
         />
         <Stack.Screen
-          name="Recovery-password"
+          name="password"
           options={{
             headerShown: false
           }}
         />
         <Stack.Screen
-          name="Validate-otp"
+          name="otp"
           options={{
             headerShown: false
           }}
         />
         <Stack.Screen
-          name="Reset-password"
+          name="reset"
           options={{
             headerShown: false
           }}

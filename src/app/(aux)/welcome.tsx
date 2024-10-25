@@ -1,12 +1,17 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { View, Text, SafeAreaView, ScrollView } from 'react-native'
 import Icons from '@/src/components/Icons'
 import { LinearGradient } from 'expo-linear-gradient'
 import Button from '@/src/components/Button'
 import Screen from '@/src/components/Screen'
-import { router } from 'expo-router'
+import { router, useNavigation } from 'expo-router'
 
 export default function Welcome() {
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    navigation.setOptions({ headerShown: false });
+  }, [navigation]);
   const { LogoBigIcon } = Icons
   return (
     <LinearGradient

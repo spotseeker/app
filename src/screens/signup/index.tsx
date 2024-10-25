@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form'
 import Screen from '@/src/components/Screen'
 import { RegisterSchema, UserData } from '@/src/schemas/UserSchema'
 import Icons from '@/src/components/Icons'
-import StepsScreens from './StepsScreens'
+import Steps from './steps'
 import { useRouter } from 'expo-router'
 import { z } from 'zod'
 
@@ -17,7 +17,7 @@ type registerProps = {
   setUserData: (user: UserData) => void
 }
 
-export default function SignupScreens({ step, setStep, setUserData, userData }: registerProps) {
+export default function SignupScreen({ step, setStep, setUserData, userData }: registerProps) {
   const getSchemaForStep = (step: number) => {
     switch (step) {
       case 1:
@@ -49,7 +49,7 @@ export default function SignupScreens({ step, setStep, setUserData, userData }: 
     mode: 'onChange'
   })
 
-  const { Step1, Step2, Step3, Step4, Step5 } = StepsScreens
+  const { Step1, Step2, Step3, Step4, Step5 } = Steps
   const { ShyIcon } = Icons
   const router = useRouter()
 
@@ -60,14 +60,14 @@ export default function SignupScreens({ step, setStep, setUserData, userData }: 
   useEffect(() => {
     if (step == 0) {
       reset()
-      router.push('/Sign-in')
+      router.push('/auth/login')
       setStep(step + 1)
     }
 
     if (step > 5) {
       reset()
-      router.push('/Sign-in')
       setStep(1)
+      router.push('/welcome')
     }
   }, [step])
 

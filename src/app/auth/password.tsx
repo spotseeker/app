@@ -5,32 +5,32 @@ import { router } from 'expo-router'
 import { zodResolver } from '@hookform/resolvers/zod'
 import Icons from '@/src/components/Icons'
 import Screen from '@/src/components/Screen'
-import { ResetPasswordSchema } from '@/src/schemas/UserSchema'
+import { EmailSchema } from '@/src/schemas/UserSchema'
 import Input from '@/src/components/Input'
 import Button from '@/src/components/Button'
 
-export default function RecoveryFunction() {
-  const { LockIcon } = Icons
+export default function RecoveryPassword() {
+  const { EmailIcon } = Icons
   const { control, handleSubmit, reset } = useForm({
-    resolver: zodResolver(ResetPasswordSchema)
+    resolver: zodResolver(EmailSchema)
   })
 
   return (
     <ScrollView>
       <Screen>
         <View className="flex justify-center items-center">
-          <Text className="text-helper font-pbold text-[20px] mb-5">
-            ¡Hora de cambiar la contraseña!
-          </Text>
-          <LockIcon />
+          <Text className="text-helper font-pbold text-[20px]">Introduce tu dirección de</Text>
+          <Text className="text-helper font-pbold text-[20px] mb-5">correo electrónico</Text>
+          <EmailIcon />
           <Text className="text-lightc font-pbold text-[16px] mt-5">
-            Introduce la nueva contraseña
+            Para recuperar tu contraseña
           </Text>
-          <Input variant="password" control={control} name="newPassword">
-            Contraseña
-          </Input>
-          <Input variant="password" control={control} name="confirmNewPassword">
-            Repite Contraseña
+          <Text className="text-lightc font-pbold text-[16px]">
+            necesitarás el correo electrónico
+          </Text>
+          <Text className="text-lightc font-pbold text-[16px]">vinculado a tu cuenta</Text>
+          <Input variant="email" control={control} name="email">
+            Correo vinculado
           </Input>
         </View>
         <View className="flex flex-row justify-around mt-20">
@@ -40,7 +40,7 @@ export default function RecoveryFunction() {
             variant="secondary"
             onPress={() => {
               reset()
-              router.replace('/Sign-in')
+              router.back()
             }}
           >
             Cancelar
@@ -52,11 +52,11 @@ export default function RecoveryFunction() {
             onPress={handleSubmit((data) => {
               if (data) {
                 reset()
-                router.push('/Sign-in')
+                router.push('/auth/otp')
               }
             })}
           >
-            Actualizar
+            Siguiente
           </Button>
         </View>
       </Screen>

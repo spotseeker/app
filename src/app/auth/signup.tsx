@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Screen from '@/src/components/Screen'
-import SignupScreens from './SignUp/SignupScreens'
+import SignupScreen from '@/src/screens/signup'
 import { UserData } from '@/src/schemas/UserSchema'
 
 export default function SignUp() {
@@ -20,7 +20,12 @@ export default function SignUp() {
 
   return (
     <Screen>
-      <SignupScreens setUserData={setFormData} userData={formData} step={step} setStep={setStep} />
+      <SignupScreen
+        setUserData={setFormData}
+        userData={formData}
+        step={step}
+        setStep={setStep}
+      />
     </Screen>
   )
 }

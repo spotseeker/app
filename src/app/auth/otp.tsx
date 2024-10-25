@@ -9,7 +9,7 @@ import { OTPSchema } from '@/src/schemas/UserSchema'
 import Input from '@/src/components/Input'
 import Button from '@/src/components/Button'
 
-export default function RecoveryFunction() {
+export default function ValidateOTP() {
   const { HappyIcon } = Icons
   const { control, handleSubmit, reset } = useForm({
     resolver: zodResolver(OTPSchema)
@@ -48,7 +48,7 @@ export default function RecoveryFunction() {
             onPress={handleSubmit((data) => {
               if (data) {
                 reset()
-                router.push('/Reset-password')
+                router.push('/auth/reset')
               }
             })}
           >

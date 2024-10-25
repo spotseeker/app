@@ -1,23 +1,23 @@
 import React, { useState, useEffect } from 'react'
-import Loading from './Loading'
+import Loading from './(aux)/loading'
 import { View } from 'react-native'
-import SignIn from './(auth)/Sign-in'
+import Login from './auth/login'
 export default function Index() {
-  const [showSignIn, setShowSignIn] = useState(false)
+  const [showLogin, setShowLogin] = useState(false)
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setShowSignIn(true)
+      setShowLogin(true)
     }, 2500)
 
     return () => clearTimeout(timer)
   }, [])
 
-  return !showSignIn ? (
+  return !showLogin ? (
     <Loading />
   ) : (
     <View className="flex-1 justify-center items-center">
-      <SignIn />
+      <Login />
     </View>
   )
 }
