@@ -1,19 +1,27 @@
-import React, { ReactNode, useState } from 'react'
+import React, { useState } from 'react'
 import { TextInput, View, Text, Pressable } from 'react-native'
 import Icons from './Icons'
 import { styled } from 'nativewind'
 import { Control, useController } from 'react-hook-form'
 const StyledPressable = styled(Pressable)
 
-type Input = {
-  children: ReactNode
-  variant: 'default' | 'email' | 'edit' | 'search' | 'password' | 'description' | 'date' | 'number'
+type InputProps = {
+  text?: string
+  variant: 'default'
+    | 'email'
+    | 'edit'
+    | 'search'
+    | 'password'
+    | 'description'
+    | 'date'
+    | 'number'
+  placeholder?: string
   name: string
   control: Control
   date?: Date
 }
 
-function Input({ children, variant, name, control, date }: Input) {
+function Input({ text, variant, placeholder, name, control, date }: InputProps) {
   const { field, fieldState } = useController({
     control,
     defaultValue: '',
@@ -47,7 +55,7 @@ function Input({ children, variant, name, control, date }: Input) {
 
   return (
     <View className="py-[15px]">
-      <Text className="text-lightc font-psemibold text-[14px] pb-[5px]">{children}</Text>
+      <Text className="text-lightc font-psemibold text-[14px] pb-[5px]">{text}</Text>
 
       <View
         className={`flex flex-row  border border-gray-400 rounded-md ${
@@ -56,7 +64,7 @@ function Input({ children, variant, name, control, date }: Input) {
       >
         <TextInput
           className="flex-auto p-[11px] text-wrap"
-          placeholder={`${children}`}
+          placeholder={`${placeholder}`}
           secureTextEntry={variant === 'password' && shownPassword}
           multiline={variant == 'description'}
           inputMode={variant == 'number' ? 'numeric' : 'text'}
