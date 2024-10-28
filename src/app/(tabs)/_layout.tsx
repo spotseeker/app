@@ -26,6 +26,7 @@ export default function TabLayout() {
         options={{
           headerShown: false,
           title: '',
+          tabBarShowLabel: false,
           tabBarIcon: ({ color }) => <HomeIcon color={color} size={38} />
         }}
       />
@@ -35,6 +36,7 @@ export default function TabLayout() {
         options={{
           headerShown: false,
           title: '',
+          tabBarShowLabel: false,
           tabBarIcon: ({ color }) => <MapMarkerIcon color={color} size={38} />
         }}
       />
@@ -44,15 +46,17 @@ export default function TabLayout() {
         options={{
           headerShown: false,
           title: '',
+          tabBarShowLabel: false,
           tabBarIcon: ({ color }) => <PlusIcon color={color} size={38} />
         }}
       />
 
       <Tabs.Screen
-        name="Search"
+        name="search"
         options={{
           headerShown: false,
           title: '',
+          tabBarShowLabel: false,
           tabBarIcon: ({ color }) => <SearchIcon color={color} size={38} />
         }}
       />
@@ -62,6 +66,7 @@ export default function TabLayout() {
         options={{
           headerShown: false,
           title: '',
+          tabBarShowLabel: false,
           tabBarIcon: ({ color }) => (
             <Avatar source={ProfileImg} color={color} radius={50} size={50} />
           )
