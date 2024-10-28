@@ -33,9 +33,13 @@ export default function RecoveryPassword() {
             necesitarás el correo electrónico
           </Text>
           <Text className="text-lightc font-pbold text-[16px]">vinculado a tu cuenta</Text>
-          <Input variant="email" control={control} name="email">
-            Correo vinculado
-          </Input>
+          <Input
+            text='Correo vinculado'
+            placeholder='correo'
+            variant="email"
+            control={control}
+            name="email"
+          />
         </View>
         <View className="flex flex-row justify-around mt-20">
           <Button

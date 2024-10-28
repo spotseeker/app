@@ -30,12 +30,20 @@ export default function ResetPassword() {
           <Text className="text-lightc font-pbold text-[16px] mt-5">
             Introduce la nueva contraseña
           </Text>
-          <Input variant="password" control={control} name="newPassword">
-            Contraseña
-          </Input>
-          <Input variant="password" control={control} name="confirmNewPassword">
-            Repite Contraseña
-          </Input>
+          <Input
+            text='Contraseña'
+            placeholder='contraseña'
+            variant="password"
+            control={control}
+            name="newPassword"
+          />
+          <Input
+            text='Repite Contraseña'
+            placeholder='contraseña'
+            variant="password"
+            control={control}
+            name="confirmNewPassword"
+          />
         </View>
         <View className="flex flex-row justify-around mt-20">
           <Button
