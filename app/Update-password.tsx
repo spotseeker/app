@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { router } from "expo-router";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Screen from "@/components/Screen";
-import { ResetPasswordSchema } from "@/Schemas/UserSchema";
+import { UpdatePasswordSchema} from "@/Schemas/UserSchema";
 import CustomInputs from "@/components/CustomInputs";
 import CustomButton from "@/components/CustomButton";
 import { Avatar } from '@kolking/react-native-avatar';
@@ -15,7 +15,7 @@ import ModalAction from "@/components/ModalAction";
 
 export default function UpdatePassword() {
     const { control, handleSubmit, reset} = useForm({
-        resolver: zodResolver(ResetPasswordSchema),
+        resolver: zodResolver(UpdatePasswordSchema),
         mode: "onChange",
     });
 
@@ -48,7 +48,7 @@ export default function UpdatePassword() {
                             <Avatar source={ProfileImg} color={Colors.text} radius={100} size={100} />
                         </View>
                         <View className='mt-[30px] px-[10%]'>
-                            <CustomInputs variant="password" control={control} name="password">
+                            <CustomInputs variant="password" control={control} name="actualPassword">
                                 Ingresa Tu Clave Actual
                             </CustomInputs>
                             <CustomInputs variant="password" control={control} name="newPassword">
