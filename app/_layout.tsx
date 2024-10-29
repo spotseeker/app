@@ -48,9 +48,21 @@ export default function RootLayout() {
         <TouchableOpacity onPress={() => router.push("/Profile")}>
           <ArrowBack size={35} />
         </TouchableOpacity>
-      )
+      ),
 
        }} />
+      <Stack.Screen name="Update-password" options={{ headerShown: true, title: '',
+       headerTitle:'Cambio de  Contraseña',
+       headerTintColor: '#EEAF61',
+       headerTitleStyle: {
+         fontWeight: 'bold',
+       },
+       headerLeft: () => (
+        <TouchableOpacity onPress={() => router.push("/Settings")}>
+          <ArrowBack size={35} />
+        </TouchableOpacity>
+      ),
+ }} />
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       <Stack.Screen name="(auth)" options={{ headerShown: false }} />
       <Stack.Screen name="index" options={{ headerShown: false }} />
