@@ -63,6 +63,20 @@ export default function RootLayout() {
         </TouchableOpacity>
       ),
  }} />
+      <Stack.Screen name="EditProfile" options={{ headerShown: true, title: '',
+       headerTitle:'Editar Perfil',
+       headerTintColor: '#EEAF61',
+       headerTitleStyle: {
+         fontWeight: 'bold',
+       },
+       headerLeft: () => (
+        <TouchableOpacity onPress={() => router.push("/Settings")}>
+          <ArrowBack size={35} />
+        </TouchableOpacity>
+      ),
+ }} />
+
+
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       <Stack.Screen name="(auth)" options={{ headerShown: false }} />
       <Stack.Screen name="index" options={{ headerShown: false }} />

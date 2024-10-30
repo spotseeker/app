@@ -28,6 +28,12 @@ export default function Settings() {
     router.push('/Update-password');
   };
 
+  const handleEditProfile = () => {
+    setModalVisible(false);
+    router.push('/EditProfile');
+  };
+
+
   return (
     <SafeAreaView className='h-full bg-white'>
       <ScrollView contentContainerStyle={{ paddingTop: 20, paddingBottom: 20 }}>
@@ -35,12 +41,14 @@ export default function Settings() {
           <View className="justify-start items-center my-[-109%] ">
             
             {/* Opción de editar perfil */}
+           <TouchableOpacity onPress={handleEditProfile}>
             <View className='w-full flex-row items-center justify-between px-4 mb-4'>
               <Text className='font-pbold text-helper text-[18px]'>Editar mi perfil</Text>
               <View className="mr-2">
                 <ArrowIcon size={24} />
               </View>
             </View>
+           </TouchableOpacity>
 
             {/* Opción de cambiar contraseña */}
             <TouchableOpacity  onPress={handleUpdatePassword}>

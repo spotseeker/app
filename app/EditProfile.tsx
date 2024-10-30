@@ -3,7 +3,7 @@ import { View, ScrollView} from "react-native";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Screen from "@/components/Screen";
-import { UpdatePasswordSchema} from "@/Schemas/UserSchema";
+import { EditProfileSchema} from "@/Schemas/UserSchema";
 import CustomInputs from "@/components/CustomInputs";
 import CustomButton from "@/components/CustomButton";
 import { Avatar } from '@kolking/react-native-avatar';
@@ -12,17 +12,23 @@ import ProfileImg from '@/assets/images_app/image_profile.png';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import ModalAction from "@/components/ModalAction";
 
-export default function UpdatePassword() {
+export default function EditProfile() {
+
+
     const { control, handleSubmit, reset} = useForm({
-        resolver: zodResolver(UpdatePasswordSchema),
+        resolver: zodResolver(EditProfileSchema),
         mode: "onChange",
     });
+
 
     const [isConfirmationVisible, setConfirmationVisible] = useState(false);
     const [isSuccessVisible, setSuccessVisible] = useState(false);
     const [isErrorVisible, setErrorVisible] = useState(false);
 
-    const handleUpdatePassword = () => {
+
+
+
+    const handleEditProfile = () => {
         reset();
         setSuccessVisible(true);
         
@@ -39,35 +45,41 @@ export default function UpdatePassword() {
 
 
     return (
-        <SafeAreaView className=' w-full bg-white'>
-            <ScrollView className="mt-[-10%]">
+        <SafeAreaView className='w-full h-full bg-white'>
+            <ScrollView className="mt-[-5%]">
                 <Screen>
-                    <View className="flex justify-center items-center mt-[5%]">
-                        <View className='mt-[-20%]'>
-                            <Avatar source={ProfileImg} color={Colors.text} radius={100} size={100} />
+                    <View className="flex  justify-center items-center mt-[-30%]">
+                        <View className='mt-[10%]'>
+                            <Avatar source={ProfileImg} color={Colors.text} radius={90} size={90} />
                         </View>
                         <View className='mt-[30px] px-[10%]'>
-                            <CustomInputs variant="password" control={control} name="actualPassword">
-                                Ingresa Tu Clave Actual
+                            <CustomInputs variant="default" control={control} name="username">
+                                Nombre de Usuario
                             </CustomInputs>
-                            <CustomInputs variant="password" control={control} name="newPassword">
-                                Ingresa Tu Nueva Clave
+                            <CustomInputs variant="default" control={control} name="firstname">
+                                Nombre
                             </CustomInputs>
-                            <CustomInputs variant="password" control={control} name="confirmNewPassword">
-                                Confirma Tu Nueva Clave
+                            <CustomInputs variant="default" control={control} name="lastname">
+                               Apellido
                             </CustomInputs>
+                            
+                            <CustomInputs variant="description" control={control} name="aboutme">
+                            Descripción
+                            </CustomInputs>
+
+
+
                         </View>
                     </View>
-                    <View className="flex justify-around ml-[55%] pb-[10] mt-[20%]">
-                     
+                    <View className="flex justify-around ml-[60%] pb-[10]">
                         <CustomButton
-                            width={150}
+                            width={130}
                             height={47}
                             variant="primary"
                             onPress={handleSubmit(onSubmit, handleError)}
                         
                         >
-                            Cambiar Contraseña
+                            Actualizar
                         </CustomButton>
                     </View>
                 </Screen>
@@ -78,17 +90,17 @@ export default function UpdatePassword() {
                 visible={isConfirmationVisible}
                 onClose={() => setConfirmationVisible(false)}
                 onConfirm={handleSubmit(() => {
-                    handleUpdatePassword();
+                    handleEditProfile();
                     setConfirmationVisible(false); 
                 }, handleError)} 
                 action="confirmation"
-                message="La proxima vez que ingreses usaras esta clave ¿Estás seguro de realizar este cambio?"
+                message=" La proxima vez que ingreses se aplicaran estos cambios ¿Estás seguro de continuar?"
            />
 
             {/* Modal de éxito */}
             <ModalAction
                 action='success'
-                message='Contraseña Actualizada con exito'
+                message='Datos de perfil Actualizados con exito'
                 visible={isSuccessVisible}
                 onClose={() => {
                     setSuccessVisible(false) 
@@ -98,7 +110,7 @@ export default function UpdatePassword() {
             {/* Modal de error */}
             <ModalAction
                 action='error'
-                message='Hubo un error al actualizar la clave. Por favor, verifica los campos.'
+                message='Hubo un error al actualizar la informacion. Por favor, verifica los campos.'
                 visible={isErrorVisible}
                 onClose={() => setErrorVisible(false)}
             />

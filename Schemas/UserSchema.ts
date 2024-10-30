@@ -89,6 +89,22 @@ export const UpdatePasswordSchema = z.object({
   }
 )
 
+export const EditProfileSchema = z.object({
+  username: z
+    .string({ required_error: "Campo requerido" })
+    .min(3, { message: "minimo 3 caracteres" }),
+    firstname: z
+    .string({ required_error: "Campo requerido" })
+    .min(1, { message: "Campo obligatorio" }),
+  lastname: z
+    .string({ required_error: "Campo requerido" })
+    .min(1, { message: "Campo obligatorio" }),
+  aboutme: z
+    .string({ required_error: "Campo requerido" })
+    .min(1, { message: "Campo obligatorio" }),
+  
+  });
+
 
 
 export type UserData = z.infer<typeof RegisterSchema>;
