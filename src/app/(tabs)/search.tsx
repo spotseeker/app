@@ -1,20 +1,14 @@
 import Icons from '@/src/components/Icons';
-import Input from '@/src/components/Input';
+import SearchInput from '@/src/components/SearchInput';
 import { router, useNavigation } from 'expo-router';
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { View, TouchableOpacity, FlatList } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import { SearchSchema } from '@/src/schemas/SearchSchema';
 import ImageGrid from '@/src/components/ImageGrid';
 import { images } from '@/src/fixtures/images';
 
 export default function Search() {
   const { ArrowBack } = Icons
-  const { control } = useForm({
-    resolver: zodResolver(SearchSchema)
-  })
   const navigation = useNavigation();
   useEffect(() => {
     navigation.setOptions({
@@ -31,21 +25,24 @@ export default function Search() {
       ),
     })
   }, [navigation])
+  const [query, setQuery] = useState('')
+  const imagesFiltered = images.filter(image =>
+    image.alt.toLowerCase().includes(query.toLowerCase())
+  )
   return (
     <SafeAreaView>
-      <View className='flex justify-center items-center'>
-        <Input
-            placeholder='Buscar usuarios, lugare o publicaciones'
-            variant='search'
-            name='search'
-            control={control}
+      <View className='flex justify-center items-center mt-[-10%]'>
+        <SearchInput
+            placeholder='Buscar usuarios, lugares o publicaciones'
+            value={query}
+            onChangeText={setQuery}
         />
       </View>
       <View className='flex justify-center items-center'>
         <FlatList
           numColumns={3}
           renderItem={ImageGrid}
-          data={images}
+          data={imagesFiltered}
           keyExtractor={(item) => item.url}
         />
       </View>
