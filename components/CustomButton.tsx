@@ -20,31 +20,46 @@ function CustomButton({
   return (
     <TouchableOpacity
       onPress={onPress}
-      activeOpacity={0.7} // Cambia la opacidad al presionar
-      style={{ width: width, height: height }}
+      activeOpacity={0.7}
+      style={{
+        width: width,
+        height: height,
+        borderRadius: 10,
+        overflow: "hidden",
+        borderWidth: variant === "secondary" ? 2 : 0,
+        borderColor: variant === "secondary" ? "#FB9062" : "transparent",
+      }}
     >
-      <LinearGradient
-        colors={
-          variant === "primary" ? ["#FB9062", "#EE5D6C"] : ["#FFFFFF", "#FFFFFF"]
-        }
-        className={`${
-          variant == "primary" ? "" : "border-2 border-helper"
-        }`}
-        style={{ flex: 1, borderRadius: 10 }}
-      >
-        <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      {variant === "primary" ? (
+        <LinearGradient
+          colors={["#FB9062", "#EE5D6C"]}
+          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+        >
+          <Text style={{ color: "#FFFFFF", fontWeight: "bold" }}>
+            {children}
+          </Text>
+        </LinearGradient>
+      ) : (
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: variant === "gray" ? "#808080" : "#FFFFFF",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
           <Text
-            className={`${
-              variant == "primary" ? "text-white" : "text-helper"
-            } font-semibold`}
+            style={{
+              color: variant === "gray" ? "#FFFFFF" : "#FB9062",
+              fontWeight: "bold",
+            }}
           >
             {children}
           </Text>
         </View>
-      </LinearGradient>
+      )}
     </TouchableOpacity>
   );
 }
 
 export default CustomButton;
-

@@ -76,6 +76,33 @@ export default function RootLayout() {
       ),
  }} />
 
+      <Stack.Screen name="userStats/UserFollowers" options={{ headerShown: true, title: '',
+       headerTitle:'Seguidores',
+       headerTintColor: '#EEAF61',
+       headerTitleStyle: {
+         fontWeight: 'bold',
+       },
+       headerLeft: () => (
+        <TouchableOpacity onPress={() => router.push("/Profile")}>
+          <ArrowBack size={35} />
+        </TouchableOpacity>
+      ),
+ }} />
+     
+     <Stack.Screen name="userStats/UserFollowing" options={{ headerShown: true, title: '',
+       headerTitle:'Siguiendo',
+       headerTintColor: '#EEAF61',
+       headerTitleStyle: {
+         fontWeight: 'bold',
+       },
+       headerLeft: () => (
+        <TouchableOpacity onPress={() => router.push("/Profile")}>
+          <ArrowBack size={35} />
+        </TouchableOpacity>
+      ),
+ }} />
+
+
 
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       <Stack.Screen name="(auth)" options={{ headerShown: false }} />

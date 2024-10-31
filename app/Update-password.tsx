@@ -8,7 +8,7 @@ import CustomInputs from "@/components/CustomInputs";
 import CustomButton from "@/components/CustomButton";
 import { Avatar } from '@kolking/react-native-avatar';
 import { Colors } from "@/constants/Colors";
-import ProfileImg from '@/assets/images_app/image_profile.png';
+import ProfileImg from '@/assets/images_app/avatar_users/image_profile.png';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import ModalAction from "@/components/ModalAction";
 

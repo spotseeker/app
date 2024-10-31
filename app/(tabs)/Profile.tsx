@@ -6,7 +6,7 @@ import { Avatar } from '@kolking/react-native-avatar';
 import Icons from "@/components/Icons";
 import {Colors} from "@/constants/Colors"
 import BackgroundImage from '@/assets/images_app/Rectangle 9 (1).png';
-import ProfileImg from '@/assets/images_app/image_profile.png'
+import ProfileImg from '@/assets/images_app/avatar_users/image_profile.png'
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Profile = () => {

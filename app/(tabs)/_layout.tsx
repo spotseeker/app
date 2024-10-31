@@ -4,7 +4,7 @@ import { Tabs, router } from 'expo-router';
 import Icons from "@/components/Icons";
 import { Avatar } from '@kolking/react-native-avatar';
 import {Colors} from '@/constants/Colors'
-import ProfileImg from '@/assets/images_app/image_profile.png'
+import ProfileImg from '@/assets/images_app/avatar_users/image_profile.png'
 
 
  export default function TabLayout() {
