@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Loading from "./Loading";
-import PostCardList from "@/components/PostCardList";
+
 import { SafeAreaView } from "react-native-safe-area-context";
+
+import Welcome from "./Welcome";
 export default function Index() {
   const [showSignIn, setShowSignIn] = useState(false);
 
@@ -17,7 +19,7 @@ export default function Index() {
     <Loading />
   ) : (
     <SafeAreaView className="flex-1 justify-center items-center">
-      <PostCardList />
+      <Welcome/>
       
 
     </SafeAreaView>
