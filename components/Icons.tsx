@@ -8,6 +8,7 @@ import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import logo from "../assets/images_app/modelo_logo_icon_V.2..4.png";
+import logoNom from "../assets/images_app/nombre_logo.png"
 import logoBig from "../assets/images_app/Group 1.png";
 import shy from "../assets/images_app/shy.png";
 import { Image } from "react-native";
@@ -20,6 +21,15 @@ type Props = {
 
 const themeIconColor = "#ee5d6c";
 const themeIconColor2 ="#FB9062";
+
+const LogoNomIcon = ({ width = 20, height = 20, mr }: pngProps) => {
+  return (
+    <Image
+      source={logoNom}
+      style={{ width: width, height: height, marginRight: mr }} // Cambia los valores según lo que necesites
+    />
+  );
+};
 
 const PersonIcon = ({ color, size = 25 }: Props) => {
   return (
@@ -353,5 +363,6 @@ export default {
   StarHalfIcon,
   MenuIcon,
   ArrowBack,
-  WarningIcon
+  WarningIcon,
+  LogoNomIcon
 };
