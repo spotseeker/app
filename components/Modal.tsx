@@ -1,7 +1,8 @@
 import React, { ReactNode } from "react";
 import { Modal as ReactModal, View, StyleSheet } from 'react-native';
 import { BlurView } from 'expo-blur'
-interface ModalProps {
+
+type ModalProps = {
   visible: boolean;
   children?: ReactNode;
   onClose: () => void;

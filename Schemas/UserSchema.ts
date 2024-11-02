@@ -69,7 +69,7 @@ export const ResetPasswordSchema = z.object({
 )
 
 export const UpdatePasswordSchema = z.object({
-  actualPassword: z
+  currentPassword: z
     .string({ required_error: "Campo requerido" })
     .min(6, { message: "Contraseña invalida minimo 6 caracteres" }),
 

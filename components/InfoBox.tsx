@@ -3,7 +3,7 @@ import { View, Text, ViewStyle, TextStyle,TouchableOpacity } from 'react-native'
 import { Colors } from '../constants/Colors';
 import { Link } from 'expo-router';
 
-interface InfoBoxProps {
+type InfoBoxProps= {
   title: string;
   subtitle: string;
   info: string;
