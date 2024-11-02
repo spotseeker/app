@@ -10,25 +10,19 @@ import {Colors} from "@/constants/Colors"
 
 type PostCardProps = {
     
-    ubicacion: string;
-    usuario: string;
-    fecha : Date;
+    location: string;
+    user: string;
+    date : Date;
     image : string;
-    descripcion: string;
+    description: string;
 
 }
-
-
-
-
-
-
 export default function PostCard ({
-    ubicacion ,
+    location ,
     image,
-    descripcion,
-    usuario,
-    fecha,
+    description,
+    user,
+    date,
     
 }: PostCardProps){
     const [count, setCount]= React.useState(1);
@@ -45,21 +39,17 @@ export default function PostCard ({
         
         <SafeAreaView className="w-full bg-white rounded-1xl p-5 my-3">
             
-           
-
-            <View className='flex row justify-between mr-[55] mt-[-60]  ' >
+             <View className='flex row justify-between mr-[55] mt-[-60]  ' >
               {/* Avatar */}
              
-              <Text style={styles.textoGrande}  className='text-coloricon ml-1 mt-5  font-extrabold   '>{usuario}</Text>
+              <Text style={styles.textUser}  className='text-coloricon ml-1 mt-5  font-extrabold   '>{user}</Text>
               <View className='flex row justify-content mr-[250]'>
                 
                 <Avatar className='mt-[-25] ' source={ProfileImg} color={Colors.text} radius={30} size={30} />
                 </View>
              
               </View>
-              
-           
-            
+                          
             <View className=' rounded-xl mt-[-40] '>
             <AntDesign
                name="ellipsis1"
@@ -82,8 +72,7 @@ export default function PostCard ({
           onPress={handleLike} // Llamar a la función handleLike al presionar
         />
         <Text className='font-pbold'>{count}</Text>
-  
-        
+         
               </View>
             <View className='flex-row items-center gap-3   '>
            
@@ -109,27 +98,18 @@ export default function PostCard ({
              >
            </AntDesign>
 
-
-           
-            <Text  className="text-coloricon text-14px mr-20 font-pbold ">{ubicacion}</Text>
-            <Text>{fecha.toLocaleDateString()}</Text>
+           <Text  className="text-coloricon text-14px mr-20 font-pbold ">{location}</Text>
+            <Text>{date.toLocaleDateString()}</Text>
          
             </View>
-            <Text>{descripcion}</Text>
+            <Text>{description}</Text>
             
-          
-
         </SafeAreaView>
-
-
-
-
-
 )
 }
 const styles = StyleSheet.create({
-  textoGrande: {
-    fontSize: 18, // Tamaño en píxeles
+  textUser: {
+    fontSize: 18, 
     marginLeft:45,
   },
     avatarContainer:{

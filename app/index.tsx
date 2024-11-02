@@ -3,7 +3,7 @@ import Loading from "./Loading";
 
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import Welcome from "./Welcome";
+
 export default function Index() {
   const [showSignIn, setShowSignIn] = useState(false);
 
@@ -18,8 +18,8 @@ export default function Index() {
   return !showSignIn ? (
     <Loading />
   ) : (
-    <SafeAreaView className="flex-1 justify-center items-center">
-      <Welcome/>
+    <SafeAreaView >
+      
       
 
     </SafeAreaView>
