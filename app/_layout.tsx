@@ -37,7 +37,7 @@ export default function RootLayout() {
 
   return (
     <Stack screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Settings" options={{ headerShown: true,
+      <Stack.Screen name="Settings" options={{ headerShown: true,  gestureEnabled: false,
        title: '',
        headerTitle:'Configuracion',
        headerTintColor: '#EEAF61',
@@ -76,7 +76,7 @@ export default function RootLayout() {
       ),
  }} />
 
-      <Stack.Screen name="userStats/UserFollowers" options={{ headerShown: true, title: '',
+      <Stack.Screen name="userStats/UserFollowers" options={{ headerShown: true,  gestureEnabled: false,title: '',
        headerTitle:'Seguidores',
        headerTintColor: '#EEAF61',
        headerTitleStyle: {
@@ -89,7 +89,7 @@ export default function RootLayout() {
       ),
  }} />
      
-     <Stack.Screen name="userStats/UserFollowing" options={{ headerShown: true, title: '',
+     <Stack.Screen name="userStats/UserFollowing" options={{ headerShown: true,  gestureEnabled: false,title: '',
        headerTitle:'Siguiendo',
        headerTintColor: '#EEAF61',
        headerTitleStyle: {
@@ -104,8 +104,8 @@ export default function RootLayout() {
 
 
 
-      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-      <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+      <Stack.Screen name="(tabs)" options={{ headerShown: false}} />
+      <Stack.Screen name="(auth)" options={{ headerShown: false, gestureEnabled: false}} />
       <Stack.Screen name="index" options={{ headerShown: false }} />
     </Stack>
   );

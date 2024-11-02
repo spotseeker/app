@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, FlatList, StyleSheet, ImageSourcePropType } from 'react-native';
+import { View, Text, FlatList, StyleSheet, ImageSourcePropType,Dimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Avatar } from '@kolking/react-native-avatar';
 import Screen from '@/components/Screen';
@@ -49,11 +49,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    padding: 16,
-    alignItems: 'flex-start'
+    paddingTop: 20,
+    alignItems: 'flex-start',
   },
   followersList: {
-    marginTop: -330,
+    marginTop: Dimensions.get('window').height*(-0.60),
+    paddingTop:Dimensions.get('window').height*0.2,
   },
   followerItem: {
     flexDirection: 'row',

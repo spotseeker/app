@@ -5,7 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { Avatar } from '@kolking/react-native-avatar';
-import ProfileImg from '@/assets/images_app/image_profile.png'
+import ProfileImg from '@/assets/images_app/avatar_users/image_profile.png'
 import {Colors} from "@/constants/Colors"
 
 type PostCardProps = {

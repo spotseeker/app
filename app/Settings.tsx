@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { View, ScrollView, Text, TouchableOpacity} from "react-native";
+import { View, ScrollView, Text, TouchableOpacity,Dimensions} from "react-native";
 import { SafeAreaView } from 'react-native-safe-area-context';
+//import AsyncStorage from '@react-native-async-storage/async-storage';
 import Screen from "@/components/Screen";
 import Icons from '@/components/Icons';
 import { router } from 'expo-router';
@@ -18,10 +19,14 @@ export default function Settings() {
     setModalVisible(false);
   };
 
-  const handleConfirmLogOut = () => {
-    setModalVisible(false);
-    router.push('/(auth)/Sign-in');
-  };
+  const handleConfirmLogOut = async () => {
+   
+     // await AsyncStorage.clear();
+      setModalVisible(false);
+      router.push('/(auth)/Sign-in');
+      
+    };
+
 
   const handleUpdatePassword = () => {
     setModalVisible(false);
@@ -36,7 +41,7 @@ export default function Settings() {
 
   return (
     <SafeAreaView className='h-full bg-white'>
-      <ScrollView contentContainerStyle={{ paddingTop: 20, paddingBottom: 20 }}>
+      <ScrollView contentContainerStyle={{ paddingTop: Dimensions.get('window').height*0.1, paddingBottom: 20, marginTop: Dimensions.get('window').height*(-0.10), }}>
         <Screen>
           <View className="justify-start items-center my-[-109%] ">
             
