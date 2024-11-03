@@ -17,7 +17,7 @@ const Modal = ({children,visible,onClose,backgroundColor }:ModalProps) => {
       animationType="fade"
       onRequestClose={onClose}
     >
-      {/* Fondo desenfocado con tinte gris */}
+  
         <BlurView className='h-full w-full' intensity={100} style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
           <View style={styles.container} />
           

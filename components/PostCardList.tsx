@@ -5,7 +5,9 @@ import { post} from '../scripts/post';
 import PostCard from "./PostCard";
 
 export default function PostCardList () {
-    return <FlatList data={post} 
+const visiblePosts = post.filter((postc) => !postc.isArchive);
+    
+return <FlatList data={visiblePosts} 
     keyExtractor={(postc) => String(postc.id)}
     renderItem={({item}) => <PostCard {...item}/>}
     

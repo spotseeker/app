@@ -56,7 +56,6 @@ const InfoBox: React.FC<InfoBoxProps> = ({
           {"\n"}Publicaciones
         </Text>
 
-        {/* Link para Seguidores con efecto de opacidad */}
         <Link href="/userStats/UserFollowers" asChild>
           <TouchableOpacity>
             <Text
@@ -81,8 +80,6 @@ const InfoBox: React.FC<InfoBoxProps> = ({
           </TouchableOpacity>
         </Link>
       </View>
-
-      {/* Línea horizontal divisoria con efecto sombreado */}
       <View
         style={{
           height: 1,
