@@ -28,6 +28,9 @@ GetLocation.getCurrentPosition({
 .catch(error => {
   const { code, message } = error;
   console.warn(code, message);
+  latitude = 10.066648
+  longitude = -69.362973
+
 })
 
 export default () => (
