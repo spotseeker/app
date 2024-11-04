@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
-import { SplashScreen, Stack } from "expo-router";
+import { SplashScreen, Stack,router} from "expo-router";
 import { useFonts } from "expo-font";
 import React, { useEffect } from "react";
+import { TouchableOpacity } from "react-native";
+import Icons from "@/components/Icons";
 
 export default function RootLayout() {
   const [fontsLoaded, error] = useFonts({
@@ -16,6 +18,7 @@ export default function RootLayout() {
     "Poppins-Thin": require("../assets/fonts/Poppins-Thin.ttf"),
   });
 
+  const {ArrowBack} =Icons
   useEffect(() => {
     if (error) throw error;
 
@@ -34,8 +37,75 @@ export default function RootLayout() {
 
   return (
     <Stack screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-      <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+      <Stack.Screen name="Settings" options={{ headerShown: true,  gestureEnabled: false,
+       title: '',
+       headerTitle:'Configuracion',
+       headerTintColor: '#EEAF61',
+       headerTitleStyle: {
+         fontWeight: 'bold',
+       },
+       headerLeft: () => (
+        <TouchableOpacity onPress={() => router.push("/Profile")}>
+          <ArrowBack size={35} />
+        </TouchableOpacity>
+      ),
+
+       }} />
+      <Stack.Screen name="Update-password" options={{ headerShown: true, title: '',
+       headerTitle:'Cambio de  Contraseña',
+       headerTintColor: '#EEAF61',
+       headerTitleStyle: {
+         fontWeight: 'bold',
+       },
+       headerLeft: () => (
+        <TouchableOpacity onPress={() => router.push("/Settings")}>
+          <ArrowBack size={35} />
+        </TouchableOpacity>
+      ),
+ }} />
+      <Stack.Screen name="EditProfile" options={{ headerShown: true, title: '',
+       headerTitle:'Editar Perfil',
+       headerTintColor: '#EEAF61',
+       headerTitleStyle: {
+         fontWeight: 'bold',
+       },
+       headerLeft: () => (
+        <TouchableOpacity onPress={() => router.push("/Settings")}>
+          <ArrowBack size={35} />
+        </TouchableOpacity>
+      ),
+ }} />
+
+      <Stack.Screen name="userStats/UserFollowers" options={{ headerShown: true,  gestureEnabled: false,title: '',
+       headerTitle:'Seguidores',
+       headerTintColor: '#EEAF61',
+       headerTitleStyle: {
+         fontWeight: 'bold',
+       },
+       headerLeft: () => (
+        <TouchableOpacity onPress={() => router.push("/Profile")}>
+          <ArrowBack size={35} />
+        </TouchableOpacity>
+      ),
+ }} />
+     
+     <Stack.Screen name="userStats/UserFollowing" options={{ headerShown: true,  gestureEnabled: false,title: '',
+       headerTitle:'Siguiendo',
+       headerTintColor: '#EEAF61',
+       headerTitleStyle: {
+         fontWeight: 'bold',
+       },
+       headerLeft: () => (
+        <TouchableOpacity onPress={() => router.push("/Profile")}>
+          <ArrowBack size={35} />
+        </TouchableOpacity>
+      ),
+ }} />
+
+
+
+      <Stack.Screen name="(tabs)" options={{ headerShown: false}} />
+      <Stack.Screen name="(auth)" options={{ headerShown: false, gestureEnabled: false}} />
       <Stack.Screen name="index" options={{ headerShown: false }} />
     </Stack>
   );

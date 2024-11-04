@@ -9,6 +9,9 @@ module.exports = {
         coloricon: "#ee5d6c",
         secondary: "#ce4993",
         primary: "#6a0d83",
+        complementaryA: '#066A33',
+        complementaryB: '#FF0000'
+        
       },
       fontFamily: {
         pthin: ["Poppins-Thin", "sans-serif"],

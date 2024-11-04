@@ -70,6 +70,14 @@ const EditIcon = ({ color, size = 25 }: Props) => {
   );
 };
 
+
+const WarningIcon= ({ color, size = 25 }: Props) => {
+  return (
+    <Ionicons name="warning-outline" size={size} color={color} style={{ padding: 11 }} />
+  );
+};
+
+
 const PasswordIcon = ({ color, shown, size = 25 }: Props) => {
   return (
     <Ionicons
@@ -355,5 +363,6 @@ export default {
   StarHalfIcon,
   MenuIcon,
   ArrowBack,
+  WarningIcon,
   LogoNomIcon
 };
