@@ -37,7 +37,14 @@ const MenuIcon = ({ color = themeIconColor, size = 25 }: Props) => {
 }
 
 const SearchIcon = ({ color, size = 25 }: Props) => {
-  return <AntDesign name="search1" size={size} color={color} style={{ padding: 11 }} />
+  return (
+    <AntDesign
+      name="search1"
+      size={size}
+      color={color}
+      style={{ padding: 11, backgroundColor: 'white' }}
+    />
+  )
 }
 
 const EditIcon = ({ color, size = 25 }: Props) => {
