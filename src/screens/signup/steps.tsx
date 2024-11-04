@@ -13,13 +13,20 @@ type StepsProps = {
 const Step1 = ({ control }: StepsProps) => {
   return (
     <View className="flex justify-center my-[70px] items-center">
-      <Input variant="email" control={control} name="email">
-        Introduce tu correo
-      </Input>
-      <Input variant="email" control={control} name="username">
-        Introduce tu nombre de usuario
-      </Input>
-
+      <Input
+        text="Introduce tu correo"
+        placeholder="correo"
+        variant="email"
+        control={control}
+        name="email"
+      />
+      <Input
+        text="Introduce tu nombre de usuario"
+        placeholder="usuario"
+        variant="email"
+        control={control}
+        name="username"
+      />
       <Text className="font-psemibold text-helper text-center text-[10px]">
         El nombre de usuario es unico, lo puedes cambiar en cualquier momento
       </Text>
@@ -34,16 +41,29 @@ const Step2 = ({ control }: StepsProps) => {
 
   return (
     <View className="flex justify-center my-[50px] items-center">
-      <Input variant="default" control={control} name="firstname">
-        Introduce tu nombre
-      </Input>
-      <Input variant="default" control={control} name="lastname">
-        Introduce tu apellido
-      </Input>
+      <Input
+        text="Introduce tu nombre"
+        placeholder="nombre"
+        variant="default"
+        control={control}
+        name="firstname"
+      />
+      <Input
+        text="Introduce tu apellido"
+        placeholder="apellido"
+        variant="default"
+        control={control}
+        name="lastname"
+      />
       <Pressable onPress={() => setShow(true)}>
-        <Input variant="date" control={control} name="birthdateString" date={date}>
-          Introduce tu fecha de nacimiento
-        </Input>
+        <Input
+          text="Introduce tu fecha de nacimiento"
+          placeholder="fecha de nacimiento"
+          variant="date"
+          control={control}
+          name="birthdateString"
+          date={date}
+        />
       </Pressable>
 
       {show && (
@@ -130,9 +150,12 @@ const Step3 = ({ control }: StepsProps) => {
           </Pressable>
         )}
 
-        <Input variant="description" name="aboutme" control={control}>
-          Cuéntanos acerca de ti
-        </Input>
+        <Input
+          text="Cuéntanos acerca de ti"
+          variant="description"
+          name="aboutme"
+          control={control}
+        />
       </View>
     </>
   )
@@ -141,12 +164,20 @@ const Step3 = ({ control }: StepsProps) => {
 const Step4 = ({ control }: StepsProps) => {
   return (
     <View className="flex justify-center my-[50px] items-center">
-      <Input variant="password" control={control} name="password">
-        Introduce tu contraseña
-      </Input>
-      <Input variant="password" control={control} name="confirm">
-        Confirma tu contraseña
-      </Input>
+      <Input
+        text="Introduce tu contraseña"
+        placeholder="contraseña"
+        variant="password"
+        control={control}
+        name="password"
+      />
+      <Input
+        text="Confirma tu contraseña"
+        placeholder="contraseña"
+        variant="password"
+        control={control}
+        name="confirm"
+      />
     </View>
   )
 }
@@ -157,9 +188,13 @@ const Step5 = ({ control }: StepsProps) => {
       <Text className="font-psemibold text-lightc text-center text-[18px] mb-5">
         Hemos enviado el codigo a tu correo por favor verificalo
       </Text>
-      <Input variant="number" control={control} name="code">
-        Introduce el codigo
-      </Input>
+      <Input
+        text="Introduce el código"
+        placeholder="código"
+        variant="number"
+        control={control}
+        name="code"
+      />
     </View>
   )
 }

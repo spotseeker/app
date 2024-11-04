@@ -10,10 +10,10 @@ import Input from '@/src/components/Input'
 import Button from '@/src/components/Button'
 
 export default function ResetPassword() {
-  const navigation = useNavigation();
+  const navigation = useNavigation()
   useEffect(() => {
-    navigation.setOptions({ headerShown: false });
-  }, [navigation]);
+    navigation.setOptions({ headerShown: false })
+  }, [navigation])
   const { LockIcon } = Icons
   const { control, handleSubmit, reset } = useForm({
     resolver: zodResolver(ResetPasswordSchema)
@@ -30,12 +30,20 @@ export default function ResetPassword() {
           <Text className="text-lightc font-pbold text-[16px] mt-5">
             Introduce la nueva contraseña
           </Text>
-          <Input variant="password" control={control} name="newPassword">
-            Contraseña
-          </Input>
-          <Input variant="password" control={control} name="confirmNewPassword">
-            Repite Contraseña
-          </Input>
+          <Input
+            text="Contraseña"
+            placeholder="contraseña"
+            variant="password"
+            control={control}
+            name="newPassword"
+          />
+          <Input
+            text="Repite Contraseña"
+            placeholder="contraseña"
+            variant="password"
+            control={control}
+            name="confirmNewPassword"
+          />
         </View>
         <View className="flex flex-row justify-around mt-20">
           <Button
@@ -56,7 +64,7 @@ export default function ResetPassword() {
             onPress={handleSubmit((data) => {
               if (data) {
                 reset()
-                router.push('/(tabs)/Home')
+                router.push('/(tabs)/home')
               }
             })}
           >

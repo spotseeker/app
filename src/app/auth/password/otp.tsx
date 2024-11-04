@@ -10,10 +10,10 @@ import Input from '@/src/components/Input'
 import Button from '@/src/components/Button'
 
 export default function ValidateOTP() {
-  const navigation = useNavigation();
+  const navigation = useNavigation()
   useEffect(() => {
-    navigation.setOptions({ headerShown: false });
-  }, [navigation]);
+    navigation.setOptions({ headerShown: false })
+  }, [navigation])
   const { HappyIcon } = Icons
   const { control, handleSubmit, reset } = useForm({
     resolver: zodResolver(OTPSchema)
@@ -23,15 +23,21 @@ export default function ValidateOTP() {
     <ScrollView>
       <Screen>
         <View className="flex justify-center items-center">
-          <Text className="text-helper font-pbold text-[20px] mb-5">Introduce el código</Text>
+          <Text className="text-helper font-pbold text-[20px] mb-5">
+            Introduce el código
+          </Text>
           <HappyIcon />
           <Text className="text-lightc font-pbold text-[16px] mt-5">
             Hemos enviado el código a tu correo
           </Text>
           <Text className="text-lightc font-pbold text-[16px]">por favor verificalo</Text>
-          <Input variant="number" control={control} name="otp">
-            Código
-          </Input>
+          <Input
+            text="Código"
+            placeholder="código"
+            variant="number"
+            control={control}
+            name="otp"
+          />
         </View>
         <View className="flex flex-row justify-around mt-20">
           <Button

@@ -23,7 +23,9 @@ export const RegisterSchema = z.object({
   lastname: z
     .string({ required_error: 'Campo requerido' })
     .min(1, { message: 'Campo obligatorio' }),
-  aboutme: z.string({ required_error: 'Campo requerido' }).min(1, { message: 'Campo obligatorio' }),
+  aboutme: z
+    .string({ required_error: 'Campo requerido' })
+    .min(1, { message: 'Campo obligatorio' }),
   birthdate: z.date({ required_error: 'Campo requerido' }),
   password: z
     .string({ required_error: 'Campo requerido' })
@@ -67,4 +69,43 @@ export const ResetPasswordSchema = z
       path: ['confirmNewPassword']
     }
   )
+
+export const UpdatePasswordSchema = z
+  .object({
+    currentPassword: z
+      .string({ required_error: 'Campo requerido' })
+      .min(6, { message: 'Contraseña invalida minimo 6 caracteres' }),
+
+    newPassword: z
+      .string({ required_error: 'Campo requerido' })
+      .min(6, { message: 'Contraseña invalida minimo 6 caracteres' }),
+    confirmNewPassword: z
+      .string({ required_error: 'Campo requerido' })
+      .min(6, { message: 'Contraseña invalida minimo 6 caracteres' })
+  })
+  .refine(
+    (values) => {
+      return values.newPassword === values.confirmNewPassword
+    },
+    {
+      message: 'Las contraseñas deben coincidir',
+      path: ['confirmNewPassword']
+    }
+  )
+
+export const EditProfileSchema = z.object({
+  username: z
+    .string({ required_error: 'Campo requerido' })
+    .min(3, { message: 'minimo 3 caracteres' }),
+  firstname: z
+    .string({ required_error: 'Campo requerido' })
+    .min(1, { message: 'Campo obligatorio' }),
+  lastname: z
+    .string({ required_error: 'Campo requerido' })
+    .min(1, { message: 'Campo obligatorio' }),
+  aboutme: z
+    .string({ required_error: 'Campo requerido' })
+    .min(1, { message: 'Campo obligatorio' })
+})
+
 export type UserData = z.infer<typeof RegisterSchema>

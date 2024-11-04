@@ -20,20 +20,32 @@ export default function Login() {
       <ScrollView>
         <Screen>
           <View className="flex justify-center items-center">
-            <Text className="text-lightc font-pbold text-[14px]">¡Hola de nuevo viajero!</Text>
+            <Text className="text-lightc font-pbold text-[14px]">
+              ¡Hola de nuevo viajero!
+            </Text>
             <LogoIcon width={200} height={200} mr={15} />
           </View>
           <View className="flex justify-center items-center ">
-            <Input variant="email" control={control} name="username">
-              Introduce usuario
-            </Input>
-            <Input variant="password" control={control} name="password">
-              Introduce contraseña
-            </Input>
+            <Input
+              text="Introduce usuario"
+              placeholder="usuario"
+              variant="email"
+              control={control}
+              name="username"
+            />
+            <Input
+              text="Introduce contraseña"
+              placeholder="contraseña"
+              variant="password"
+              control={control}
+              name="password"
+            />
           </View>
           <View className="flex justify-end items-end p-5">
             <Link asChild href={'/auth/password'}>
-              <Text className="font-psemibold text-helper underline pb-5">Recuperar mi clave</Text>
+              <Text className="font-psemibold text-helper underline pb-5">
+                Recuperar mi clave
+              </Text>
             </Link>
             <Button
               width={326}
@@ -41,7 +53,7 @@ export default function Login() {
               variant="primary"
               onPress={handleSubmit(() => {
                 reset()
-                router.push('/(tabs)/Home')
+                router.push('/(tabs)/home')
               })}
             >
               Ingresar
@@ -51,7 +63,9 @@ export default function Login() {
             <Text className="font-psemibold p-5">¿No posees cuenta?</Text>
 
             <Link asChild href={'/auth/signup'}>
-              <Text className="font-psemibold text-helper underline p-5">Registrate Aqui</Text>
+              <Text className="font-psemibold text-helper underline p-5">
+                Registrate Aqui
+              </Text>
             </Link>
           </View>
         </Screen>
