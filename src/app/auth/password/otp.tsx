@@ -31,9 +31,13 @@ export default function ValidateOTP() {
             Hemos enviado el código a tu correo
           </Text>
           <Text className="text-lightc font-pbold text-[16px]">por favor verificalo</Text>
-          <Input variant="number" control={control} name="otp">
-            Código
-          </Input>
+          <Input
+            text="Código"
+            placeholder="código"
+            variant="number"
+            control={control}
+            name="otp"
+          />
         </View>
         <View className="flex flex-row justify-around mt-20">
           <Button

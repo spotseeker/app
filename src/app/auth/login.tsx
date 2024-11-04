@@ -26,12 +26,20 @@ export default function Login() {
             <LogoIcon width={200} height={200} mr={15} />
           </View>
           <View className="flex justify-center items-center ">
-            <Input variant="email" control={control} name="username">
-              Introduce usuario
-            </Input>
-            <Input variant="password" control={control} name="password">
-              Introduce contraseña
-            </Input>
+            <Input
+              text="Introduce usuario"
+              placeholder="usuario"
+              variant="email"
+              control={control}
+              name="username"
+            />
+            <Input
+              text="Introduce contraseña"
+              placeholder="contraseña"
+              variant="password"
+              control={control}
+              name="password"
+            />
           </View>
           <View className="flex justify-end items-end p-5">
             <Link asChild href={'/auth/password'}>
