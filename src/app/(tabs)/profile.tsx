@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, Image, StyleSheet, TouchableOpacity, FlatList, Pressable } from 'react-native'
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  FlatList,
+  Pressable
+} from 'react-native'
 import InfoBox from '@/src/components/InfoBox'
 import Screen from '@/src/components/Screen'
 import { Avatar } from '@kolking/react-native-avatar'
@@ -7,14 +15,14 @@ import Icons from '@/src/components/Icons'
 import { Colors } from '@/src/constants/Colors'
 import BackgroundImage from '@/src/assets/images_app/Rectangle 9 (1).png'
 import ProfileImg from '@/src/assets/images_app/image_profile.png'
-import { post } from '@/src/fixtures/post';
-import PostCard from '@/src/components/PostCard';
+import { post } from '@/src/fixtures/post'
+import PostCard from '@/src/components/PostCard'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { router, useNavigation } from 'expo-router'
 
 const Profile = () => {
   const userData = {
-    id:'Abc234',
+    id: 'Abc234',
     username: 'Ricardodlpj',
     fullName: 'Ricardo Jimenez',
     description: 'Estudiante de Ing. Informática | UCLA',
@@ -23,55 +31,55 @@ const Profile = () => {
     posts: 6
   }
   const { ArchiveIcon2, PostsIcon, StarIcon, FourLinesIcon, ArrowBack } = Icons
-  const navigation = useNavigation();
+  const navigation = useNavigation()
   useEffect(() => {
     navigation.setOptions({
       headerShown: true,
       title: '',
-      headerTitle: "Mi Perfil",
+      headerTitle: 'Mi Perfil',
       headerTintColor: '#FB9062',
       headerTitleStyle: {
         fontWeight: 'bold'
       },
       headerRightContainerStyle: {
-        marginRight:'9%',
-        paddingRight:'10%',
+        marginRight: '9%',
+        paddingRight: '10%'
       },
       headerRight: () => (
-        <Pressable  onPress={() => router.push("/profile/settings")}>
-        <FourLinesIcon size={35} />
+        <Pressable onPress={() => router.push('/profile/settings')}>
+          <FourLinesIcon size={35} />
         </Pressable>
       ),
       headerLeft: () => (
         <TouchableOpacity onPress={() => router.push('/(tabs)/home')}>
           <ArrowBack size={35} />
         </TouchableOpacity>
-      ),
-    });
-  }, [navigation]);
+      )
+    })
+  }, [navigation])
   const [currentTypePost, setCurrentTypePost] = useState<string>('')
-  const [filterPosts,setFilterPost] = useState(post)
+  const [filterPosts, setFilterPost] = useState(post)
 
   useEffect(() => {
-    const filteredPosts = post.filter(post => {
-        if (currentTypePost === 'all') {
-            return post &&  post.isArchive == false && post.userid == userData.id; 
-        } else if (currentTypePost === 'favorites') {
-            return post.isFavorite == true && post.userid == userData.id;  
-        } else if (currentTypePost === 'archived') {
-            return post.isArchive === true && post.userid == userData.id; 
-        } 
-    });
+    const filteredPosts = post.filter((post) => {
+      if (currentTypePost === 'all') {
+        return post && post.isArchive == false && post.userid == userData.id
+      } else if (currentTypePost === 'favorites') {
+        return post.isFavorite == true && post.userid == userData.id
+      } else if (currentTypePost === 'archived') {
+        return post.isArchive === true && post.userid == userData.id
+      }
+    })
 
-    setFilterPost(filteredPosts);
-}, [currentTypePost]);
+    setFilterPost(filteredPosts)
+  }, [currentTypePost])
 
   const handlePostButton = (type: string) => {
     setCurrentTypePost(type)
   }
   const textLight = 'text-lightc font-pbold text-[14px]'
   const renderHeader = () => (
-    <View style={{height: 500}}>
+    <View style={{ height: 500 }}>
       <View className="h-60 w-full my-[-20%] absolute">
         <Image
           source={BackgroundImage}
@@ -92,7 +100,11 @@ const Profile = () => {
               title={userData.username}
               subtitle={userData.fullName}
               info={userData.description}
-              containerStyles={{ padding: 16, backgroundColor: 'transparent', borderRadius: 0 }}
+              containerStyles={{
+                padding: 16,
+                backgroundColor: 'transparent',
+                borderRadius: 0
+              }}
               titleStyles={{ fontSize: 18 }}
               followers={userData.followers}
               following={userData.following}
@@ -102,28 +114,47 @@ const Profile = () => {
 
           {/* Iconos de opciones */}
           <View className="left-[2%]" style={styles.iconTabContainer}>
-              <TouchableOpacity  style={{height: '100%', width: '33%'}} onPress={()=>{ handlePostButton('all')}}>
-                <View style={styles.iconStyles}>
-                        <PostsIcon size={40} />
-                        <Text className={textLight} style={{ alignSelf: 'center' }}>Publicaciones</Text>
-                </View> 
-              </TouchableOpacity>
-               
-              <TouchableOpacity style={{height: '100%', width: '33%'}}  onPress={()=>{ handlePostButton('favorites')}}>
-                <View  style={styles.iconStyles}> 
-                  <StarIcon size={40} />
-                    <Text className={textLight} style={{ alignSelf: 'center' }}>Favoritas</Text>
-                </View> 
-              </TouchableOpacity>
-            
-            
-                <TouchableOpacity style={{height: '100%', width: '33%'}} onPress={()=>{ handlePostButton('archived')}}>
-                  <View  style={styles.iconStyles}>
-                    <ArchiveIcon2 size={40} />
-                      <Text className={textLight} style={{ alignSelf: 'center' }}>Archivadas</Text>
-                  </View>
-                </TouchableOpacity> 
-           
+            <TouchableOpacity
+              style={{ height: '100%', width: '33%' }}
+              onPress={() => {
+                handlePostButton('all')
+              }}
+            >
+              <View style={styles.iconStyles}>
+                <PostsIcon size={40} />
+                <Text className={textLight} style={{ alignSelf: 'center' }}>
+                  Publicaciones
+                </Text>
+              </View>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={{ height: '100%', width: '33%' }}
+              onPress={() => {
+                handlePostButton('favorites')
+              }}
+            >
+              <View style={styles.iconStyles}>
+                <StarIcon size={40} />
+                <Text className={textLight} style={{ alignSelf: 'center' }}>
+                  Favoritas
+                </Text>
+              </View>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={{ height: '100%', width: '33%' }}
+              onPress={() => {
+                handlePostButton('archived')
+              }}
+            >
+              <View style={styles.iconStyles}>
+                <ArchiveIcon2 size={40} />
+                <Text className={textLight} style={{ alignSelf: 'center' }}>
+                  Archivadas
+                </Text>
+              </View>
+            </TouchableOpacity>
           </View>
 
           {/* Línea divisoria */}
@@ -134,29 +165,37 @@ const Profile = () => {
               marginLeft: '-20%',
               backgroundColor: '#cccc',
               elevation: 5,
-              marginVertical: 20,
+              marginVertical: 20
             }}
           />
         </View>
       </Screen>
     </View>
-  );
+  )
 
   return (
     <SafeAreaView className="h-full mt-[-35]" style={{ backgroundColor: 'white' }}>
       {/* FlatList con encabezado y lista de posts */}
       <FlatList
         ListHeaderComponent={renderHeader}
-        data={filterPosts}  // Puedes pasar datos aquí o usar PostCardList como se muestra
-        renderItem={({item}) => <PostCard location={item.location} image={item.image} user={item.user} date={item.date} description={item.description} />}
+        data={filterPosts} // Puedes pasar datos aquí o usar PostCardList como se muestra
+        renderItem={({ item }) => (
+          <PostCard
+            location={item.location}
+            image={item.image}
+            user={item.user}
+            date={item.date}
+            description={item.description}
+          />
+        )}
         keyExtractor={(item, index) => index.toString()}
         showsVerticalScrollIndicator={false}
       />
     </SafeAreaView>
-  );
-};
+  )
+}
 
-export default Profile;
+export default Profile
 
 const styles = StyleSheet.create({
   iconTabContainer: {
@@ -166,7 +205,7 @@ const styles = StyleSheet.create({
     width: '100%',
     shadowColor: 'black',
     shadowRadius: 4,
-    height: 80,
+    height: 80
   },
   iconStyles: {
     marginLeft: -13,
@@ -187,6 +226,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'white',
-    overflow: 'hidden',
-  },
-});
+    overflow: 'hidden'
+  }
+})

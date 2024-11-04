@@ -7,10 +7,10 @@ import Screen from '@/src/components/Screen'
 import { router, useNavigation } from 'expo-router'
 
 export default function Welcome() {
-  const navigation = useNavigation();
+  const navigation = useNavigation()
   useEffect(() => {
-    navigation.setOptions({ headerShown: false });
-  }, [navigation]);
+    navigation.setOptions({ headerShown: false })
+  }, [navigation])
   const { LogoBigIcon } = Icons
 
   return (

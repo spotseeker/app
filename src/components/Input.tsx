@@ -7,7 +7,15 @@ const StyledPressable = styled(Pressable)
 
 type Input = {
   children: ReactNode
-  variant: 'default' | 'email' | 'edit' | 'search' | 'password' | 'description' | 'date' | 'number'
+  variant:
+    | 'default'
+    | 'email'
+    | 'edit'
+    | 'search'
+    | 'password'
+    | 'description'
+    | 'date'
+    | 'number'
   name: string
   control: Control
   date?: Date
@@ -61,7 +69,9 @@ function Input({ children, variant, name, control, date }: Input) {
           multiline={variant == 'description'}
           inputMode={variant == 'number' ? 'numeric' : 'text'}
           textAlignVertical="top"
-          value={variant == 'date' ? (date ? date.toLocaleDateString() : '') : field.value}
+          value={
+            variant == 'date' ? (date ? date.toLocaleDateString() : '') : field.value
+          }
           onChangeText={field.onChange}
           editable={variant == 'date' ? false : true}
         />

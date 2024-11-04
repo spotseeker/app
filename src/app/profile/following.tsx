@@ -1,31 +1,39 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, StyleSheet, ImageSourcePropType,Dimensions, TouchableOpacity } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { Avatar } from '@kolking/react-native-avatar';
-import Screen from '@/src/components/Screen';
-import Button from '@/src/components/Button';
-import Img1 from '@/src/assets/images_app/avatar_users/Ellipse 11.png';
-import Img2 from '@/src/assets/images_app/avatar_users/Ellipse 14.png';
-import Img3 from '@/src/assets/images_app/avatar_users/Ellipse 14 (1).png';
-import Icons from '@/src/components/Icons';
-import { router, useNavigation } from 'expo-router';
+import React, { useEffect, useState } from 'react'
+import {
+  View,
+  Text,
+  FlatList,
+  StyleSheet,
+  ImageSourcePropType,
+  Dimensions,
+  TouchableOpacity
+} from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import { Avatar } from '@kolking/react-native-avatar'
+import Screen from '@/src/components/Screen'
+import Button from '@/src/components/Button'
+import Img1 from '@/src/assets/images_app/avatar_users/Ellipse 11.png'
+import Img2 from '@/src/assets/images_app/avatar_users/Ellipse 14.png'
+import Img3 from '@/src/assets/images_app/avatar_users/Ellipse 14 (1).png'
+import Icons from '@/src/components/Icons'
+import { router, useNavigation } from 'expo-router'
 
 type Following = {
-  id: string;
-  username: string;
-  uri: ImageSourcePropType;
-  isFollowing: boolean;
-};
+  id: string
+  username: string
+  uri: ImageSourcePropType
+  isFollowing: boolean
+}
 
 const UserFollowing = () => {
-    const { ArrowBack } = Icons;
-  const navigation = useNavigation();
+  const { ArrowBack } = Icons
+  const navigation = useNavigation()
   useEffect(() => {
     navigation.setOptions({
       headerShown: true,
       gestureEnabled: false,
       title: '',
-      headerTitle:'Seguidores',
+      headerTitle: 'Seguidores',
       headerTintColor: '#EEAF61',
       headerTitleStyle: {
         fontWeight: 'bold'
@@ -34,27 +42,27 @@ const UserFollowing = () => {
         <TouchableOpacity onPress={() => router.push('/(tabs)/profile')}>
           <ArrowBack size={35} />
         </TouchableOpacity>
-      ),
-    });
-  }, [navigation]);
-  const images = [Img1, Img2, Img3];
+      )
+    })
+  }, [navigation])
+  const images = [Img1, Img2, Img3]
 
   const [followingData, setFollowingData] = useState<Following[]>([
     { id: '1', username: 'Andresjpg', uri: images[0], isFollowing: true },
     { id: '2', username: 'Yohanna33', uri: images[1], isFollowing: true },
-    { id: '3', username: 'Davidbqto', uri: images[2], isFollowing: false },
-  ]);
+    { id: '3', username: 'Davidbqto', uri: images[2], isFollowing: false }
+  ])
 
   const toggleFollow = (id: string) => {
     setFollowingData((prevData) =>
       prevData.map((user) =>
         user.id === id ? { ...user, isFollowing: !user.isFollowing } : user
       )
-    );
-  };
+    )
+  }
 
   const renderFollowing = ({ item }: { item: Following }) => (
-    <View  className='flex-1 justify-start content-start' style={styles.followingItem}>
+    <View className="flex-1 justify-start content-start" style={styles.followingItem}>
       <Avatar source={item.uri} size={40} />
       <View style={styles.userInfo}>
         <Text className="text-primary font-pbold">{item.username}</Text>
@@ -70,7 +78,7 @@ const UserFollowing = () => {
         </Text>
       </Button>
     </View>
-  );
+  )
 
   return (
     <SafeAreaView>
@@ -83,23 +91,23 @@ const UserFollowing = () => {
         />
       </Screen>
     </SafeAreaView>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   followingList: {
-    marginTop: Dimensions.get('window').height*(-0.70),
-    paddingTop:Dimensions.get('window').height*0.2,
+    marginTop: Dimensions.get('window').height * -0.7,
+    paddingTop: Dimensions.get('window').height * 0.2
   },
   followingItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 10,
+    padding: 10
   },
   userInfo: {
     flex: 1,
-    marginLeft: 10,
-  },
-});
+    marginLeft: 10
+  }
+})
 
-export default UserFollowing;
+export default UserFollowing

@@ -10,10 +10,10 @@ import Input from '@/src/components/Input'
 import Button from '@/src/components/Button'
 
 export default function ResetPassword() {
-  const navigation = useNavigation();
+  const navigation = useNavigation()
   useEffect(() => {
-    navigation.setOptions({ headerShown: false });
-  }, [navigation]);
+    navigation.setOptions({ headerShown: false })
+  }, [navigation])
   const { LockIcon } = Icons
   const { control, handleSubmit, reset } = useForm({
     resolver: zodResolver(ResetPasswordSchema)

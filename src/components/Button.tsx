@@ -19,33 +19,31 @@ function Button({ children, onPress, variant, width, height }: ButtonProps) {
         width: width,
         height: height,
         borderRadius: 10,
-        overflow: "hidden",
-        borderWidth: variant === "secondary" ? 2 : 0,
-        borderColor: variant === "secondary" ? "#FB9062" : "transparent",
+        overflow: 'hidden',
+        borderWidth: variant === 'secondary' ? 2 : 0,
+        borderColor: variant === 'secondary' ? '#FB9062' : 'transparent'
       }}
     >
-      {variant === "primary" ? (
+      {variant === 'primary' ? (
         <LinearGradient
-          colors={["#FB9062", "#EE5D6C"]}
-          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+          colors={['#FB9062', '#EE5D6C']}
+          style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
         >
-          <Text style={{ color: "#FFFFFF", fontWeight: "bold" }}>
-            {children}
-          </Text>
+          <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>{children}</Text>
         </LinearGradient>
       ) : (
         <View
           style={{
             flex: 1,
-            backgroundColor: variant === "gray" ? "#808080" : "#FFFFFF",
-            justifyContent: "center",
-            alignItems: "center",
+            backgroundColor: variant === 'gray' ? '#808080' : '#FFFFFF',
+            justifyContent: 'center',
+            alignItems: 'center'
           }}
         >
           <Text
             style={{
-              color: variant === "gray" ? "#FFFFFF" : "#FB9062",
-              fontWeight: "bold",
+              color: variant === 'gray' ? '#FFFFFF' : '#FB9062',
+              fontWeight: 'bold'
             }}
           >
             {children}

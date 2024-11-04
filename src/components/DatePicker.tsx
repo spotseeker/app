@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react'
-import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker'
+import DateTimePicker, {
+  DateTimePickerEvent
+} from '@react-native-community/datetimepicker'
 import { Control, useController } from 'react-hook-form'
 import { Platform, View, TouchableOpacity, Text } from 'react-native'
 
@@ -12,7 +14,14 @@ type DatePickerProps = {
   show: boolean
 }
 
-function DatePicker({ setDate, setShow, control, name, setDateError, show }: DatePickerProps) {
+function DatePicker({
+  setDate,
+  setShow,
+  control,
+  name,
+  setDateError,
+  show
+}: DatePickerProps) {
   const { field, fieldState } = useController({
     control,
     name,
@@ -100,7 +109,9 @@ function DatePicker({ setDate, setShow, control, name, setDateError, show }: Dat
             }}
             onPress={confirmIOSDate}
           >
-            <Text style={{ color: '#075985', fontSize: 14, fontWeight: '500' }}>Confirmar</Text>
+            <Text style={{ color: '#075985', fontSize: 14, fontWeight: '500' }}>
+              Confirmar
+            </Text>
           </TouchableOpacity>
         </View>
       )}
