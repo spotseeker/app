@@ -17,7 +17,12 @@ type registerProps = {
   setUserData: (user: UserData) => void
 }
 
-export default function SignupScreen({ step, setStep, setUserData, userData }: registerProps) {
+export default function SignupScreen({
+  step,
+  setStep,
+  setUserData,
+  userData
+}: registerProps) {
   const getSchemaForStep = (step: number) => {
     switch (step) {
       case 1:
@@ -128,7 +133,9 @@ export default function SignupScreen({ step, setStep, setUserData, userData }: r
                         }
                       : {}),
                     ...(step === 3 ? { aboutme: data.aboutme } : {}),
-                    ...(step === 4 ? { password: data.password, confirm: data.confirm } : {}),
+                    ...(step === 4
+                      ? { password: data.password, confirm: data.confirm }
+                      : {}),
                     ...(step === 5 ? { code: data.code } : {})
                   }
 

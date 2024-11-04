@@ -1,4 +1,5 @@
 import React from 'react'
+import { Image } from 'react-native'
 import Ionicons from '@expo/vector-icons/Ionicons'
 import AntDesign from '@expo/vector-icons/AntDesign'
 import Entypo from '@expo/vector-icons/Entypo'
@@ -7,10 +8,11 @@ import Fontisto from '@expo/vector-icons/Fontisto'
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
-import logo from '../assets/images_app/modelo_logo_icon_V.2..4.png'
-import logoBig from '../assets/images_app/Group 1.png'
-import shy from '../assets/images_app/shy.png'
-import { Image } from 'react-native'
+import logo from '@/src/assets/images_app/modelo_logo_icon_V.2..4.png'
+import logoNom from '@/src/assets/images_app/nombre_logo.png'
+import logoBig from '@/src/assets/images_app/Group 1.png'
+import shy from '@/src/assets/images_app/shy.png'
+
 type Props = {
   color?: string
   shown?: boolean
@@ -22,11 +24,15 @@ const themeIconColor = '#ee5d6c'
 const themeIconColor2 = '#FB9062'
 
 const PersonIcon = ({ color, size = 25 }: Props) => {
-  return <Ionicons name="person-outline" size={size} color={color} style={{ padding: 11 }} />
+  return (
+    <Ionicons name="person-outline" size={size} color={color} style={{ padding: 11 }} />
+  )
 }
 
 const MenuIcon = ({ color = themeIconColor, size = 25 }: Props) => {
-  return <Ionicons name="menu-outline" size={size} color={color} style={{ padding: 11 }} />
+  return (
+    <Ionicons name="menu-outline" size={size} color={color} style={{ padding: 11 }} />
+  )
 }
 
 const SearchIcon = ({ color, size = 25 }: Props) => {
@@ -65,7 +71,14 @@ const EmailIcon = ({ size = 65 }: Props) => {
 }
 
 const ImageIcon1 = ({ size = 25 }: Props) => {
-  return <FontAwesome6 name="image" size={size} color={themeIconColor} style={{ padding: 11 }} />
+  return (
+    <FontAwesome6
+      name="image"
+      size={size}
+      color={themeIconColor}
+      style={{ padding: 11 }}
+    />
+  )
 }
 
 const ImageIcon2 = ({ size = 60 }: Props) => {
@@ -124,7 +137,13 @@ const HomeIcon = ({ size = 30 }: Props) => {
 }
 
 const MapMarkerIcon = ({ size = 25 }: Props) => {
-  return <MaterialCommunityIcons name="map-marker-outline" size={size} color={themeIconColor} />
+  return (
+    <MaterialCommunityIcons
+      name="map-marker-outline"
+      size={size}
+      color={themeIconColor}
+    />
+  )
 }
 
 const PlusIcon = ({ size = 25 }: Props) => {
@@ -136,11 +155,19 @@ const FourLinesIcon = ({ size = 25 }: Props) => {
 }
 
 const TrashIcon = ({ size = 25 }: Props) => {
-  return <MaterialCommunityIcons name="trash-can-outline" size={size} color={themeIconColor} />
+  return (
+    <MaterialCommunityIcons name="trash-can-outline" size={size} color={themeIconColor} />
+  )
 }
 
 const ArchiveIcon = ({ size = 25 }: Props) => {
-  return <MaterialCommunityIcons name="archive-arrow-down-outline" size={size} color="#eeaf61" />
+  return (
+    <MaterialCommunityIcons
+      name="archive-arrow-down-outline"
+      size={size}
+      color="#eeaf61"
+    />
+  )
 }
 
 const ArchiveIcon2 = ({ color = themeIconColor2, size = 25 }: Props) => {
@@ -220,8 +247,26 @@ const ShyIcon = ({ size = 100 }: Props) => {
 }
 
 const CalendarIcon = () => {
-  return <AntDesign name="calendar" size={24} color={themeIconColor} style={{ padding: 11 }} />
+  return (
+    <AntDesign name="calendar" size={24} color={themeIconColor} style={{ padding: 11 }} />
+  )
 }
+
+const WarningIcon = ({ color, size = 25 }: Props) => {
+  return (
+    <Ionicons name="warning-outline" size={size} color={color} style={{ padding: 11 }} />
+  )
+}
+
+const LogoNomIcon = ({ width = 20, height = 20, mr }: pngProps) => {
+  return (
+    <Image
+      source={logoNom}
+      style={{ width: width, height: height, marginRight: mr }} // Cambia los valores según lo que necesites
+    />
+  )
+}
+
 export default {
   CalendarIcon,
   ShyIcon,
@@ -262,5 +307,7 @@ export default {
   StarIcon,
   StarHalfIcon,
   MenuIcon,
-  ArrowBack
+  ArrowBack,
+  WarningIcon,
+  LogoNomIcon
 }

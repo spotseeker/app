@@ -28,7 +28,12 @@ const InfoBox: React.FC<InfoBoxProps> = ({
       <Text
         className="text-lightc font-bold"
         style={[
-          { color: Colors.text, fontWeight: '900', textAlign: 'center', marginTop: '-5%' },
+          {
+            color: Colors.text,
+            fontWeight: '900',
+            textAlign: 'center',
+            marginTop: '-5%'
+          },
           titleStyles
         ]}
       >

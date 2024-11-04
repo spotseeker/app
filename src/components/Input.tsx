@@ -69,7 +69,9 @@ function Input({ text, variant, placeholder, name, control, date }: InputProps) 
           multiline={variant == 'description'}
           inputMode={variant == 'number' ? 'numeric' : 'text'}
           textAlignVertical="top"
-          value={variant == 'date' ? (date ? date.toLocaleDateString() : '') : field.value}
+          value={
+            variant == 'date' ? (date ? date.toLocaleDateString() : '') : field.value
+          }
           onChangeText={field.onChange}
           editable={variant == 'date' ? false : true}
         />

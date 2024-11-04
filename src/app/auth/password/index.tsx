@@ -10,10 +10,10 @@ import Input from '@/src/components/Input'
 import Button from '@/src/components/Button'
 
 export default function RecoveryPassword() {
-  const navigation = useNavigation();
+  const navigation = useNavigation()
   useEffect(() => {
-    navigation.setOptions({ headerShown: false });
-  }, [navigation]);
+    navigation.setOptions({ headerShown: false })
+  }, [navigation])
   const { EmailIcon } = Icons
   const { control, handleSubmit, reset } = useForm({
     resolver: zodResolver(EmailSchema)
@@ -23,8 +23,12 @@ export default function RecoveryPassword() {
     <ScrollView>
       <Screen>
         <View className="flex justify-center items-center">
-          <Text className="text-helper font-pbold text-[20px]">Introduce tu dirección de</Text>
-          <Text className="text-helper font-pbold text-[20px] mb-5">correo electrónico</Text>
+          <Text className="text-helper font-pbold text-[20px]">
+            Introduce tu dirección de
+          </Text>
+          <Text className="text-helper font-pbold text-[20px] mb-5">
+            correo electrónico
+          </Text>
           <EmailIcon />
           <Text className="text-lightc font-pbold text-[16px] mt-5">
             Para recuperar tu contraseña
@@ -32,7 +36,9 @@ export default function RecoveryPassword() {
           <Text className="text-lightc font-pbold text-[16px]">
             necesitarás el correo electrónico
           </Text>
-          <Text className="text-lightc font-pbold text-[16px]">vinculado a tu cuenta</Text>
+          <Text className="text-lightc font-pbold text-[16px]">
+            vinculado a tu cuenta
+          </Text>
           <Input
             text='Correo vinculado'
             placeholder='correo'
