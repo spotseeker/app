@@ -23,6 +23,9 @@ function SearchInput({ value, onChangeText, placeholder }: InputProps) {
           textAlignVertical="top"
           value={value}
           onChangeText={onChangeText}
+          style={{
+            backgroundColor: 'white'
+          }}
         />
         {<SearchIcon color="#ee5d6c" />}
       </View>
