@@ -99,18 +99,25 @@ export default function EditProfile() {
               </TouchableOpacity>
             </View>
             <View className="mt-[30px] px-[10%]">
-              <Input variant="default" control={control} name="username">
-                Nombre de Usuario
-              </Input>
-              <Input variant="default" control={control} name="firstname">
-                Nombre
-              </Input>
-              <Input variant="default" control={control} name="lastname">
-                Apellido
-              </Input>
-              <Input variant="description" control={control} name="aboutme">
-                Descripción
-              </Input>
+              <Input
+                text="Nombre de Usuario"
+                variant="default"
+                control={control}
+                name="username"
+              />
+              <Input text="Nombre" variant="default" control={control} name="firstname" />
+              <Input
+                text="Apellido"
+                variant="default"
+                control={control}
+                name="lastname"
+              />
+              <Input
+                text="Description"
+                variant="description"
+                control={control}
+                name="aboutme"
+              />
             </View>
           </View>
           <View className="flex justify-around ml-[60%] pb-[10]">
