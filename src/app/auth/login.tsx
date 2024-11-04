@@ -27,15 +27,15 @@ export default function Login() {
           </View>
           <View className="flex justify-center items-center ">
             <Input
-              text='Introduce usuario'
-              placeholder='usuario'
+              text="Introduce usuario"
+              placeholder="usuario"
               variant="email"
               control={control}
               name="username"
             />
             <Input
-              text='Introduce contraseña'
-              placeholder='contraseña'
+              text="Introduce contraseña"
+              placeholder="contraseña"
               variant="password"
               control={control}
               name="password"

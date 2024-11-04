@@ -7,7 +7,8 @@ const StyledPressable = styled(Pressable)
 
 type InputProps = {
   text?: string
-  variant: 'default'
+  variant:
+    | 'default'
     | 'email'
     | 'edit'
     | 'search'

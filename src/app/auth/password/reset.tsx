@@ -31,15 +31,15 @@ export default function ResetPassword() {
             Introduce la nueva contraseña
           </Text>
           <Input
-            text='Contraseña'
-            placeholder='contraseña'
+            text="Contraseña"
+            placeholder="contraseña"
             variant="password"
             control={control}
             name="newPassword"
           />
           <Input
-            text='Repite Contraseña'
-            placeholder='contraseña'
+            text="Repite Contraseña"
+            placeholder="contraseña"
             variant="password"
             control={control}
             name="confirmNewPassword"

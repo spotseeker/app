@@ -14,12 +14,12 @@ function SearchInput({ value, onChangeText, placeholder }: InputProps) {
   return (
     <View className="py-[15px]">
       <View
-        className={"flex flex-row border border-gray-400 rounded-md w-[330px] h-[48px]"}
+        className={'flex flex-row border border-gray-400 rounded-md w-[330px] h-[48px]'}
       >
         <TextInput
           className="flex-auto p-[11px] text-wrap"
           placeholder={`${placeholder}`}
-          inputMode='text'
+          inputMode="text"
           textAlignVertical="top"
           value={value}
           onChangeText={onChangeText}

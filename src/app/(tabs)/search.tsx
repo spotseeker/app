@@ -1,15 +1,15 @@
-import Icons from '@/src/components/Icons';
-import SearchInput from '@/src/components/SearchInput';
-import { router, useNavigation } from 'expo-router';
+import Icons from '@/src/components/Icons'
+import SearchInput from '@/src/components/SearchInput'
+import { router, useNavigation } from 'expo-router'
 import React, { useEffect, useState } from 'react'
 import { View, TouchableOpacity, FlatList } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import ImageGrid from '@/src/components/ImageGrid';
-import { images } from '@/src/fixtures/images';
+import ImageGrid from '@/src/components/ImageGrid'
+import { images } from '@/src/fixtures/images'
 
 export default function Search() {
   const { ArrowBack } = Icons
-  const navigation = useNavigation();
+  const navigation = useNavigation()
   useEffect(() => {
     navigation.setOptions({
       headerShown: true,
@@ -22,23 +22,23 @@ export default function Search() {
         <TouchableOpacity onPress={() => router.back()}>
           <ArrowBack size={35} />
         </TouchableOpacity>
-      ),
+      )
     })
   }, [navigation])
   const [query, setQuery] = useState('')
-  const imagesFiltered = images.filter(image =>
+  const imagesFiltered = images.filter((image) =>
     image.alt.toLowerCase().includes(query.toLowerCase())
   )
   return (
     <SafeAreaView>
-      <View className='flex justify-center items-center mt-[-10%]'>
+      <View className="flex justify-center items-center mt-[-10%]">
         <SearchInput
-            placeholder='Buscar usuarios, lugares o publicaciones'
-            value={query}
-            onChangeText={setQuery}
+          placeholder="Buscar usuarios, lugares o publicaciones"
+          value={query}
+          onChangeText={setQuery}
         />
       </View>
-      <View className='flex justify-center items-center'>
+      <View className="flex justify-center items-center">
         <FlatList
           numColumns={3}
           renderItem={ImageGrid}

@@ -14,15 +14,15 @@ const Step1 = ({ control }: StepsProps) => {
   return (
     <View className="flex justify-center my-[70px] items-center">
       <Input
-        text='Introduce tu correo'
-        placeholder='correo'
+        text="Introduce tu correo"
+        placeholder="correo"
         variant="email"
         control={control}
         name="email"
       />
       <Input
-        text='Introduce tu nombre de usuario'
-        placeholder='usuario'
+        text="Introduce tu nombre de usuario"
+        placeholder="usuario"
         variant="email"
         control={control}
         name="username"
@@ -42,23 +42,23 @@ const Step2 = ({ control }: StepsProps) => {
   return (
     <View className="flex justify-center my-[50px] items-center">
       <Input
-        text='Introduce tu nombre'
-        placeholder='nombre'
+        text="Introduce tu nombre"
+        placeholder="nombre"
         variant="default"
         control={control}
         name="firstname"
       />
       <Input
-        text='Introduce tu apellido'
-        placeholder='apellido'
+        text="Introduce tu apellido"
+        placeholder="apellido"
         variant="default"
         control={control}
         name="lastname"
       />
       <Pressable onPress={() => setShow(true)}>
         <Input
-          text='Introduce tu fecha de nacimiento'
-          placeholder='fecha de nacimiento'
+          text="Introduce tu fecha de nacimiento"
+          placeholder="fecha de nacimiento"
           variant="date"
           control={control}
           name="birthdateString"
@@ -151,7 +151,7 @@ const Step3 = ({ control }: StepsProps) => {
         )}
 
         <Input
-          text='Cuéntanos acerca de ti'
+          text="Cuéntanos acerca de ti"
           variant="description"
           name="aboutme"
           control={control}
@@ -165,15 +165,15 @@ const Step4 = ({ control }: StepsProps) => {
   return (
     <View className="flex justify-center my-[50px] items-center">
       <Input
-        text='Introduce tu contraseña'
-        placeholder='contraseña'
+        text="Introduce tu contraseña"
+        placeholder="contraseña"
         variant="password"
         control={control}
         name="password"
       />
       <Input
-        text='Confirma tu contraseña'
-        placeholder='contraseña'
+        text="Confirma tu contraseña"
+        placeholder="contraseña"
         variant="password"
         control={control}
         name="confirm"
@@ -189,8 +189,8 @@ const Step5 = ({ control }: StepsProps) => {
         Hemos enviado el codigo a tu correo por favor verificalo
       </Text>
       <Input
-        text='Introduce el código'
-        placeholder='código'
+        text="Introduce el código"
+        placeholder="código"
         variant="number"
         control={control}
         name="code"

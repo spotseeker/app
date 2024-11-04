@@ -40,8 +40,8 @@ export default function RecoveryPassword() {
             vinculado a tu cuenta
           </Text>
           <Input
-            text='Correo vinculado'
-            placeholder='correo'
+            text="Correo vinculado"
+            placeholder="correo"
             variant="email"
             control={control}
             name="email"

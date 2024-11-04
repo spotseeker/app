@@ -32,8 +32,8 @@ export default function ValidateOTP() {
           </Text>
           <Text className="text-lightc font-pbold text-[16px]">por favor verificalo</Text>
           <Input
-            text='Código'
-            placeholder='código'
+            text="Código"
+            placeholder="código"
             variant="number"
             control={control}
             name="otp"
