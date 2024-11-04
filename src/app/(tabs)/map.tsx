@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { View, StyleSheet, TouchableOpacity } from 'react-native'
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps'
 import GetLocation from 'react-native-get-location'
 import Icons from '@/src/components/Icons'
 import { router, useNavigation } from 'expo-router'
+import SearchInput from '@/src/components/SearchInput'
 
 const { MapMarkerColorIcon, ArrowBack } = Icons
 let latitude: number
@@ -52,6 +53,7 @@ export default function Map() {
       )
     })
   }, [navigation])
+  const [query, setQuery] = useState('')
   return (
     <View style={styles.container}>
       <MapView
@@ -75,6 +77,13 @@ export default function Map() {
           <MapMarkerColorIcon size={50} />
         </Marker>
       </MapView>
+      <View style={{ position: 'absolute', top: 0 }}>
+        <SearchInput
+          placeholder="Buscar lugares nuevos"
+          value={query}
+          onChangeText={setQuery}
+        />
+      </View>
     </View>
   )
 }
