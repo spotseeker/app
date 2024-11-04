@@ -41,7 +41,7 @@ export default function Login() {
               variant="primary"
               onPress={handleSubmit(() => {
                 reset()
-                router.push('/(tabs)/Home')
+                router.push('/(tabs)/home')
               })}
             >
               Ingresar

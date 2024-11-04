@@ -6,11 +6,14 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        helper: '#eeaf61',
-        lightc: '#fb9062',
-        coloricon: '#ee5d6c',
-        secondary: '#ce4993',
-        primary: '#6a0d83'
+        helper: "#eeaf61",
+        lightc: "#fb9062",
+        coloricon: "#ee5d6c",
+        secondary: "#ce4993",
+        primary: "#6a0d83",
+        complementaryA: '#066A33',
+        complementaryB: '#FF0000'
+        
       },
       fontFamily: {
         pthin: ['Poppins-Thin', 'sans-serif'],

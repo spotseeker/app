@@ -22,7 +22,7 @@ export default function TabLayout() {
       }}
     >
       <Tabs.Screen
-        name="Home"
+        name="home"
         options={{
           headerShown: false,
           title: '',
@@ -58,7 +58,7 @@ export default function TabLayout() {
       />
 
       <Tabs.Screen
-        name="Profile"
+        name="profile"
         options={{
           headerShown: false,
           title: '',

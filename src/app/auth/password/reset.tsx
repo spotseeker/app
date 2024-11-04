@@ -56,7 +56,7 @@ export default function ResetPassword() {
             onPress={handleSubmit((data) => {
               if (data) {
                 reset()
-                router.push('/(tabs)/Home')
+                router.push('/(tabs)/home')
               }
             })}
           >
