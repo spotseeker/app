@@ -4,15 +4,15 @@ import { Avatar } from '@kolking/react-native-avatar'
 import { Colors } from '@/src/constants/Colors'
 import Icons from './Icons'
 
-type CommentProps = {
+type commentProps = {
   Avatar: number
   name: string
   commentText: string
   alignLeft?: boolean
 }
 
-type CommentCardProps = {
-  Comments: CommentProps
+type commentCardProps = {
+  Comments: commentProps
   deleteComment: () => void
   editComment: () => void
   isEditing: boolean
@@ -29,7 +29,7 @@ function CommentCard({
   editText,
   setEditText,
   saveEdit
-}: CommentCardProps) {
+}: commentCardProps) {
   const { EditIcon, TrashIcon, ArchiveIcon } = Icons
 
   return (

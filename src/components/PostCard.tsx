@@ -30,8 +30,12 @@ export default function PostCard({
     if (!liked) {
       setCount(count + 1)
       setLiked(true)
+    } else {
+      setCount(count - 1)
+      setLiked(false)
     }
   }
+
   return (
     <SafeAreaView className="w-80% bg-white border border-gray-300 jusfify-center m-2  space-y-3">
       <View className="flex-row mx-2">
@@ -61,7 +65,7 @@ export default function PostCard({
           />
           <Text className="font-pbold">{count}</Text>
         </View>
-        <Pressable onPress={() => router.push('/posting/PostComments' as Href)}>
+        <Pressable onPress={() => router.push('/post/Comments' as Href)}>
           <View className="flex-row items-center }   ">
             <AntDesign name="message1" size={28}></AntDesign>
           </View>

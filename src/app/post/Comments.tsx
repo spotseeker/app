@@ -12,7 +12,7 @@ import Input from '@/src/components/Input'
 import CommentsFixture from '@/src/fixtures/Comments'
 import ModalAction from '@/src/components/ModalAction'
 
-function PostComments() {
+function Comments() {
   const navigation = useNavigation()
   const { ArrowBack, SendIcon } = Icons
   const { control, handleSubmit, reset, getValues } = useForm({})
@@ -53,7 +53,7 @@ function PostComments() {
 
   const handleEditComment = (index: number) => {
     setEditIndex(index)
-    setEditText(comments[index].commentText) // Cargar el texto del comentario en el estado de edición
+    setEditText(comments[index].commentText)
   }
 
   const saveEditedComment = (index: number) => {
@@ -129,4 +129,4 @@ function PostComments() {
   )
 }
 
-export default PostComments
+export default Comments
