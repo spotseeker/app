@@ -62,7 +62,7 @@ export default function Settings() {
         }}
       >
         <Screen>
-          <View className="justify-start items-center my-[-109%] ">
+          <View className="justify-start items-center my-[-90%] ">
             {/* Opción de editar perfil */}
             <TouchableOpacity onPress={handleEditProfile}>
               <View className="w-full flex-row items-center justify-between px-4 mb-4">
