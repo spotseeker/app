@@ -178,7 +178,7 @@ const Profile = () => {
       {/* FlatList con encabezado y lista de posts */}
       <FlatList
         ListHeaderComponent={renderHeader}
-        data={filterPosts} // Puedes pasar datos aquí o usar PostCardList como se muestra
+        data={filterPosts}
         renderItem={({ item }) => (
           <PostCard
             location={item.location}
@@ -186,6 +186,7 @@ const Profile = () => {
             user={item.user}
             date={item.date}
             description={item.description}
+            isOwnProfile={true}
           />
         )}
         keyExtractor={(item, index) => index.toString()}

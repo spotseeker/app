@@ -1,7 +1,7 @@
 export const post = [
   {
     id: 1,
-    user: 'Ricardodl',
+    user: 'Ricardodlpj',
     userid: 'Abc234',
     date: new Date(2024, 6, 6),
     description:
@@ -13,7 +13,7 @@ export const post = [
   },
   {
     id: 2,
-    user: 'Ricardodl',
+    user: 'Ricardodlpj',
     userid: 'Abc234',
     date: new Date(2024, 3, 4),
     description: 'Muy buen lugar para comer, excelente servicio',
@@ -24,7 +24,7 @@ export const post = [
   },
   {
     id: 3,
-    user: 'Ricardodl',
+    user: 'Ricardodlpj',
     userid: 'Abc234',
     date: new Date(2024, 4, 9),
     description: 'Me encanto la comida.',
