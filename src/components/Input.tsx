@@ -16,6 +16,8 @@ type InputProps = {
     | 'description'
     | 'date'
     | 'number'
+    | 'comment'
+
   placeholder?: string
   name: string
   control: Control
@@ -60,7 +62,11 @@ function Input({ text, variant, placeholder, name, control, date }: InputProps) 
 
       <View
         className={`flex flex-row  border border-gray-400 rounded-md ${
-          variant == 'description' ? 'w-[330px] h-[140px]' : 'w-[330px] h-[48px]'
+          variant == 'description'
+            ? 'w-[330px] h-[120px]'
+            : variant == 'comment'
+              ? 'w-[250px] h-[48px]'
+              : 'w-[330px] h-[48px]'
         }`}
       >
         <TextInput

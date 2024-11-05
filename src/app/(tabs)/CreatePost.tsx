@@ -1,13 +1,8 @@
-import React from 'react'
-import { View, Text } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { useEffect } from 'react'
 
-export default function Home() {
-  return (
-    <SafeAreaView>
-      <View>
-        <Text className="text-lightc font-pbold text-[14px]">Crear Post</Text>
-      </View>
-    </SafeAreaView>
-  )
+import { router } from 'expo-router'
+export default function CreatePost() {
+  useEffect(() => {
+    router.push('/posting/NewPost')
+  }, [])
 }

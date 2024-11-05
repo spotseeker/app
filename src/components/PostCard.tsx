@@ -1,12 +1,13 @@
 import * as React from 'react'
 import { useState } from 'react'
-import { View, Text, Image, StyleSheet } from 'react-native'
+import { View, Text, Image, StyleSheet, Pressable } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import AntDesign from '@expo/vector-icons/AntDesign'
 import { Avatar } from '@kolking/react-native-avatar'
 import ProfileImg from '@/src/assets/images_app/avatar_users/image_profile.png'
 import { Colors } from '@/src/constants/Colors'
+import { Href, router } from 'expo-router'
 
 type PostCardProps = {
   location: string
@@ -73,9 +74,11 @@ export default function PostCard({
           />
           <Text className="font-pbold">{count}</Text>
         </View>
-        <View className="flex-row items-center gap-3   ">
-          <AntDesign name="message1" size={28}></AntDesign>
-        </View>
+        <Pressable onPress={() => router.push('/posting/PostComments' as Href)}>
+          <View className="flex-row items-center gap-3   ">
+            <AntDesign name="message1" size={28}></AntDesign>
+          </View>
+        </Pressable>
         <View className="flex-row items-center gap-3  justify-content ">
           <AntDesign name="staro" size={28} className="ml-1"></AntDesign>
         </View>
