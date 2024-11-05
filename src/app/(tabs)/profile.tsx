@@ -187,6 +187,7 @@ const Profile = () => {
             date={item.date}
             description={item.description}
             isOwnProfile={true}
+            rating={item.rating}
           />
         )}
         keyExtractor={(item, index) => index.toString()}

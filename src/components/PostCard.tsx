@@ -8,6 +8,7 @@ import ProfileImg from '@/src/assets/images_app/avatar_users/image_profile.png'
 import { Colors } from '@/src/constants/Colors'
 import { Href, router } from 'expo-router'
 import Modal from '@/src/components/Modal'
+import Rating from './Rating'
 
 type PostCardProps = {
   location: string
@@ -16,6 +17,7 @@ type PostCardProps = {
   image: string
   description: string
   isOwnProfile?: boolean
+  rating: number
 }
 
 export default function PostCard({
@@ -24,12 +26,13 @@ export default function PostCard({
   description,
   user,
   date,
-  isOwnProfile
+  isOwnProfile,
+  rating
 }: PostCardProps) {
   const [count, setCount] = useState(1)
   const [liked, setLiked] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
-
+  const { RenderStar } = Rating
   const handleLike = () => {
     if (!liked) {
       setCount(count + 1)
@@ -71,6 +74,10 @@ export default function PostCard({
         <View style={styles.actionGroup}>
           <AntDesign name="staro" size={28} />
         </View>
+        <View style={styles.ratingContainer}>
+          <RenderStar rating={rating} />
+          <Text style={styles.ratingText}>{rating}</Text>
+        </View>
       </View>
 
       <View style={styles.footerRow}>
@@ -79,7 +86,9 @@ export default function PostCard({
           <Text style={styles.locationText}>{location}</Text>
         </View>
 
-        <Text>{date.toLocaleDateString()}</Text>
+        <View className="ml-[-55] mr-[10]">
+          <Text>{date.toLocaleDateString()}</Text>
+        </View>
       </View>
       <Text>{description}</Text>
 
@@ -166,6 +175,21 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: 'bold',
     color: Colors.text
+  },
+  ratingContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: Colors.tabIconSelected,
+    borderRadius: 20,
+    padding: 8,
+    marginLeft: 120,
+    width: 80
+  },
+  ratingText: {
+    marginLeft: 5,
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: 'white'
   },
   modalOption: {
     fontSize: 18,

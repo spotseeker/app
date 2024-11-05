@@ -22,6 +22,7 @@ interface SelectImageScreenProps {
 const CreatePostScreen1 = ({ image, control, setStep }: createPostScreenProps) => {
   const { ImageIcon1, ImageIcon2, HashTagIcon, StarIconColorized, MapMarkerIcon } = Icons
   const [rate, setRate] = useState(0)
+  const { SetRating } = Rating
   return (
     <View className="w-full h-full bg-white ">
       <View className="flex justify-center items-center ">
@@ -74,7 +75,7 @@ const CreatePostScreen1 = ({ image, control, setStep }: createPostScreenProps) =
           title="Puntuar experiencia"
           leftItem={<StarIconColorized shown={true} />}
         >
-          <Rating rating={rate} setRating={setRate} />
+          <SetRating rating={rate} setRating={setRate} />
         </OptionItem>
       </View>
       <View className="flex justify-center items-center my-[25px]">

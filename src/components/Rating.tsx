@@ -7,7 +7,11 @@ type RatingProps = {
   setRating: (rate: number) => void
 }
 
-function Rating({ rating, setRating }: RatingProps) {
+type FillRatingProps = {
+  rating: number
+}
+
+function SetRating({ rating, setRating }: RatingProps) {
   const { StarIcon } = Icons
 
   return (
@@ -31,4 +35,15 @@ function Rating({ rating, setRating }: RatingProps) {
   )
 }
 
-export default Rating
+const RenderStar = ({ rating }: FillRatingProps) => {
+  const { StarIcon, StarHalfIcon } = Icons
+  if (rating >= 4.5) {
+    return <StarIcon shown={true} size={20} />
+  } else if (rating >= 2.5) {
+    return <StarHalfIcon size={20} />
+  } else {
+    return <StarIcon shown={false} size={20} />
+  }
+}
+
+export default { SetRating, RenderStar }

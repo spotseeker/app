@@ -31,6 +31,7 @@ const EditPostScreen = ({ postId = 1 }: EditProps) => {
   const [isConfirmationVisible, setConfirmationVisible] = useState(false)
   const [isSuccessVisible, setSuccessVisible] = useState(false)
   const [isErrorVisible, setErrorVisible] = useState(false)
+  const { SetRating } = Rating
 
   useEffect(() => {
     navigation.setOptions({
@@ -132,7 +133,7 @@ const EditPostScreen = ({ postId = 1 }: EditProps) => {
               title="Cambiar puntuacion"
               leftItem={<StarIconColorized shown={true} />}
             >
-              <Rating rating={rate} setRating={setRate} />
+              <SetRating rating={rate} setRating={setRate} />
             </OptionItem>
 
             <View
