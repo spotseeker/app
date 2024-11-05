@@ -18,6 +18,7 @@ type Props = {
   shown?: boolean
   size?: number
   height?: number
+  padding?: number
 }
 
 const themeIconColor = '#ee5d6c'
@@ -39,8 +40,8 @@ const SearchIcon = ({ color, size = 25 }: Props) => {
   return <AntDesign name="search1" size={size} color={color} style={{ padding: 11 }} />
 }
 
-const EditIcon = ({ color, size = 25 }: Props) => {
-  return <Ionicons name="pencil" size={size} color={color} style={{ padding: 11 }} />
+const EditIcon = ({ color, size = 25, padding = 11 }: Props) => {
+  return <Ionicons name="pencil" size={size} color={color} style={{ padding: padding }} />
 }
 
 const PasswordIcon = ({ color, shown, size = 25 }: Props) => {
@@ -71,14 +72,7 @@ const EmailIcon = ({ size = 65 }: Props) => {
 }
 
 const ImageIcon1 = ({ size = 25 }: Props) => {
-  return (
-    <FontAwesome6
-      name="image"
-      size={size}
-      color={themeIconColor}
-      style={{ padding: 11 }}
-    />
-  )
+  return <FontAwesome6 name="image" size={size} color={themeIconColor} />
 }
 
 const ImageIcon2 = ({ size = 60 }: Props) => {
@@ -113,6 +107,12 @@ const StarIcon = ({ shown, size = 25 }: Props) => {
       size={size}
       color={shown ? '#fb9062' : themeIconColor2}
     />
+  )
+}
+
+const StarIconColorized = ({ shown, size = 25 }: Props) => {
+  return (
+    <Ionicons name={shown ? 'star' : 'star-outline'} size={size} color={themeIconColor} />
   )
 }
 
@@ -154,10 +154,8 @@ const FourLinesIcon = ({ size = 25 }: Props) => {
   return <Ionicons name="reorder-four-outline" size={size} color={themeIconColor} />
 }
 
-const TrashIcon = ({ size = 25 }: Props) => {
-  return (
-    <MaterialCommunityIcons name="trash-can-outline" size={size} color={themeIconColor} />
-  )
+const TrashIcon = ({ size = 25, color = themeIconColor }: Props) => {
+  return <MaterialCommunityIcons name="trash-can-outline" size={size} color={color} />
 }
 
 const ArchiveIcon = ({ size = 25 }: Props) => {
@@ -262,12 +260,16 @@ const LogoNomIcon = ({ width = 20, height = 20, mr }: pngProps) => {
   return (
     <Image
       source={logoNom}
-      style={{ width: width, height: height, marginRight: mr }} // Cambia los valores según lo que necesites
+      style={{ width: width, height: height, marginLeft: mr }} // Cambia los valores según lo que necesites
     />
   )
 }
 
+const DeployIcon = () => {
+  return <AntDesign name="caretdown" size={10} color="black" />
+}
 export default {
+  DeployIcon,
   CalendarIcon,
   ShyIcon,
   LogoIcon,
@@ -309,5 +311,6 @@ export default {
   MenuIcon,
   ArrowBack,
   WarningIcon,
-  LogoNomIcon
+  LogoNomIcon,
+  StarIconColorized
 }

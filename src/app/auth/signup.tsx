@@ -4,7 +4,7 @@ import SignupScreen from '@/src/screens/signup'
 import { UserData } from '@/src/schemas/UserSchema'
 
 export default function SignUp() {
-  const [step, setStep] = useState(5)
+  const [step, setStep] = useState(1)
 
   const [formData, setFormData] = useState<UserData>({
     email: '',
