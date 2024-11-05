@@ -53,7 +53,7 @@ export default function Settings() {
   }
 
   return (
-    <SafeAreaView className="h-full bg-white">
+    <SafeAreaView edges={['bottom']} className="h-full bg-white">
       <ScrollView
         contentContainerStyle={{
           paddingTop: Dimensions.get('window').height * 0.1,

@@ -31,6 +31,7 @@ function OptionItem({ children, leftItem, title, Navigator }: OptionTypes) {
           </Pressable>
         </View>
       </View>
+
       {renderItem && <View className="">{children}</View>}
     </>
   )
