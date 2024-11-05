@@ -64,15 +64,27 @@ export default function UpdatePassword() {
               <Avatar source={ProfileImg} color={Colors.text} radius={100} size={100} />
             </View>
             <View className="mt-[30px] px-[10%]">
-              <Input variant="password" control={control} name="actualPassword">
-                Ingresa Tu Clave Actual
-              </Input>
-              <Input variant="password" control={control} name="newPassword">
-                Ingresa Tu Nueva Clave
-              </Input>
-              <Input variant="password" control={control} name="confirmNewPassword">
-                Confirma Tu Nueva Clave
-              </Input>
+              <Input
+                variant="password"
+                control={control}
+                name="actualPassword"
+                text="Ingresa Tu Clave Actual"
+                placeholder="Ingresa Tu Clave Actual"
+              />
+              <Input
+                variant="password"
+                control={control}
+                name="newPassword"
+                text="Ingresa Tu Nueva Clave"
+                placeholder="Ingresa Tu Nueva Clave"
+              />
+              <Input
+                variant="password"
+                control={control}
+                name="confirmNewPassword"
+                text="Confirma Tu Nueva Clave"
+                placeholder="Confirma Tu Nueva Clave"
+              />
             </View>
           </View>
           <View className="flex justify-around ml-[55%] pb-[10] mt-[20%]">

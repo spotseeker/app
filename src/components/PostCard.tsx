@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { useState } from 'react'
-import { View, Text, Image, StyleSheet, Pressable } from 'react-native'
+import { View, Text, Image, Pressable } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import AntDesign from '@expo/vector-icons/AntDesign'
@@ -28,44 +28,31 @@ export default function PostCard({
   const [liked, setLiked] = useState(false)
   const handleLike = () => {
     if (!liked) {
-      setCount(count + 1) // Incrementar el contador de likes
-      setLiked(true) // Marcar que el usuario ha dado like
-      // Aquí puedes agregar lógica para guardar el like en un backend si es necesario
+      setCount(count + 1)
+      setLiked(true)
     }
   }
   return (
-    <SafeAreaView className="w-full bg-white rounded-1xl p-5 my-3">
-      <View className="flex row justify-between mr-[55] mt-[-60]  ">
-        {/* Avatar */}
-
-        <Text
-          style={styles.textUser}
-          className="text-coloricon ml-1 mt-5  font-extrabold   "
-        >
-          {user}
-        </Text>
-        <View className="flex row justify-content mr-[250]">
+    <SafeAreaView className="w-80% bg-white border border-gray-300 jusfify-center m-2  space-y-3">
+      <View className="flex-row mx-2">
+        <View className="flex-row flex-1 items-center space-x-3">
           <Avatar
-            className="mt-[-25] "
+            className=""
             source={ProfileImg}
             color={Colors.text}
             radius={30}
             size={30}
           />
+          <Text className="text-coloricon  font-extrabold   ">{user}</Text>
         </View>
+
+        <AntDesign name="ellipsis1" size={28}></AntDesign>
       </View>
 
-      <View className=" rounded-xl mt-[-40] ">
-        <AntDesign name="ellipsis1" size={28} style={styles.iconellipsis}></AntDesign>
-        <Image
-          source={{ uri: image }}
-          className=" h-72 "
-          style={{ resizeMode: 'contain' }}
-        />
-      </View>
+      <Image source={{ uri: image }} className=" h-72 mx-2" />
 
-      <View className="flex-row items-center gap-0.5   justify-content ">
-        <View className="flex-row items-center gap-3 ml-1 mr-1 mt-1 justify-content ">
+      <View className="flex flex-row items-center space-x-3   justify-start mx-2">
+        <View className="flex-row items-center space-x-3   ">
           <AntDesign
             name={liked ? 'heart' : 'hearto'} // Cambiar el ícono según si el usuario ha dado like
             size={28}
@@ -75,45 +62,24 @@ export default function PostCard({
           <Text className="font-pbold">{count}</Text>
         </View>
         <Pressable onPress={() => router.push('/posting/PostComments' as Href)}>
-          <View className="flex-row items-center gap-3   ">
+          <View className="flex-row items-center }   ">
             <AntDesign name="message1" size={28}></AntDesign>
           </View>
         </Pressable>
-        <View className="flex-row items-center gap-3  justify-content ">
+        <View className="flex-row items-center   justify-content ">
           <AntDesign name="staro" size={28} className="ml-1"></AntDesign>
         </View>
       </View>
 
-      <View className="flex-row justify-between">
-        <AntDesign name="enviromento" size={20}></AntDesign>
+      <View className="flex-row py-2 mx-2">
+        <View className="flex flex-1 flex-row">
+          <AntDesign name="enviromento" size={20}></AntDesign>
+          <Text className="text-coloricon text-14pxfont-pbold ">{location}</Text>
+        </View>
 
-        <Text className="text-coloricon text-14px mr-20 font-pbold ">{location}</Text>
         <Text>{date.toLocaleDateString()}</Text>
       </View>
-      <Text>{description}</Text>
+      <Text className="mx-2 my-2">{description}</Text>
     </SafeAreaView>
   )
 }
-const styles = StyleSheet.create({
-  textUser: {
-    fontSize: 18,
-    marginLeft: 45
-  },
-  avatarContainer: {
-    marginTop: 0,
-    borderWidth: 5,
-    borderColor: 'white',
-    borderRadius: 60,
-    width: 1000,
-    height: 1000,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'white',
-    overflow: 'hidden'
-  },
-  iconellipsis: {
-    marginLeft: 310,
-    marginRight: 'auto',
-    marginTop: -20
-  }
-})
