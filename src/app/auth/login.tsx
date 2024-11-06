@@ -47,18 +47,18 @@ export default function Login() {
                 Recuperar mi clave
               </Text>
             </Link>
-            <Button
-              width={326}
-              height={47}
-              variant="primary"
-              onPress={handleSubmit(() => {
-                reset()
-                router.push('/(tabs)/home')
-              })}
-            >
-              Ingresar
-            </Button>
           </View>
+          <Button
+            width={330}
+            height={47}
+            variant="primary"
+            onPress={handleSubmit(() => {
+              reset()
+              router.push('/(tabs)/home')
+            })}
+          >
+            Ingresar
+          </Button>
           <View className="flex flex-row space-x-[-20px] justify-center items-center">
             <Text className="font-psemibold p-5">¿No posees cuenta?</Text>
 

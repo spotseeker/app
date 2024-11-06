@@ -174,7 +174,11 @@ const Profile = () => {
   )
 
   return (
-    <SafeAreaView className="h-full mt-[-35]" style={{ backgroundColor: 'white' }}>
+    <SafeAreaView
+      edges={['bottom']}
+      className="h-full "
+      style={{ backgroundColor: 'white' }}
+    >
       {/* FlatList con encabezado y lista de posts */}
       <FlatList
         ListHeaderComponent={renderHeader}

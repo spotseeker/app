@@ -1,14 +1,15 @@
 import React, { ReactNode, useState } from 'react'
 import { View, Text, Pressable } from 'react-native'
 import Icons from './Icons'
-type OptionTypes = {
+
+type optionTypes = {
   leftItem?: ReactNode
   title: string
   children?: ReactNode
-  Navigator?: () => void
+  setNavigator?: () => void
 }
 
-function OptionItem({ children, leftItem, title, Navigator }: OptionTypes) {
+function OptionItem({ children, leftItem, title, setNavigator }: optionTypes) {
   const { ArrowIcon } = Icons
   const [renderItem, setRenderItem] = useState(false)
 
@@ -26,11 +27,12 @@ function OptionItem({ children, leftItem, title, Navigator }: OptionTypes) {
           <Text className="text-helper font-bold text-center text-[16px]">{title}</Text>
         </View>
         <View className=" flex flex-row items-center">
-          <Pressable onPress={children ? handleDeploy : Navigator}>
+          <Pressable onPress={children ? handleDeploy : setNavigator}>
             <ArrowIcon shown={renderItem} />
           </Pressable>
         </View>
       </View>
+
       {renderItem && <View className="">{children}</View>}
     </>
   )

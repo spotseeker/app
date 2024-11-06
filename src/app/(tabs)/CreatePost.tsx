@@ -1,8 +1,8 @@
 import { useEffect } from 'react'
 
-import { router } from 'expo-router'
+import { Href, router } from 'expo-router'
 export default function CreatePost() {
   useEffect(() => {
-    router.push('/posting/NewPost')
+    router.push('/post/NewPost' as Href)
   }, [])
 }

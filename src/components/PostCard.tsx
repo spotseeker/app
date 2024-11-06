@@ -1,12 +1,11 @@
 import * as React from 'react'
 import { useState } from 'react'
-import { View, Text, Image, StyleSheet, Pressable } from 'react-native'
+import { View, Text, Image, Pressable, StyleSheet } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import AntDesign from '@expo/vector-icons/AntDesign'
 import { Avatar } from '@kolking/react-native-avatar'
 import ProfileImg from '@/src/assets/images_app/avatar_users/image_profile.png'
 import { Colors } from '@/src/constants/Colors'
-import { Href, router } from 'expo-router'
 import Modal from '@/src/components/Modal'
 import Rating from './Rating'
 
@@ -37,14 +36,25 @@ export default function PostCard({
     if (!liked) {
       setCount(count + 1)
       setLiked(true)
+    } else {
+      setCount(count - 1)
+      setLiked(false)
     }
   }
 
   return (
-    <SafeAreaView style={styles.cardContainer}>
-      <View style={styles.headerRow}>
-        <Avatar source={ProfileImg} color={Colors.text} radius={30} size={30} />
-        <Text style={styles.textUser}>{user}</Text>
+    <SafeAreaView className="w-80% bg-white border border-gray-300 jusfify-center m-2  space-y-3">
+      <View className="flex-row mx-2">
+        <View className="flex-row flex-1 items-center space-x-3">
+          <Avatar
+            className=""
+            source={ProfileImg}
+            color={Colors.text}
+            radius={30}
+            size={30}
+          />
+          <Text className="text-coloricon  font-extrabold   ">{user}</Text>
+        </View>
         {isOwnProfile && (
           <Pressable onPress={() => setModalVisible(true)}>
             <AntDesign name="ellipsis1" size={28} style={styles.iconEllipsis} />
@@ -52,12 +62,10 @@ export default function PostCard({
         )}
       </View>
 
-      <View style={styles.imageContainer}>
-        <Image source={{ uri: image }} style={styles.image} />
-      </View>
+      <Image source={{ uri: image }} className=" h-72 mx-2" />
 
-      <View style={styles.actionRow}>
-        <View style={styles.actionGroup}>
+      <View className="flex flex-row items-center space-x-3   justify-start mx-2">
+        <View className="flex-row items-center space-x-3   ">
           <AntDesign
             name={liked ? 'heart' : 'hearto'}
             size={28}
@@ -66,7 +74,7 @@ export default function PostCard({
           />
           <Text style={styles.likeCount}>{count}</Text>
         </View>
-        <Pressable onPress={() => router.push('/posting/PostComments' as Href)}>
+        <Pressable onPress={() => router.push('/post/Comments')}>
           <View style={styles.commentButton}>
             <AntDesign name="message1" size={28} />
           </View>
@@ -97,7 +105,7 @@ export default function PostCard({
         onClose={() => setModalVisible(false)}
         backgroundColor="white"
       >
-        <Text onPress={() => router.push('/posting/EditPost')} style={styles.modalOption}>
+        <Text onPress={() => router.push('/post/EditPost')} style={styles.modalOption}>
           Editar
         </Text>
         <Text onPress={() => console.log('Eliminar post')} style={styles.modalOption}>
@@ -115,43 +123,8 @@ export default function PostCard({
 }
 
 const styles = StyleSheet.create({
-  cardContainer: {
-    width: '100%',
-    backgroundColor: 'white',
-    borderRadius: 15,
-    padding: 16,
-    marginVertical: 8
-  },
-  headerRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginBottom: 12
-  },
-  textUser: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: Colors.text,
-    flex: 1,
-    marginLeft: 8
-  },
   iconEllipsis: {
     color: Colors.secondaryText
-  },
-  imageContainer: {
-    borderRadius: 10,
-    overflow: 'hidden',
-    marginBottom: 12
-  },
-  image: {
-    width: '100%',
-    height: 250,
-    resizeMode: 'contain'
-  },
-  actionRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginVertical: 8
   },
   actionGroup: {
     flexDirection: 'row',

@@ -260,7 +260,7 @@ const LogoNomIcon = ({ width = 20, height = 20, mr }: pngProps) => {
   return (
     <Image
       source={logoNom}
-      style={{ width: width, height: height, marginRight: mr }} // Cambia los valores según lo que necesites
+      style={{ width: width, height: height, marginLeft: mr }} // Cambia los valores según lo que necesites
     />
   )
 }

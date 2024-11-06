@@ -59,17 +59,17 @@ const CreatePostScreen1 = ({ image, control, setStep }: createPostScreenProps) =
         <OptionItem
           title="Seleccionar imagen"
           leftItem={<ImageIcon1 />}
-          Navigator={() => setStep(2)}
+          setNavigator={() => setStep(2)}
         />
         <OptionItem
           title="Seleccionar ubicación"
           leftItem={<MapMarkerIcon size={25} />}
-          Navigator={() => setStep(3)}
+          setNavigator={() => setStep(3)}
         />
         <OptionItem
           title="Añadir etiquetas"
           leftItem={<HashTagIcon />}
-          Navigator={() => setStep(4)}
+          setNavigator={() => setStep(4)}
         />
         <OptionItem
           title="Puntuar experiencia"

@@ -69,21 +69,21 @@ export default function UpdatePassword() {
                 variant="password"
                 control={control}
                 name="currentPassword"
-                placeholder="tu calve actual"
+                placeholder="contraseña"
               />
               <Input
                 text="Ingresa Tu Nueva Clave"
                 variant="password"
                 control={control}
                 name="newPassword"
-                placeholder="tu nueva clave"
+                placeholder="contraseña"
               />
               <Input
                 text=" Confirma Tu Nueva Clave"
                 variant="password"
                 control={control}
                 name="confirmNewPassword"
-                placeholder=" confirma tu nueva clave"
+                placeholder=" confirma contraseña"
               ></Input>
             </View>
           </View>
