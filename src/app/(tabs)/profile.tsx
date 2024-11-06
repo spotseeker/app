@@ -57,7 +57,7 @@ const Profile = () => {
       )
     })
   }, [navigation])
-  const [currentTypePost, setCurrentTypePost] = useState<string>('')
+  const [currentTypePost, setCurrentTypePost] = useState<string>('all')
   const [filterPosts, setFilterPost] = useState(post)
 
   useEffect(() => {
