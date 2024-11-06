@@ -104,29 +104,29 @@ export default function EditProfile() {
                 control={control}
                 name="username"
                 text="Nombre de Usuario"
-                placeholder="Nombre de Usuario"
-              />
+                placeholder="usuario actual"
+              ></Input>
               <Input
                 variant="default"
                 control={control}
                 name="firstname"
                 text="Nombre"
                 placeholder="Nombre"
-              />
+              ></Input>
               <Input
                 variant="default"
                 control={control}
                 name="lastname"
                 text="Apellido"
                 placeholder="Apellido"
-              />
+              ></Input>
               <Input
                 variant="description"
                 control={control}
                 name="aboutme"
                 text="Descripción"
-                placeholder="Descripción"
-              />
+                placeholder="Descripcion"
+              ></Input>
             </View>
           </View>
           <View className="flex justify-around ml-[60%] pb-[10]">

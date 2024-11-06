@@ -65,26 +65,26 @@ export default function UpdatePassword() {
             </View>
             <View className="mt-[30px] px-[10%]">
               <Input
+                text=" Ingresa Tu Clave Actual"
                 variant="password"
                 control={control}
-                name="actualPassword"
-                text="Ingresa Tu Clave Actual"
-                placeholder="Ingresa Tu Clave Actual"
+                name="currentPassword"
+                placeholder="contraseña"
               />
               <Input
+                text="Ingresa Tu Nueva Clave"
                 variant="password"
                 control={control}
                 name="newPassword"
-                text="Ingresa Tu Nueva Clave"
-                placeholder="Ingresa Tu Nueva Clave"
+                placeholder="contraseña"
               />
               <Input
+                text=" Confirma Tu Nueva Clave"
                 variant="password"
                 control={control}
                 name="confirmNewPassword"
-                text="Confirma Tu Nueva Clave"
-                placeholder="Confirma Tu Nueva Clave"
-              />
+                placeholder=" confirma contraseña"
+              ></Input>
             </View>
           </View>
           <View className="flex justify-around ml-[55%] pb-[10] mt-[20%]">
