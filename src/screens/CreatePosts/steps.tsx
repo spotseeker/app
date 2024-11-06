@@ -266,11 +266,8 @@ const SelectLocationScreen = ({ setLocation, setStep }: SelectLocationScreenProp
                   setLocation(location.text)
                   setStep(1)
                 }}
-                style={{
-                  padding: 10
-                }}
               >
-                <Text className="text-lightc font-pbold text-[24px] mt-[10]">
+                <Text className="text-lightc font-pbold text-[24px] mt-[10] p-[10]">
                   {location.text}
                 </Text>
               </TouchableOpacity>
