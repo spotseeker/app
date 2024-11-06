@@ -8,6 +8,7 @@ import ProfileImg from '@/src/assets/images_app/avatar_users/image_profile.png'
 import { Colors } from '@/src/constants/Colors'
 import Modal from '@/src/components/Modal'
 import Rating from './Rating'
+import { router } from 'expo-router'
 
 type PostCardProps = {
   location: string
