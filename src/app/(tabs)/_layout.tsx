@@ -4,9 +4,10 @@ import Icons from '@/src/components/Icons'
 import { Avatar } from '@kolking/react-native-avatar'
 import { Colors } from '@/src/constants/Colors'
 import ProfileImg from '@/src/assets/images_app/image_profile.png'
+import AntDesign from '@expo/vector-icons/AntDesign'
 
 export default function TabLayout() {
-  const { SearchIcon, HomeIcon, PlusIcon, MapMarkerIcon } = Icons
+  const { SearchIcon, HomeIcon, PlusIcon, MapMarkerIcon, LogoNomIcon } = Icons
   return (
     <Tabs
       screenOptions={{
@@ -24,10 +25,30 @@ export default function TabLayout() {
       <Tabs.Screen
         name="home"
         options={{
-          headerShown: false,
+          headerShown: true,
           title: '',
           tabBarShowLabel: false,
-          tabBarIcon: ({ color }) => <HomeIcon color={color} size={38} />
+          headerShadowVisible: true,
+          headerStyle: {
+            shadowColor: '#000',
+            shadowOffset: { width: 0, height: 2 },
+            shadowOpacity: 0.3,
+            shadowRadius: 4,
+            elevation: 5
+          },
+          tabBarIcon: ({ color }) => <HomeIcon color={color} size={38} />,
+          headerLeft: () => <LogoNomIcon width={200} height={30} mr={10} />,
+          headerRight: () => (
+            <AntDesign
+              name="bells"
+              size={28}
+              style={{
+                marginLeft: 'auto',
+                marginRight: 7,
+                marginTop: 1
+              }}
+            />
+          )
         }}
       />
 

@@ -57,7 +57,7 @@ const Profile = () => {
       )
     })
   }, [navigation])
-  const [currentTypePost, setCurrentTypePost] = useState<string>('')
+  const [currentTypePost, setCurrentTypePost] = useState<string>('all')
   const [filterPosts, setFilterPost] = useState(post)
 
   useEffect(() => {
@@ -174,11 +174,15 @@ const Profile = () => {
   )
 
   return (
-    <SafeAreaView className="h-full mt-[-35]" style={{ backgroundColor: 'white' }}>
+    <SafeAreaView
+      edges={['bottom']}
+      className="h-full "
+      style={{ backgroundColor: 'white' }}
+    >
       {/* FlatList con encabezado y lista de posts */}
       <FlatList
         ListHeaderComponent={renderHeader}
-        data={filterPosts} // Puedes pasar datos aquí o usar PostCardList como se muestra
+        data={filterPosts}
         renderItem={({ item }) => (
           <PostCard
             location={item.location}
@@ -186,6 +190,8 @@ const Profile = () => {
             user={item.user}
             date={item.date}
             description={item.description}
+            isOwnProfile={true}
+            rating={item.rating}
           />
         )}
         keyExtractor={(item, index) => index.toString()}

@@ -100,24 +100,33 @@ export default function EditProfile() {
             </View>
             <View className="mt-[30px] px-[10%]">
               <Input
-                text="Nombre de Usuario"
                 variant="default"
                 control={control}
                 name="username"
-              />
-              <Input text="Nombre" variant="default" control={control} name="firstname" />
+                text="Nombre de Usuario"
+                placeholder="usuario actual"
+              ></Input>
               <Input
-                text="Apellido"
+                variant="default"
+                control={control}
+                name="firstname"
+                text="Nombre"
+                placeholder="Nombre"
+              ></Input>
+              <Input
                 variant="default"
                 control={control}
                 name="lastname"
-              />
+                text="Apellido"
+                placeholder="Apellido"
+              ></Input>
               <Input
-                text="Description"
                 variant="description"
                 control={control}
                 name="aboutme"
-              />
+                text="Descripción"
+                placeholder="Descripcion"
+              ></Input>
             </View>
           </View>
           <View className="flex justify-around ml-[60%] pb-[10]">

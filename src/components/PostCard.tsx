@@ -1,12 +1,14 @@
 import * as React from 'react'
 import { useState } from 'react'
-import { View, Text, Image, StyleSheet } from 'react-native'
+import { View, Text, Image, Pressable, StyleSheet } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-
 import AntDesign from '@expo/vector-icons/AntDesign'
 import { Avatar } from '@kolking/react-native-avatar'
 import ProfileImg from '@/src/assets/images_app/avatar_users/image_profile.png'
 import { Colors } from '@/src/constants/Colors'
+import Modal from '@/src/components/Modal'
+import Rating from './Rating'
+import { router } from 'expo-router'
 
 type PostCardProps = {
   location: string
@@ -14,103 +16,163 @@ type PostCardProps = {
   date: Date
   image: string
   description: string
+  isOwnProfile?: boolean
+  rating: number
 }
+
 export default function PostCard({
   location,
   image,
   description,
   user,
-  date
+  date,
+  isOwnProfile,
+  rating
 }: PostCardProps) {
-  const [count, setCount] = React.useState(1)
-
+  const [count, setCount] = useState(1)
   const [liked, setLiked] = useState(false)
+  const [modalVisible, setModalVisible] = useState(false)
+  const { RenderStar } = Rating
   const handleLike = () => {
     if (!liked) {
-      setCount(count + 1) // Incrementar el contador de likes
-      setLiked(true) // Marcar que el usuario ha dado like
-      // Aquí puedes agregar lógica para guardar el like en un backend si es necesario
+      setCount(count + 1)
+      setLiked(true)
+    } else {
+      setCount(count - 1)
+      setLiked(false)
     }
   }
-  return (
-    <SafeAreaView className="w-full bg-white rounded-1xl p-5 my-3">
-      <View className="flex row justify-between mr-[55] mt-[-60]  ">
-        {/* Avatar */}
 
-        <Text
-          style={styles.textUser}
-          className="text-coloricon ml-1 mt-5  font-extrabold   "
-        >
-          {user}
-        </Text>
-        <View className="flex row justify-content mr-[250]">
+  return (
+    <SafeAreaView className="w-80% bg-white border border-gray-300 jusfify-center m-2  space-y-3">
+      <View className="flex-row mx-2">
+        <View className="flex-row flex-1 items-center space-x-3">
           <Avatar
-            className="mt-[-25] "
+            className=""
             source={ProfileImg}
             color={Colors.text}
             radius={30}
             size={30}
           />
+          <Text className="text-coloricon  font-extrabold   ">{user}</Text>
         </View>
+        {isOwnProfile && (
+          <Pressable onPress={() => setModalVisible(true)}>
+            <AntDesign name="ellipsis1" size={28} style={styles.iconEllipsis} />
+          </Pressable>
+        )}
       </View>
 
-      <View className=" rounded-xl mt-[-40] ">
-        <AntDesign name="ellipsis1" size={28} style={styles.iconellipsis}></AntDesign>
-        <Image
-          source={{ uri: image }}
-          className=" h-72 "
-          style={{ resizeMode: 'contain' }}
-        />
-      </View>
+      <Image source={{ uri: image }} className=" h-72 mx-2" />
 
-      <View className="flex-row items-center gap-0.5   justify-content ">
-        <View className="flex-row items-center gap-3 ml-1 mr-1 mt-1 justify-content ">
+      <View className="flex flex-row items-center space-x-3   justify-start mx-2">
+        <View className="flex-row items-center space-x-3   ">
           <AntDesign
-            name={liked ? 'heart' : 'hearto'} // Cambiar el ícono según si el usuario ha dado like
+            name={liked ? 'heart' : 'hearto'}
             size={28}
-            color={liked ? 'red' : 'black'} // Cambiar el color del ícono
-            onPress={handleLike} // Llamar a la función handleLike al presionar
+            color={liked ? 'red' : 'black'}
+            onPress={handleLike}
           />
-          <Text className="font-pbold">{count}</Text>
+          <Text style={styles.likeCount}>{count}</Text>
         </View>
-        <View className="flex-row items-center gap-3   ">
-          <AntDesign name="message1" size={28}></AntDesign>
+        <Pressable onPress={() => router.push('/post/Comments')}>
+          <View style={styles.commentButton}>
+            <AntDesign name="message1" size={28} />
+          </View>
+        </Pressable>
+        <View style={styles.actionGroup}>
+          <AntDesign name="staro" size={28} />
         </View>
-        <View className="flex-row items-center gap-3  justify-content ">
-          <AntDesign name="staro" size={28} className="ml-1"></AntDesign>
+        <View style={styles.ratingContainer}>
+          <RenderStar rating={rating} />
+          <Text style={styles.ratingText}>{rating}</Text>
         </View>
       </View>
 
-      <View className="flex-row justify-between">
-        <AntDesign name="enviromento" size={20}></AntDesign>
+      <View style={styles.footerRow}>
+        <AntDesign name="enviromento" size={20} />
+        <View className="mr-[130] ">
+          <Text style={styles.locationText}>{location}</Text>
+        </View>
 
-        <Text className="text-coloricon text-14px mr-20 font-pbold ">{location}</Text>
-        <Text>{date.toLocaleDateString()}</Text>
+        <View className="ml-[-55] mr-[10]">
+          <Text>{date.toLocaleDateString()}</Text>
+        </View>
       </View>
       <Text>{description}</Text>
+
+      <Modal
+        visible={modalVisible}
+        onClose={() => setModalVisible(false)}
+        backgroundColor="white"
+      >
+        <Text onPress={() => router.push('/post/EditPost')} style={styles.modalOption}>
+          Editar
+        </Text>
+        <Text onPress={() => console.log('Eliminar post')} style={styles.modalOption}>
+          Eliminar
+        </Text>
+        <Text onPress={() => console.log('Archivar post')} style={styles.modalOption}>
+          Archivar
+        </Text>
+        <Pressable onPress={() => setModalVisible(false)}>
+          <Text style={styles.modalClose}>Cerrar</Text>
+        </Pressable>
+      </Modal>
     </SafeAreaView>
   )
 }
+
 const styles = StyleSheet.create({
-  textUser: {
-    fontSize: 18,
-    marginLeft: 45
+  iconEllipsis: {
+    color: Colors.secondaryText
   },
-  avatarContainer: {
-    marginTop: 0,
-    borderWidth: 5,
-    borderColor: 'white',
-    borderRadius: 60,
-    width: 1000,
-    height: 1000,
-    justifyContent: 'center',
+  actionGroup: {
+    flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: 'white',
-    overflow: 'hidden'
+    marginHorizontal: 8
   },
-  iconellipsis: {
-    marginLeft: 310,
-    marginRight: 'auto',
-    marginTop: -20
+  likeCount: {
+    fontSize: 16,
+    fontWeight: 'bold'
+  },
+  commentButton: {
+    marginHorizontal: 8
+  },
+  footerRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginVertical: 8
+  },
+  locationText: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: Colors.text
+  },
+  ratingContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: Colors.tabIconSelected,
+    borderRadius: 20,
+    padding: 8,
+    marginLeft: 120,
+    width: 80
+  },
+  ratingText: {
+    marginLeft: 5,
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: 'white'
+  },
+  modalOption: {
+    fontSize: 18,
+    paddingVertical: 10,
+    color: Colors.secondaryText
+  },
+  modalClose: {
+    marginTop: 10,
+    fontSize: 16,
+    color: 'grey'
   }
 })
