@@ -9,11 +9,19 @@ type Props = {
   setStep: (step: number) => void
   image: string[]
   setImage: (uris: string[]) => void
+  location: string
+  setLocation: (id: string) => void
 }
 
-export default function CreatePosts({ step, setStep, image, setImage }: Props) {
+export default function CreatePosts({
+  step,
+  setStep,
+  image,
+  setImage,
+  setLocation
+}: Props) {
   const { control } = useForm({})
-  const { CreatePostScreen1, SelectImageScreen } = Steps
+  const { CreatePostScreen1, SelectImageScreen, SelectLocationScreen } = Steps
 
   useEffect(() => {
     const backAction = () => {
@@ -38,6 +46,7 @@ export default function CreatePosts({ step, setStep, image, setImage }: Props) {
         <CreatePostScreen1 image={image} control={control} setStep={setStep} />
       )}
       {step == 2 && <SelectImageScreen image={image} setImage={setImage} />}
+      {step == 3 && <SelectLocationScreen setLocation={setLocation} setStep={setStep} />}
     </View>
   )
 }

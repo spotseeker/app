@@ -8,6 +8,8 @@ import OptionItem from '@/src/components/OptionItem'
 import * as MediaLibrary from 'expo-media-library'
 import * as ImagePicker from 'expo-image-picker'
 import Rating from '@/src/components/Rating'
+import SearchInput from '@/src/components/SearchInput'
+import { locations } from '@/src/fixtures/locations'
 type createPostScreenProps = {
   image: string[]
   control: Control
@@ -17,6 +19,11 @@ type createPostScreenProps = {
 interface SelectImageScreenProps {
   image: string[]
   setImage: (uris: string[]) => void
+}
+
+type SelectLocationScreenProps = {
+  setLocation: (id: string) => void
+  setStep: (step: number) => void
 }
 
 const CreatePostScreen1 = ({ image, control, setStep }: createPostScreenProps) => {
@@ -234,4 +241,39 @@ const SelectImageScreen = ({ image, setImage }: SelectImageScreenProps) => {
     </View>
   )
 }
-export default { CreatePostScreen1, SelectImageScreen }
+
+const SelectLocationScreen = ({ setLocation, setStep }: SelectLocationScreenProps) => {
+  const [query, setQuery] = useState('')
+  const filteredLocations = locations.filter((item) => {
+    item.text.toLowerCase().includes(query.toLowerCase())
+  })
+  console.log(filteredLocations)
+  return (
+    <View>
+      <View className="flex justify-center items-center">
+        <SearchInput
+          value={query}
+          onChangeText={setQuery}
+          placeholder="Buscar una ubicación"
+        />
+      </View>
+      <View className="ml-[40] items-start">
+        {locations.map((value, key) => (
+          <TouchableOpacity
+            key={key}
+            onPress={() => {
+              setLocation(value.text)
+              setStep(1)
+            }}
+          >
+            <Text className="text-lightc font-pbold text-[24px] mt-[10]">
+              {value.text}
+            </Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+    </View>
+  )
+}
+
+export default { CreatePostScreen1, SelectImageScreen, SelectLocationScreen }

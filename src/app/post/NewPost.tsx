@@ -9,6 +9,7 @@ function NewPost() {
   const [step, setStep] = useState(1)
   const navigation = useNavigation()
   const [image, setImage] = useState<string[]>([])
+  const [location, setLocation] = useState('')
 
   const headerTitleStep = () => {
     switch (step) {
@@ -73,6 +74,8 @@ function NewPost() {
         setStep={setStep}
         image={image as string[]}
         setImage={setImage}
+        location={location}
+        setLocation={setLocation}
       />
     </SafeAreaView>
   )
