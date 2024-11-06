@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import { View, StyleSheet, TouchableOpacity } from 'react-native'
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps'
-import GetLocation from 'react-native-get-location'
 import Icons from '@/src/components/Icons'
 import { router, useNavigation } from 'expo-router'
+import * as Location from 'expo-location'
+import { LocationObject } from 'expo-location'
 import SearchInput from '@/src/components/SearchInput'
 
 const { MapMarkerColorIcon, ArrowBack } = Icons
 let latitude: number
 let longitude: number
+let location: LocationObject
 const styles = StyleSheet.create({
   container: {
     ...StyleSheet.absoluteFillObject,
@@ -19,22 +21,6 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject
   }
 })
-
-GetLocation.getCurrentPosition({
-  enableHighAccuracy: true,
-  timeout: 60000
-})
-  .then((location) => {
-    console.log(location)
-    latitude = location.latitude
-    longitude = location.longitude
-  })
-  .catch((error) => {
-    const { code, message } = error
-    console.warn(code, message)
-    latitude = 10.066648
-    longitude = -69.362973
-  })
 
 export default function Map() {
   const navigation = useNavigation()
@@ -54,6 +40,22 @@ export default function Map() {
     })
   }, [navigation])
   const [query, setQuery] = useState('')
+
+  useEffect(() => {
+    ;(async () => {
+      const { status } = await Location.requestForegroundPermissionsAsync()
+      if (status !== 'granted') {
+        latitude = 10.066648
+        longitude = -69.362973
+        return
+      }
+
+      location = await Location.getCurrentPositionAsync({})
+      latitude = location.coords.latitude
+      longitude = location.coords.longitude
+    })()
+  }, [])
+
   return (
     <View style={styles.container}>
       <MapView
