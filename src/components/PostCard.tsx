@@ -9,6 +9,8 @@ import { Colors } from '@/src/constants/Colors'
 import Modal from '@/src/components/Modal'
 import Rating from './Rating'
 import { router } from 'expo-router'
+import Icons from './Icons'
+import ModalAction from './ModalAction'
 
 type PostCardProps = {
   location: string
@@ -31,42 +33,55 @@ export default function PostCard({
 }: PostCardProps) {
   const [count, setCount] = useState(1)
   const [liked, setLiked] = useState(false)
-  const [modalVisible, setModalVisible] = useState(false)
+  const [isOptionsModalVisible, setOptionsModalVisible] = useState(false)
+  const [isConfirmationModalVisible, setConfirmationModalVisible] = useState(false)
+  const [modalAction, setModalAction] = useState<'archive' | 'delete' | null>(null)
   const { RenderStar } = Rating
+  const { TrashIcon, EditIcon, ArchiveIcon2 } = Icons
+
   const handleLike = () => {
-    if (!liked) {
-      setCount(count + 1)
-      setLiked(true)
-    } else {
-      setCount(count - 1)
-      setLiked(false)
-    }
+    setCount(liked ? count - 1 : count + 1)
+    setLiked(!liked)
+  }
+
+  const openConfirmationModal = (action: 'archive' | 'delete') => {
+    setModalAction(action)
+    setOptionsModalVisible(false)
+    setConfirmationModalVisible(true)
+  }
+
+  const handleCloseModal = () => {
+    setConfirmationModalVisible(false)
+  }
+
+  const handleArchive = () => {
+    console.log('Post archivado')
+    setConfirmationModalVisible(false)
+  }
+
+  const handleDelete = () => {
+    console.log('Post eliminado')
+    setConfirmationModalVisible(false)
   }
 
   return (
-    <SafeAreaView className="w-80% bg-white border border-gray-300 jusfify-center m-2  space-y-3">
+    <SafeAreaView className="w-80% bg-white border border-gray-300 justify-center m-2 space-y-3">
       <View className="flex-row mx-2">
         <View className="flex-row flex-1 items-center space-x-3">
-          <Avatar
-            className=""
-            source={ProfileImg}
-            color={Colors.text}
-            radius={30}
-            size={30}
-          />
-          <Text className="text-coloricon  font-extrabold   ">{user}</Text>
+          <Avatar source={ProfileImg} color={Colors.text} radius={30} size={30} />
+          <Text className="text-coloricon font-extrabold">{user}</Text>
         </View>
         {isOwnProfile && (
-          <Pressable onPress={() => setModalVisible(true)}>
+          <Pressable onPress={() => setOptionsModalVisible(true)}>
             <AntDesign name="ellipsis1" size={28} style={styles.iconEllipsis} />
           </Pressable>
         )}
       </View>
 
-      <Image source={{ uri: image }} className=" h-72 mx-2" />
+      <Image source={{ uri: image }} className="h-72 mx-2" />
 
-      <View className="flex flex-row items-center space-x-3   justify-start mx-2">
-        <View className="flex-row items-center space-x-3   ">
+      <View className="flex flex-row items-center space-x-3 justify-start mx-2">
+        <View className="flex-row items-center space-x-3">
           <AntDesign
             name={liked ? 'heart' : 'hearto'}
             size={28}
@@ -91,34 +106,77 @@ export default function PostCard({
 
       <View style={styles.footerRow}>
         <AntDesign name="enviromento" size={20} />
-        <View className="mr-[130] ">
+        <View className="mr-[130]">
           <Text style={styles.locationText}>{location}</Text>
         </View>
-
         <View className="ml-[-55] mr-[10]">
           <Text>{date.toLocaleDateString()}</Text>
         </View>
       </View>
       <Text>{description}</Text>
 
+      {/* Modal de opciones */}
       <Modal
-        visible={modalVisible}
-        onClose={() => setModalVisible(false)}
+        visible={isOptionsModalVisible}
+        onClose={() => setOptionsModalVisible(false)}
         backgroundColor="white"
       >
-        <Text onPress={() => router.push('/post/EditPost')} style={styles.modalOption}>
-          Editar
-        </Text>
-        <Text onPress={() => console.log('Eliminar post')} style={styles.modalOption}>
-          Eliminar
-        </Text>
-        <Text onPress={() => console.log('Archivar post')} style={styles.modalOption}>
-          Archivar
-        </Text>
-        <Pressable onPress={() => setModalVisible(false)}>
+        <View className="flex-row mr-[8] pb-[10]">
+          <Text
+            className="text-lightc font-pbold"
+            onPress={() => {
+              setOptionsModalVisible(false)
+              router.push('/post/EditPost')
+            }}
+            style={styles.modalOption}
+          >
+            Editar
+          </Text>
+          <View className="ml-[150] pl-[30] pb-[10]">
+            <EditIcon color={Colors.text} />
+          </View>
+        </View>
+        <View className="flex-row mr-[10] ml-[10] pb-[20]">
+          <Text
+            className="text-lightc font-pbold"
+            onPress={() => openConfirmationModal('archive')}
+            style={styles.modalOption}
+          >
+            Archivar
+          </Text>
+          <View className="ml-[160] pl-[20] pb-[20] pr-[10]">
+            <ArchiveIcon2 />
+          </View>
+        </View>
+        <View className="flex-row mr-[10] pb-[10]">
+          <Text
+            className="font-pbold text-complementaryB"
+            onPress={() => openConfirmationModal('delete')}
+            style={styles.modalOption}
+          >
+            Eliminar
+          </Text>
+          <View className="ml-[150] pl-[25]">
+            <TrashIcon color="#FF0000" />
+          </View>
+        </View>
+        <Pressable onPress={() => setOptionsModalVisible(false)}>
           <Text style={styles.modalClose}>Cerrar</Text>
         </Pressable>
       </Modal>
+
+      {/* Modal de confirmación */}
+      <ModalAction
+        action="confirmation"
+        visible={isConfirmationModalVisible}
+        onClose={handleCloseModal}
+        message={
+          modalAction === 'delete'
+            ? '¿Estás seguro de que deseas borrar esta publicación?'
+            : '¿Estás seguro de que deseas archivar esta publicación?'
+        }
+        onConfirm={modalAction === 'delete' ? handleDelete : handleArchive}
+      />
     </SafeAreaView>
   )
 }
@@ -166,9 +224,7 @@ const styles = StyleSheet.create({
     color: 'white'
   },
   modalOption: {
-    fontSize: 18,
-    paddingVertical: 10,
-    color: Colors.secondaryText
+    paddingVertical: 10
   },
   modalClose: {
     marginTop: 10,

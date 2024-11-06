@@ -52,6 +52,19 @@ export const post = [
   },
   {
     id: 5,
+    user: 'AndresUcla',
+    userid: 'Abb234',
+    date: new Date(2024, 5, 6),
+    description: 'Excelente, un rato de aventura',
+    location: 'Barquisimeto-Venezuela',
+    image:
+      'https://images.alltrails.com/eyJidWNrZXQiOiJhc3NldHMuYWxsdHJhaWxzLmNvbSIsImtleSI6InVwbG9hZHMvcGhvdG8vaW1hZ2UvMjkxMzk1MDUvNmYxOTQ1NDc1MDI1ZDQ0YThhYzBjZThkODVkNjNmNGQuanBnIiwiZWRpdHMiOnsidG9Gb3JtYXQiOiJ3ZWJwIiwicmVzaXplIjp7IndpZHRoIjoyMDQ4LCJoZWlnaHQiOjIwNDgsImZpdCI6Imluc2lkZSJ9LCJyb3RhdGUiOm51bGwsImpwZWciOnsidHJlbGxpc1F1YW50aXNhdGlvbiI6dHJ1ZSwib3ZlcnNob290RGVyaW5naW5nIjp0cnVlLCJvcHRpbWlzZVNjYW5zIjp0cnVlLCJxdWFudGlzYXRpb25UYWJsZSI6M319fQ==',
+    isFavorite: false,
+    isArchive: false,
+    rating: 5
+  },
+  {
+    id: 6,
     user: 'Davidj',
     userid: 'Abc135',
     date: new Date(2024, 4, 9),

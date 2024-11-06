@@ -6,7 +6,8 @@ import {
   StyleSheet,
   ImageSourcePropType,
   Dimensions,
-  TouchableOpacity
+  TouchableOpacity,
+  Pressable
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Avatar } from '@kolking/react-native-avatar'
@@ -62,22 +63,24 @@ const UserFollowing = () => {
   }
 
   const renderFollowing = ({ item }: { item: Following }) => (
-    <View className="flex-1 justify-start content-start" style={styles.followingItem}>
-      <Avatar source={item.uri} size={40} />
-      <View style={styles.userInfo}>
-        <Text className="text-primary font-pbold">{item.username}</Text>
+    <Pressable onPress={() => router.push('/profile/otherUser/OtherProfile')}>
+      <View className="flex-1 justify-start content-start" style={styles.followingItem}>
+        <Avatar source={item.uri} size={40} />
+        <View style={styles.userInfo}>
+          <Text className="text-primary font-pbold">{item.username}</Text>
+        </View>
+        <Button
+          onPress={() => toggleFollow(item.id)}
+          variant={item.isFollowing ? 'gray' : 'primary'}
+          width={118}
+          height={44}
+        >
+          <Text className="text-white font-pbold">
+            {item.isFollowing ? 'Dejar de seguir' : 'Seguir'}
+          </Text>
+        </Button>
       </View>
-      <Button
-        onPress={() => toggleFollow(item.id)}
-        variant={item.isFollowing ? 'gray' : 'primary'}
-        width={118}
-        height={44}
-      >
-        <Text className="text-white font-pbold">
-          {item.isFollowing ? 'Dejar de seguir' : 'Seguir'}
-        </Text>
-      </Button>
-    </View>
+    </Pressable>
   )
 
   return (
