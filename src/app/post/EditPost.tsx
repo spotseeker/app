@@ -16,22 +16,25 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import Rating from '@/src/components/Rating'
 import OptionItem from '@/src/components/OptionItem'
 import ModalAction from '@/src/components/ModalAction'
+import { Colors } from '@/src/constants/Colors'
 
 type EditProps = {
   postId: number
+  userId: string
 }
 
-const EditPostScreen = ({ postId = 1 }: EditProps) => {
-  const currentPost = post.find((p) => p.id === postId)
+const EditPostScreen = ({ postId = 1, userId = 'Abc234' }: EditProps) => {
+  const currentPost = post.find((p) => p.id === postId && p.userid === userId)
+  const ratingPost = currentPost?.rating ?? 0
   const { EditIcon, ImageIcon2, StarIconColorized, ArrowBack, MapMarkerIcon } = Icons
   const [isExpanded, setIsExpanded] = useState(false)
-  const [rate, setRate] = useState(0)
+  const [rate, setRate] = useState(ratingPost)
   const navigation = useNavigation()
 
   const [isConfirmationVisible, setConfirmationVisible] = useState(false)
   const [isSuccessVisible, setSuccessVisible] = useState(false)
   const [isErrorVisible, setErrorVisible] = useState(false)
-  const { SetRating } = Rating
+  const { RenderStar, SetRating } = Rating
 
   useEffect(() => {
     navigation.setOptions({
@@ -80,10 +83,13 @@ const EditPostScreen = ({ postId = 1 }: EditProps) => {
           ) : (
             <ImageIcon2 />
           )}
+          <View style={styles.ratingContainer}>
+            <RenderStar rating={ratingPost} />
+            <Text style={styles.ratingText}>{rate}</Text>
+          </View>
           <View className="flex-row mr-[100] pr-[20%] pt-[3px]">
             <MapMarkerIcon size={20} />
             <Text className="font-pbold text-helper text-[14px]">
-              {' '}
               {currentPost?.location}
             </Text>
           </View>
@@ -118,16 +124,7 @@ const EditPostScreen = ({ postId = 1 }: EditProps) => {
               </View>
             ) : null}
 
-            <View
-              style={{
-                height: 1,
-                width: '200%',
-                marginLeft: '-20%',
-                backgroundColor: '#cccc',
-                elevation: 5,
-                marginVertical: 20
-              }}
-            />
+            <View style={styles.divider} />
 
             <OptionItem
               title="Cambiar puntuacion"
@@ -136,16 +133,7 @@ const EditPostScreen = ({ postId = 1 }: EditProps) => {
               <SetRating rating={rate} setRating={setRate} />
             </OptionItem>
 
-            <View
-              style={{
-                height: 1,
-                width: '200%',
-                marginLeft: '-20%',
-                backgroundColor: '#cccc',
-                elevation: 5,
-                marginVertical: 20
-              }}
-            />
+            <View style={styles.divider} />
 
             <View className="items-center mt-[100] pb-[10%]">
               <Button width={288} height={48} variant="primary" onPress={onSubmit}>
@@ -162,19 +150,19 @@ const EditPostScreen = ({ postId = 1 }: EditProps) => {
         onClose={() => setConfirmationVisible(false)}
         onConfirm={handleEditPost}
         action="confirmation"
-        message="¿Estás seguro de  Aplicar estos cambios?"
+        message="¿Estás seguro de aplicar estos cambios?"
       />
 
       <ModalAction
         action="success"
-        message="Publicacion actualizada con exito"
+        message="Publicación actualizada con éxito"
         visible={isSuccessVisible}
         onClose={() => setSuccessVisible(false)}
       />
 
       <ModalAction
         action="error"
-        message="Hubo un error al actualizar la información de la publicacion. Por favor, verifica  los datos."
+        message="Hubo un error al actualizar la información de la publicación. Por favor, verifica los datos."
         visible={isErrorVisible}
         onClose={() => setErrorVisible(false)}
       />
@@ -186,6 +174,23 @@ const styles = StyleSheet.create({
   content: {
     alignItems: 'center',
     marginTop: 50
+  },
+  ratingContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: Colors.tabIconSelected,
+    borderRadius: 20,
+    padding: 8,
+    marginTop: 20,
+    marginLeft: 250,
+    paddingLeft: 10,
+    width: 80
+  },
+  ratingText: {
+    marginLeft: 5,
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: 'white'
   },
   inputContainer: {
     flexDirection: 'row',
@@ -206,6 +211,14 @@ const styles = StyleSheet.create({
     flex: 1,
     height: '100%',
     textAlignVertical: 'top'
+  },
+  divider: {
+    height: 1,
+    width: '200%',
+    marginLeft: '-20%',
+    backgroundColor: '#cccc',
+    elevation: 5,
+    marginVertical: 20
   }
 })
 

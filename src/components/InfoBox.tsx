@@ -1,6 +1,7 @@
 import React from 'react'
-import { View, Text, ViewStyle, TextStyle } from 'react-native'
+import { View, Text, ViewStyle, TextStyle, TouchableOpacity } from 'react-native'
 import { Colors } from '../constants/Colors'
+import { router } from 'expo-router'
 
 interface InfoBoxProps {
   title: string
@@ -63,6 +64,7 @@ const InfoBox: React.FC<InfoBoxProps> = ({
       >
         {info}
       </Text>
+
       <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 24 }}>
         <Text
           className="text-lightc font-pbold"
@@ -71,40 +73,44 @@ const InfoBox: React.FC<InfoBoxProps> = ({
             color: Colors.text,
             fontWeight: '100',
             fontSize: 14,
-            marginRight: '15%',
+            marginRight: '10%',
             marginLeft: '2%'
           }}
         >
           {posts}
           {'\n'}Publicaciones
         </Text>
-        <Text
-          className="text-lightc font-pbold"
-          style={{
-            textAlign: 'center',
-            color: Colors.text,
-            fontWeight: '100',
-            fontSize: 14,
-            marginRight: '10%'
-          }}
-        >
-          {followers}
-          {'\n'}Seguidores
-        </Text>
-        <Text
-          className="text-lightc font-pbold"
-          style={{
-            textAlign: 'center',
-            color: Colors.text,
-            fontWeight: '100',
-            fontSize: 14,
-            marginLeft: '5%',
-            marginRight: '10%'
-          }}
-        >
-          {following}
-          {'\n'}Siguiendo
-        </Text>
+        <TouchableOpacity onPress={() => router.push('/profile/followers')}>
+          <Text
+            className="text-lightc font-pbold"
+            style={{
+              textAlign: 'center',
+              color: Colors.text,
+              fontWeight: '100',
+              fontSize: 14,
+              marginRight: '10%'
+            }}
+          >
+            {followers}
+            {'\n'}Seguidores
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => router.push('/profile/following')}>
+          <Text
+            className="text-lightc font-pbold"
+            style={{
+              textAlign: 'center',
+              color: Colors.text,
+              fontWeight: '100',
+              fontSize: 14,
+              marginLeft: '5%',
+              marginRight: '10%'
+            }}
+          >
+            {following}
+            {'\n'}Siguiendo
+          </Text>
+        </TouchableOpacity>
       </View>
       {/* Línea horizontal divisoria  efecto sombreado*/}
       <View

@@ -6,7 +6,8 @@ import {
   StyleSheet,
   ImageSourcePropType,
   Dimensions,
-  TouchableOpacity
+  TouchableOpacity,
+  Pressable
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Avatar } from '@kolking/react-native-avatar'
@@ -52,10 +53,12 @@ const UserFollowers = () => {
   ]
 
   const renderFollower = ({ item }: { item: Follower }) => (
-    <View style={styles.followerItem}>
-      <Avatar source={item.uri} size={40} />
-      <Text className="text-primary font-pbold ml-[10]">{item.username}</Text>
-    </View>
+    <Pressable onPress={() => router.push('/profile/otherUser/OtherProfile')}>
+      <View style={styles.followerItem}>
+        <Avatar source={item.uri} size={40} />
+        <Text className="text-primary font-pbold ml-[10]">{item.username}</Text>
+      </View>
+    </Pressable>
   )
 
   return (
