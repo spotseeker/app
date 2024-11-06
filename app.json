@@ -21,7 +21,12 @@
         "backgroundColor": "#ffffff"
       },
       "permissions": ["android.permission.RECORD_AUDIO"],
-      "package": "com.daragoucla.spotseeker"
+      "package": "com.daragoucla.spotseeker",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyBIFxAZoEFzpVUzScjuk0HIWf8yPXh6Uqg"
+        }
+      }
     },
     "web": {
       "bundler": "metro",
