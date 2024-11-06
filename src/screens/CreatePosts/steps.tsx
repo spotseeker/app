@@ -243,34 +243,39 @@ const SelectImageScreen = ({ image, setImage }: SelectImageScreenProps) => {
 }
 
 const SelectLocationScreen = ({ setLocation, setStep }: SelectLocationScreenProps) => {
-  const [query, setQuery] = useState('')
-  const filteredLocations = locations.filter((item) => {
-    item.text.toLowerCase().includes(query.toLowerCase())
-  })
-  console.log(filteredLocations)
+  const [search, setSearch] = useState('')
   return (
-    <View>
+    <View className="w-full h-full bg-white">
       <View className="flex justify-center items-center">
         <SearchInput
-          value={query}
-          onChangeText={setQuery}
-          placeholder="Buscar una ubicación"
+          value={search}
+          onChangeText={(text) => setSearch(text)}
+          placeholder="Buscar ubicación"
         />
       </View>
       <View className="ml-[40] items-start">
-        {locations.map((value, key) => (
-          <TouchableOpacity
-            key={key}
-            onPress={() => {
-              setLocation(value.text)
-              setStep(1)
-            }}
-          >
-            <Text className="text-lightc font-pbold text-[24px] mt-[10]">
-              {value.text}
-            </Text>
-          </TouchableOpacity>
-        ))}
+        <ScrollView>
+          {locations
+            .filter((location) =>
+              location.text.toLowerCase().includes(search.toLowerCase())
+            )
+            .map((location) => (
+              <TouchableOpacity
+                key={location.id}
+                onPress={() => {
+                  setLocation(location.text)
+                  setStep(1)
+                }}
+                style={{
+                  padding: 10
+                }}
+              >
+                <Text className="text-lightc font-pbold text-[24px] mt-[10]">
+                  {location.text}
+                </Text>
+              </TouchableOpacity>
+            ))}
+        </ScrollView>
       </View>
     </View>
   )
