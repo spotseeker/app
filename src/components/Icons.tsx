@@ -6,6 +6,7 @@ import Entypo from '@expo/vector-icons/Entypo'
 import Feather from '@expo/vector-icons/Feather'
 import Fontisto from '@expo/vector-icons/Fontisto'
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6'
+import FontAwesome5 from '@expo/vector-icons/FontAwesome5'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import logo from '@/src/assets/images_app/modelo_logo_icon_V.2..4.png'
@@ -37,7 +38,14 @@ const MenuIcon = ({ color = themeIconColor, size = 25 }: Props) => {
 }
 
 const SearchIcon = ({ color, size = 25 }: Props) => {
-  return <AntDesign name="search1" size={size} color={color} style={{ padding: 11 }} />
+  return (
+    <AntDesign
+      name="search1"
+      size={size}
+      color={color}
+      style={{ padding: 11, backgroundColor: 'white' }}
+    />
+  )
 }
 
 const EditIcon = ({ color, size = 25, padding = 11 }: Props) => {
@@ -144,6 +152,10 @@ const MapMarkerIcon = ({ size = 25 }: Props) => {
       color={themeIconColor}
     />
   )
+}
+
+const MapMarkerColorIcon = ({ size = 25 }: Props) => {
+  return <FontAwesome5 name="map-marker-alt" size={size} color="#6A0D83" />
 }
 
 const PlusIcon = ({ size = 25 }: Props) => {
@@ -290,6 +302,7 @@ export default {
   FourLinesIcon,
   PlusIcon,
   MapMarkerIcon,
+  MapMarkerColorIcon,
   HomeIcon,
   NotificationsIcon,
   ThreeDotsIcon,
