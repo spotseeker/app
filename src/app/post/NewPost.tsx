@@ -3,7 +3,7 @@ import { router, useNavigation } from 'expo-router'
 import React, { useEffect, useState } from 'react'
 import { TouchableOpacity, Pressable } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import CreatePosts from '@/src/screens/CreatePosts'
+import CreatePosts from '@/src/screens/createPost'
 function NewPost() {
   const { ArrowBack, CrossDeleteIcon, RefreshIcon } = Icons
   const [step, setStep] = useState(1)

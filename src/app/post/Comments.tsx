@@ -9,14 +9,14 @@ import { Avatar } from '@kolking/react-native-avatar'
 import avatar1 from '../../assets/images_app/avatar_users/image_profile.png'
 import { Colors } from '@/src/constants/Colors'
 import Input from '@/src/components/Input'
-import CommentsFixture from '@/src/fixtures/Comments'
+import commentsFixture from '@/src/fixtures/comments'
 import ModalAction from '@/src/components/ModalAction'
 
 function Comments() {
   const navigation = useNavigation()
   const { ArrowBack, SendIcon } = Icons
   const { control, handleSubmit, reset, getValues } = useForm({})
-  const [comments, setComments] = useState(CommentsFixture)
+  const [comments, setComments] = useState(commentsFixture)
   const [isModalVisible, setModalVisible] = useState(false)
   const [commentIndex, setCommentIndex] = useState<number>()
   const [editIndex, setEditIndex] = useState<number | null>(null) // Índice del comentario en edición
@@ -42,7 +42,7 @@ function Comments() {
 
   const onSubmit = () => {
     const newComment = {
-      Avatar: avatar1,
+      avatar: avatar1,
       name: 'Ricardolpj',
       commentText: getValues('comment')
     }
@@ -85,8 +85,8 @@ function Comments() {
         {comments.map((comment, index) => (
           <View className="my-5 mx-5" key={index}>
             <CommentCard
-              Comments={{
-                Avatar: comment.Avatar,
+              comments={{
+                avatar: comment.avatar,
                 name: comment.name,
                 commentText: comment.commentText,
                 alignLeft: index % 2 === 0

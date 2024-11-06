@@ -30,7 +30,7 @@ export default function Search() {
     image.alt.toLowerCase().includes(query.toLowerCase())
   )
   return (
-    <SafeAreaView>
+    <SafeAreaView className="bg-white h-full">
       <View className="flex justify-center items-center mt-[-10%]">
         <SearchInput
           placeholder="Buscar usuarios, lugares o publicaciones"

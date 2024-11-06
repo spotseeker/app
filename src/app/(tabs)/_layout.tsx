@@ -63,7 +63,7 @@ export default function TabLayout() {
       />
 
       <Tabs.Screen
-        name="CreatePost"
+        name="post"
         options={{
           headerShown: false,
           title: '',
