@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import { View, Text, Image, TouchableOpacity, ScrollView, Alert } from 'react-native'
+import { zodResolver } from '@hookform/resolvers/zod'
 import Button from '@/src/components/Button'
 import Input from '@/src/components/Input'
 import Icons from '@/src/components/Icons'
-import { Control } from 'react-hook-form'
+import { Control, useForm } from 'react-hook-form'
 import OptionItem from '@/src/components/OptionItem'
 import * as MediaLibrary from 'expo-media-library'
 import * as ImagePicker from 'expo-image-picker'
 import Rating from '@/src/components/Rating'
 import SearchInput from '@/src/components/SearchInput'
 import { locations } from '@/src/fixtures/locations'
+import { HashtagSchema } from '@/src/schemas/hashtagSchema'
+import HashtagInput from '@/src/components/HashtagInput'
 type createPostScreenProps = {
   image: string[]
   control: Control
@@ -24,6 +27,11 @@ interface SelectImageScreenProps {
 type SelectLocationScreenProps = {
   setLocation: (id: string) => void
   setStep: (step: number) => void
+}
+
+type SelectHashtagsScreenProps = {
+  hashtags: string[]
+  setHashtags: (hashtags: string[]) => void
 }
 
 const CreatePostScreen1 = ({ image, control, setStep }: createPostScreenProps) => {
@@ -278,4 +286,59 @@ const SelectLocationScreen = ({ setLocation, setStep }: SelectLocationScreenProp
   )
 }
 
-export default { CreatePostScreen1, SelectImageScreen, SelectLocationScreen }
+const SelectHashtagsScreen = ({ hashtags, setHashtags }: SelectHashtagsScreenProps) => {
+  const { control, handleSubmit, reset } = useForm({
+    resolver: zodResolver(HashtagSchema),
+    mode: 'onChange'
+  })
+  const popularHashtags = [
+    '#viaje',
+    '#vacaciones',
+    '#playa',
+    '#montaña',
+    '#ciudad',
+    '#turismo'
+  ]
+
+  return (
+    <View className="bg-white">
+      <View className=" flex justify-center items-center">
+        <HashtagInput
+          text="Etiquetas agregadas"
+          placeholder="etiquetas"
+          value={`${hashtags.join(' ')}`}
+        />
+        <Input
+          text="Añadir etiquetas"
+          variant="default"
+          placeholder="Añadir etiquetas"
+          name="hashtag"
+          control={control}
+        />
+      </View>
+      <View className="mr-[40] items-end">
+        <Button
+          variant="primary"
+          width={150}
+          height={50}
+          onPress={handleSubmit((data) => {
+            setHashtags([...hashtags, data.hashtag])
+            reset()
+          })}
+        >
+          Añadir
+        </Button>
+      </View>
+      <View className="flex justify-center items-center">
+        <HashtagInput text="Etiquetas populares" value={`${popularHashtags.join(' ')}`} />
+      </View>
+    </View>
+  )
+}
+
+export default {
+  CreatePostScreen1,
+  SelectImageScreen,
+  SelectLocationScreen,
+  SelectHashtagsScreen
+}

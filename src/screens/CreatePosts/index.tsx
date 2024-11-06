@@ -11,6 +11,8 @@ type Props = {
   setImage: (uris: string[]) => void
   location: string
   setLocation: (id: string) => void
+  hashtags: string[]
+  setHashtags: (hashtags: string[]) => void
 }
 
 export default function CreatePosts({
@@ -18,10 +20,17 @@ export default function CreatePosts({
   setStep,
   image,
   setImage,
-  setLocation
+  setLocation,
+  hashtags,
+  setHashtags
 }: Props) {
   const { control } = useForm({})
-  const { CreatePostScreen1, SelectImageScreen, SelectLocationScreen } = Steps
+  const {
+    CreatePostScreen1,
+    SelectImageScreen,
+    SelectLocationScreen,
+    SelectHashtagsScreen
+  } = Steps
 
   useEffect(() => {
     const backAction = () => {
@@ -47,6 +56,9 @@ export default function CreatePosts({
       )}
       {step == 2 && <SelectImageScreen image={image} setImage={setImage} />}
       {step == 3 && <SelectLocationScreen setLocation={setLocation} setStep={setStep} />}
+      {step == 4 && (
+        <SelectHashtagsScreen hashtags={hashtags} setHashtags={setHashtags} />
+      )}
     </View>
   )
 }

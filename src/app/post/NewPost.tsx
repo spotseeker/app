@@ -10,6 +10,7 @@ function NewPost() {
   const navigation = useNavigation()
   const [image, setImage] = useState<string[]>([])
   const [location, setLocation] = useState('')
+  const [hashtags, setHashtags] = useState<string[]>([])
 
   const headerTitleStep = () => {
     switch (step) {
@@ -76,6 +77,8 @@ function NewPost() {
         setImage={setImage}
         location={location}
         setLocation={setLocation}
+        hashtags={hashtags}
+        setHashtags={setHashtags}
       />
     </SafeAreaView>
   )
