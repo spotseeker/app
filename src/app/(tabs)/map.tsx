@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react'
-import { View, StyleSheet, TouchableOpacity } from 'react-native'
+import {
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  Alert,
+  ActivityIndicator
+} from 'react-native'
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps'
 import Icons from '@/src/components/Icons'
 import { router, useNavigation } from 'expo-router'
 import * as Location from 'expo-location'
-import { LocationObject } from 'expo-location'
 import SearchInput from '@/src/components/SearchInput'
 
 const { MapMarkerColorIcon, ArrowBack } = Icons
-let latitude: number
-let longitude: number
-let location: LocationObject
 const styles = StyleSheet.create({
   container: {
     ...StyleSheet.absoluteFillObject,
@@ -24,6 +26,75 @@ const styles = StyleSheet.create({
 
 export default function Map() {
   const navigation = useNavigation()
+  const [location, setLocation] = useState<{
+    latitude: number
+    longitude: number
+  } | null>(null)
+  const [query, setQuery] = useState('')
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const requestLocationPermission = async () => {
+      setLoading(true)
+      const timeout = setTimeout(() => {
+        Alert.alert(
+          'Tiempo de espera agotado',
+          'No se pudo obtener la ubicación. Usando ubicación predeterminada.'
+        )
+        setLocation({
+          latitude: 10.066648,
+          longitude: -69.362973
+        })
+        setLoading(false)
+      }, 10000) // Tiempo de espera de 10 segundos
+
+      try {
+        const servicesEnabled = await Location.hasServicesEnabledAsync()
+        if (!servicesEnabled) {
+          Alert.alert(
+            'Servicios de ubicación deshabilitados',
+            'Activa los servicios de ubicación en tu dispositivo.'
+          )
+          clearTimeout(timeout)
+          return
+        }
+
+        const { status } = await Location.requestForegroundPermissionsAsync()
+        if (status !== 'granted') {
+          Alert.alert(
+            'Permiso denegado',
+            'Se necesita acceso a la ubicación para usar esta función.'
+          )
+          setLocation({
+            latitude: 10.066648,
+            longitude: -69.362973
+          })
+          clearTimeout(timeout)
+        } else {
+          const currentLocation = await Location.getCurrentPositionAsync({})
+          setLocation({
+            latitude: currentLocation.coords.latitude,
+            longitude: currentLocation.coords.longitude
+          })
+          clearTimeout(timeout)
+        }
+      } catch (error) {
+        console.log(error)
+        Alert.alert(
+          'Error al obtener la ubicación',
+          'Hubo un problema al intentar obtener tu ubicación.'
+        )
+        setLocation({
+          latitude: 10.066648,
+          longitude: -69.362973
+        })
+        clearTimeout(timeout)
+      }
+      setLoading(false)
+    }
+
+    requestLocationPermission()
+  }, [])
   useEffect(() => {
     navigation.setOptions({
       headerShown: true,
@@ -39,22 +110,15 @@ export default function Map() {
       )
     })
   }, [navigation])
-  const [query, setQuery] = useState('')
-
-  useEffect(() => {
-    ;(async () => {
-      const { status } = await Location.requestForegroundPermissionsAsync()
-      if (status !== 'granted') {
-        latitude = 10.066648
-        longitude = -69.362973
-        return
-      }
-
-      location = await Location.getCurrentPositionAsync({})
-      latitude = location.coords.latitude
-      longitude = location.coords.longitude
-    })()
-  }, [])
+  if (loading || location === null) {
+    return (
+      <View
+        style={[styles.container, { justifyContent: 'center', alignItems: 'center' }]}
+      >
+        <ActivityIndicator size="large" color="#FB9062" />
+      </View>
+    )
+  }
 
   return (
     <View style={styles.container}>
@@ -62,8 +126,8 @@ export default function Map() {
         provider={PROVIDER_GOOGLE}
         style={styles.map}
         region={{
-          latitude: latitude,
-          longitude: longitude,
+          latitude: location.latitude,
+          longitude: location.longitude,
           latitudeDelta: 0.015,
           longitudeDelta: 0.0121
         }}
@@ -72,8 +136,8 @@ export default function Map() {
           title="SpotSeeker"
           description="Marker custom"
           coordinate={{
-            latitude: latitude,
-            longitude: longitude
+            latitude: location.latitude,
+            longitude: location.longitude
           }}
         >
           <MapMarkerColorIcon size={50} />
