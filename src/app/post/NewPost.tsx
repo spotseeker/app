@@ -3,12 +3,14 @@ import { router, useNavigation } from 'expo-router'
 import React, { useEffect, useState } from 'react'
 import { TouchableOpacity, Pressable } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import CreatePosts from '@/src/screens/CreatePosts'
+import CreatePosts from '@/src/screens/createPost'
 function NewPost() {
   const { ArrowBack, CrossDeleteIcon, RefreshIcon } = Icons
   const [step, setStep] = useState(1)
   const navigation = useNavigation()
   const [image, setImage] = useState<string[]>([])
+  const [location, setLocation] = useState('')
+  const [hashtags, setHashtags] = useState<string[]>([])
 
   const headerTitleStep = () => {
     switch (step) {
@@ -73,6 +75,10 @@ function NewPost() {
         setStep={setStep}
         image={image as string[]}
         setImage={setImage}
+        location={location}
+        setLocation={setLocation}
+        hashtags={hashtags}
+        setHashtags={setHashtags}
       />
     </SafeAreaView>
   )

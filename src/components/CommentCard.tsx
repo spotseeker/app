@@ -5,14 +5,14 @@ import { Colors } from '@/src/constants/Colors'
 import Icons from './Icons'
 
 type commentProps = {
-  Avatar: number
+  avatar: number
   name: string
   commentText: string
   alignLeft?: boolean
 }
 
 type commentCardProps = {
-  Comments: commentProps
+  comments: commentProps
   deleteComment: () => void
   editComment: () => void
   isEditing: boolean
@@ -22,7 +22,7 @@ type commentCardProps = {
 }
 
 function CommentCard({
-  Comments,
+  comments,
   deleteComment,
   editComment,
   isEditing,
@@ -35,14 +35,14 @@ function CommentCard({
   return (
     <View
       className={`w-[261px] min-h-[70] bg-[#E5D0D0] rounded-lg p-3 m-3 flex flex-row items-center justify-between ${
-        Comments.alignLeft ? 'self-start' : 'self-end'
+        comments.alignLeft ? 'self-start' : 'self-end'
       }`}
     >
       {/* Sección de Avatar y comentario */}
       <View className="flex flex-col flex-1 space-y-1">
         <View className="flex flex-row items-center space-x-2">
-          <Avatar source={Comments.Avatar} color={Colors.text} radius={30} size={30} />
-          <Text className="font-bold">{Comments.name}</Text>
+          <Avatar source={comments.avatar} color={Colors.text} radius={30} size={30} />
+          <Text className="font-bold">{comments.name}</Text>
         </View>
 
         {isEditing ? (
@@ -52,7 +52,7 @@ function CommentCard({
             className="px-5 border border-gray-300 rounded-md"
           />
         ) : (
-          <Text className="px-5">{Comments.commentText}</Text>
+          <Text className="px-5">{comments.commentText}</Text>
         )}
       </View>
 

@@ -5,7 +5,7 @@ import { router, useNavigation } from 'expo-router'
 import { zodResolver } from '@hookform/resolvers/zod'
 import Icons from '@/src/components/Icons'
 import Screen from '@/src/components/Screen'
-import { OTPSchema } from '@/src/schemas/UserSchema'
+import { OTPSchema } from '@/src/schemas/userSchema'
 import Input from '@/src/components/Input'
 import Button from '@/src/components/Button'
 

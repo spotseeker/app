@@ -4,12 +4,12 @@
     "slug": "spotseeker",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "src/assets/images/icon.png",
+    "icon": "src/assets/images_app/logo_icon.png",
     "scheme": "spotseeker",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "src/assets/images/splash.png",
-      "resizeMode": "contain",
+      "image": "src/assets/images_app/logo_icon.png",
+      "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
     "ios": {
