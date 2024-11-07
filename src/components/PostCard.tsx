@@ -80,40 +80,43 @@ export default function PostCard({
 
       <Image source={{ uri: image }} className="h-72 mx-2" />
 
-      <View className="flex flex-row items-center space-x-3 justify-start mx-2">
-        <View className="flex-row items-center space-x-3">
-          <AntDesign
-            name={liked ? 'heart' : 'hearto'}
-            size={28}
-            color={liked ? 'red' : 'black'}
-            onPress={handleLike}
-          />
-          <Text style={styles.likeCount}>{count}</Text>
-        </View>
-        <Pressable onPress={() => router.push('/post/Comments')}>
-          <View style={styles.commentButton}>
-            <AntDesign name="message1" size={28} />
+      <View className="flex flex-row items-center space-x-3 justify-start mx-4">
+        <View className="flex-row flex flex-1 items-center space-x-3">
+          <View className="flex-row items-center space-x-3">
+            <AntDesign
+              name={liked ? 'heart' : 'hearto'}
+              size={28}
+              color={liked ? 'red' : 'black'}
+              onPress={handleLike}
+            />
+            <Text style={styles.likeCount}>{count}</Text>
           </View>
-        </Pressable>
-        <View style={styles.actionGroup}>
-          <AntDesign name="staro" size={28} />
+          <Pressable onPress={() => router.push('/post/Comments')}>
+            <View style={styles.commentButton}>
+              <AntDesign name="message1" size={28} />
+            </View>
+          </Pressable>
+          <View style={styles.actionGroup}>
+            <AntDesign name="staro" size={28} />
+          </View>
         </View>
-        <View style={styles.ratingContainer}>
+        <View style={styles.ratingContainer} className="mx-2">
           <RenderStar rating={rating} />
           <Text style={styles.ratingText}>{rating}</Text>
         </View>
       </View>
 
-      <View style={styles.footerRow}>
-        <AntDesign name="enviromento" size={20} />
-        <View className="mr-[130]">
+      <View className="flex-row py-2 mx-2">
+        <View className="flex flex-1 flex-row">
+          <AntDesign name="enviromento" size={20} />
           <Text style={styles.locationText}>{location}</Text>
         </View>
+
         <View className="ml-[-55] mr-[10]">
           <Text>{date.toLocaleDateString()}</Text>
         </View>
       </View>
-      <Text>{description}</Text>
+      <Text className="mx-3 my-3">{description}</Text>
 
       {/* Modal de opciones */}
       <Modal
