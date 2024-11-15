@@ -13,7 +13,8 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.daragoucla.spotseeker"
     },
     "android": {
       "adaptiveIcon": {
@@ -35,7 +36,7 @@
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "src/assets/images_app/logo_icon.png"
+      "favicon": "src/assets/images/icon.png"
     },
     "plugins": [
       [
