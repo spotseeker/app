@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
-import { SplashScreen, Stack, useRouter, useSegments } from 'expo-router'
+import { router, SplashScreen, Stack, usePathname } from 'expo-router'
 import { useFonts } from 'expo-font'
 import React, { useEffect } from 'react'
 import { BackHandler } from 'react-native'
@@ -16,9 +16,8 @@ export default function RootLayout() {
     'Poppins-SemiBold': require('../assets/fonts/Poppins-SemiBold.ttf'),
     'Poppins-Thin': require('../assets/fonts/Poppins-Thin.ttf')
   })
-  const router = useRouter()
-  const segments = useSegments()
 
+  const pathname = usePathname()
   useEffect(() => {
     if (error) throw error
 
@@ -27,24 +26,24 @@ export default function RootLayout() {
     }
 
     const onBackPress = () => {
-      const currentSegment = segments[0]
+      console.log('Current route:', pathname)
 
-      if (currentSegment === '(tabs)') {
+      if (pathname === '/profile/settings') {
+        router.replace('/profile')
         return true
       }
 
-      if (router.canGoBack()) {
-        router.back()
-        return true
+      if (pathname == '/profile/edit' || pathname === '/profile/password') {
+        return false
       }
 
-      return true
+      return false
     }
 
     const backHandler = BackHandler.addEventListener('hardwareBackPress', onBackPress)
 
     return () => backHandler.remove()
-  }, [fontsLoaded, error, segments, router])
+  }, [fontsLoaded, error, pathname])
 
   if (!fontsLoaded) {
     return null

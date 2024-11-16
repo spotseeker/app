@@ -38,7 +38,7 @@ export default function Settings() {
   const handleConfirmLogOut = async () => {
     // await AsyncStorage.clear();
     setModalVisible(false)
-    router.push('/auth/login')
+    router.replace('/auth/login')
   }
 
   const handleUpdatePassword = () => {
