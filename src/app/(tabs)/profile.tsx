@@ -46,12 +46,12 @@ const Profile = () => {
         paddingRight: '10%'
       },
       headerRight: () => (
-        <Pressable onPress={() => router.push('/profile/settings')}>
+        <Pressable onPress={() => router.replace('/profile/settings')}>
           <FourLinesIcon size={35} />
         </Pressable>
       ),
       headerLeft: () => (
-        <TouchableOpacity onPress={() => router.push('/(tabs)/home')}>
+        <TouchableOpacity onPress={() => router.replace('/(tabs)/home')}>
           <ArrowBack size={35} />
         </TouchableOpacity>
       )

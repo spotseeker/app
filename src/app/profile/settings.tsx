@@ -12,7 +12,6 @@ export default function Settings() {
   useEffect(() => {
     navigation.setOptions({
       headerShown: true,
-      gestureEnabled: false,
       title: '',
       headerTitle: 'Configuracion',
       headerTintColor: '#EEAF61',
@@ -39,17 +38,17 @@ export default function Settings() {
   const handleConfirmLogOut = async () => {
     // await AsyncStorage.clear();
     setModalVisible(false)
-    router.push('/auth/login')
+    router.replace('/auth/login')
   }
 
   const handleUpdatePassword = () => {
     setModalVisible(false)
-    router.push('/profile/password')
+    router.replace('/profile/password')
   }
 
   const handleEditProfile = () => {
     setModalVisible(false)
-    router.push('/profile/edit')
+    router.replace('/profile/edit')
   }
 
   return (

@@ -20,6 +20,7 @@ export default function UpdatePassword() {
   useEffect(() => {
     navigation.setOptions({
       headerShown: true,
+      gestureEnabled: false,
       title: '',
       headerTitle: 'Cambio de  Contraseña',
       headerTintColor: '#EEAF61',

@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
-import { SplashScreen, Stack } from 'expo-router'
+import { router, SplashScreen, Stack, usePathname } from 'expo-router'
 import { useFonts } from 'expo-font'
 import React, { useEffect } from 'react'
+import { BackHandler } from 'react-native'
 
 export default function RootLayout() {
   const [fontsLoaded, error] = useFonts({
@@ -16,19 +17,48 @@ export default function RootLayout() {
     'Poppins-Thin': require('../assets/fonts/Poppins-Thin.ttf')
   })
 
+  const pathname = usePathname()
   useEffect(() => {
     if (error) throw error
 
     if (fontsLoaded) {
       SplashScreen.hideAsync()
     }
-  }, [fontsLoaded, error])
+
+    const onBackPress = () => {
+      console.log('Current route:', pathname)
+
+      if (pathname.startsWith('/auth')) {
+        return true
+      }
+
+      if (pathname === '/auth/login' || pathname === '/welcome') {
+        return true
+      }
+
+      if (pathname === '/profile/Notifications') {
+        router.replace('/home')
+        return true
+      }
+
+      if (pathname.startsWith('/profile') && pathname !== '/profile/Notifications') {
+        router.replace('/profile')
+        return true
+      }
+
+      if (pathname == '/profile/edit' || pathname === '/profile/password') {
+        return true
+      }
+
+      return false
+    }
+
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', onBackPress)
+
+    return () => backHandler.remove()
+  }, [fontsLoaded, error, pathname])
 
   if (!fontsLoaded) {
-    return null
-  }
-
-  if (!fontsLoaded && !error) {
     return null
   }
 

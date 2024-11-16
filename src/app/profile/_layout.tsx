@@ -3,29 +3,26 @@ import React from 'react'
 
 const ProfileLayout = () => {
   return (
-    <>
-      <Stack>
-        <Stack.Screen
-          name="settings"
-          options={{
-            headerShown: false
-          }}
-        />
-        <Stack.Screen
-          name="edit"
-          options={{
-            headerShown: false
-          }}
-        />
-
-        <Stack.Screen
-          name="otherUser/OtherProfile"
-          options={{
-            headerShown: false
-          }}
-        />
-      </Stack>
-    </>
+    <Stack>
+      <Stack.Screen
+        name="settings"
+        options={{
+          headerShown: false
+        }}
+      />
+      <Stack.Screen
+        name="edit"
+        options={{
+          headerShown: false
+        }}
+      />
+      <Stack.Screen
+        name="otherUser/OtherProfile"
+        options={{
+          headerShown: false
+        }}
+      />
+    </Stack>
   )
 }
 
