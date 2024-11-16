@@ -28,13 +28,26 @@ export default function RootLayout() {
     const onBackPress = () => {
       console.log('Current route:', pathname)
 
-      if (pathname === '/profile/settings') {
+      if (pathname.startsWith('/auth')) {
+        return true
+      }
+
+      if (pathname === '/auth/login' || pathname === '/welcome') {
+        return true
+      }
+
+      if (pathname === '/profile/Notifications') {
+        router.replace('/home')
+        return true
+      }
+
+      if (pathname.startsWith('/profile') && pathname !== '/profile/Notifications') {
         router.replace('/profile')
         return true
       }
 
       if (pathname == '/profile/edit' || pathname === '/profile/password') {
-        return false
+        return true
       }
 
       return false
