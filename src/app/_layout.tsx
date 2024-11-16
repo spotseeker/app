@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
-import { SplashScreen, Stack } from 'expo-router'
+import { SplashScreen, Stack, useRouter, useSegments } from 'expo-router'
 import { useFonts } from 'expo-font'
 import React, { useEffect } from 'react'
+import { BackHandler } from 'react-native'
 
 export default function RootLayout() {
   const [fontsLoaded, error] = useFonts({
@@ -15,6 +16,8 @@ export default function RootLayout() {
     'Poppins-SemiBold': require('../assets/fonts/Poppins-SemiBold.ttf'),
     'Poppins-Thin': require('../assets/fonts/Poppins-Thin.ttf')
   })
+  const router = useRouter()
+  const segments = useSegments()
 
   useEffect(() => {
     if (error) throw error
@@ -22,20 +25,35 @@ export default function RootLayout() {
     if (fontsLoaded) {
       SplashScreen.hideAsync()
     }
-  }, [fontsLoaded, error])
+
+    const onBackPress = () => {
+      const currentSegment = segments[0]
+
+      if (currentSegment === '(tabs)') {
+        return true
+      }
+
+      if (router.canGoBack()) {
+        router.back()
+        return true
+      }
+
+      return true
+    }
+
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', onBackPress)
+
+    return () => backHandler.remove()
+  }, [fontsLoaded, error, segments, router])
 
   if (!fontsLoaded) {
     return null
   }
 
-  if (!fontsLoaded && !error) {
-    return null
-  }
-
   return (
-    <Stack screenOptions={{ headerShown: false, gestureEnabled: false }}>
-      <Stack.Screen name="(tabs)" options={{ gestureEnabled: false }} />
-      <Stack.Screen name="(aux)" options={{ gestureEnabled: false }} />
+    <Stack screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="(tabs)" />
+      <Stack.Screen name="(aux)" />
     </Stack>
   )
 }
