@@ -23,6 +23,7 @@ export class Client {
   }
 
   addAuthToken(config: InternalAxiosRequestConfig) {
+    // TODO: Implement session storage
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [session, setSession] = useStorageState('session')
     config.headers['Authorization'] = `Bearer ${session}`
@@ -45,6 +46,7 @@ export class Client {
         params: config.params
       })
       return response.data
+      // TODO: Implement error handling
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       throw new Error(error)
