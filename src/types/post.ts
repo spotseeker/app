@@ -13,6 +13,12 @@ export type Post = {
   user: string
 }
 
+export type PostUpdate = {
+  body: string
+  locationId: number
+  isArchived: boolean
+}
+
 export type PostResponse = {
   id: string
   likes: number
