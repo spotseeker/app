@@ -10,6 +10,13 @@ export type ClientConfig = {
   params?: object
 }
 
+export type Pagination = {
+  results: object[]
+  count: number
+  next: string | null
+  previous: string | null
+}
+
 export class Client {
   client: AxiosInstance
 
@@ -36,7 +43,7 @@ export class Client {
     }
   }
 
-  async call(method: string, config: ClientConfig): Promise<Response> {
+  async call(method: string, config: ClientConfig): Promise<Response | Pagination> {
     this.handleConfig(config)
     try {
       const response = await this.client.request({
@@ -54,8 +61,23 @@ export class Client {
   }
 
   async get(config: ClientConfig) {
-    const data = await this.call('get', config)
-    return objectToCamel(data)
+    const isPaginated = config.params && 'page' in config.params
+    if (isPaginated) {
+      const response = await this.call('get', config)
+      if ('results' in response) {
+        const data: Pagination = response
+        return {
+          results: objectToCamel(data.results),
+          count: data.count,
+          next: data.next,
+          previous: data.previous
+        }
+      }
+      throw new Error('Expected Pagination response')
+    } else {
+      const data = await this.call('get', config)
+      return objectToCamel(data)
+    }
   }
 
   async post(config: ClientConfig) {
