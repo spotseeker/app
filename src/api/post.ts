@@ -3,10 +3,11 @@ import { Client } from './client'
 import { objectToSnake } from 'ts-case-convert'
 
 export class PostService extends Client {
-  async list(): Promise<PostResponse[]> {
+  async list(page: number): Promise<PostResponse[]> {
     const response = await this.get({
       url: '/post/',
-      needAuthorization: true
+      needAuthorization: true,
+      params: { page }
     })
     return response as unknown as PostResponse[]
   }
