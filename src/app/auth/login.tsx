@@ -6,26 +6,54 @@ import Button from '@/src/components/Button'
 import Input from '@/src/components/Input'
 import { LoginSchema } from '@/src/schemas/userSchema'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
+import { useForm, SubmitHandler } from 'react-hook-form'
 import Screen from '@/src/components/Screen'
 import { Link } from 'expo-router'
+import { useAuth } from '@/src/hooks/useAuth'
 
 export default function Login() {
+  const { login, error, tokens } = useAuth()
   const { LogoIcon } = Icons
-  const { control, handleSubmit, reset } = useForm({
-    resolver: zodResolver(LoginSchema)
+
+  const schema_2 = LoginSchema.pick({ username: true, password: true })
+
+  const { control, reset, handleSubmit } = useForm({
+    resolver: zodResolver(schema_2)
   })
+
+  // Función para manejar el envío del formulario
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const onSubmit: SubmitHandler<any> = async (data) => {
+    try {
+      await login(data.username, data.password)
+
+      if (tokens) {
+        console.log('Tokens después de login:')
+        console.log('Access Token:', tokens.access)
+        console.log('Refresh Token:', tokens.refresh)
+        router.push('/(tabs)/home')
+      }
+    } catch (err) {
+      console.error('Error durante el proceso de login', err)
+    } finally {
+      reset()
+    }
+  }
+
   return (
     <SafeAreaView className="h-full">
       <ScrollView>
         <Screen>
+          {/* Encabezado */}
           <View className="flex justify-center items-center">
             <Text className="text-lightc font-pbold text-[14px]">
               ¡Hola de nuevo viajero!
             </Text>
             <LogoIcon width={200} height={200} mr={15} />
           </View>
-          <View className="flex justify-center items-center ">
+
+          {/* Inputs de usuario y contraseña */}
+          <View className="flex justify-center items-center">
             <Input
               text="Introduce usuario"
               placeholder="usuario"
@@ -41,6 +69,8 @@ export default function Login() {
               name="password"
             />
           </View>
+
+          {/* Enlace para recuperar contraseña */}
           <View className="flex justify-end items-end p-5">
             <Link asChild href={'/auth/password'}>
               <Text className="font-psemibold text-helper underline pb-5">
@@ -48,23 +78,26 @@ export default function Login() {
               </Text>
             </Link>
           </View>
+
+          {/* Mensaje de error */}
+          {error && <Text className="text-red-500 text-center">{error}</Text>}
+
+          {/* Botón de ingreso */}
           <Button
             width={330}
             height={47}
             variant="primary"
-            onPress={handleSubmit(() => {
-              reset()
-              router.push('/(tabs)/home')
-            })}
+            onPress={handleSubmit(onSubmit)} // Conectar con handleSubmit
           >
             Ingresar
           </Button>
+
+          {/* Enlace para registro */}
           <View className="flex flex-row space-x-[-20px] justify-center items-center">
             <Text className="font-psemibold p-5">¿No posees cuenta?</Text>
-
             <Link asChild href={'/auth/signup'}>
               <Text className="font-psemibold text-helper underline p-5">
-                Registrate Aqui
+                Regístrate Aquí
               </Text>
             </Link>
           </View>
