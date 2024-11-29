@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { View, Text, SafeAreaView, ScrollView } from 'react-native'
 import { router } from 'expo-router'
 import Icons from '@/src/components/Icons'
@@ -17,6 +17,7 @@ export default function Login() {
 
   const schema_2 = LoginSchema.pick({ username: true, password: true })
 
+  const [loading, setLoading] = useState(false)
   const { control, handleSubmit } = useForm({
     resolver: zodResolver(schema_2)
   })
@@ -25,13 +26,15 @@ export default function Login() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onSubmit: SubmitHandler<any> = async (data) => {
     try {
+      setLoading(true)
       await login(data.username, data.password)
-
       if (tokens) {
         router.push('/(tabs)/home')
       }
     } catch (err) {
       console.error('Error durante el proceso de login', err)
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -78,14 +81,17 @@ export default function Login() {
           {error && <Text className="text-red-500 text-center">{error}</Text>}
 
           {/* Botón de ingreso */}
-          <Button
-            width={330}
-            height={47}
-            variant="primary"
-            onPress={handleSubmit(onSubmit)} // Conectar con handleSubmit
-          >
-            Ingresar
-          </Button>
+          <View className="flex justify-center ml-3 p-2">
+            <Button
+              width={330}
+              height={47}
+              variant="primary"
+              onPress={handleSubmit(onSubmit)} // Conectar con handleSubmit
+              disable={loading}
+            >
+              Ingresar
+            </Button>
+          </View>
 
           {/* Enlace para registro */}
           <View className="flex flex-row space-x-[-20px] justify-center items-center">
