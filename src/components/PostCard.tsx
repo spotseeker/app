@@ -11,19 +11,20 @@ import Rating from './Rating'
 import { router } from 'expo-router'
 import Icons from './Icons'
 import ModalAction from './ModalAction'
+import PagerView from 'react-native-pager-view'
 
 type PostCardProps = {
-  location: string
+  locationId: string
   user: string
   date: Date
-  image: string
+  image: string[]
   description: string
   isOwnProfile?: boolean
   rating: number
 }
 
 export default function PostCard({
-  location,
+  locationId,
   image,
   description,
   user,
@@ -78,8 +79,13 @@ export default function PostCard({
         )}
       </View>
 
-      <Image source={{ uri: image }} className="h-72 mx-2" />
-
+      <PagerView style={styles.pagerView} initialPage={0}>
+        {image.map((img: string, index: number) => (
+          <View key={index} style={styles.page}>
+            <Image source={{ uri: img }} style={styles.image} />
+          </View>
+        ))}
+      </PagerView>
       <View className="flex flex-row items-center space-x-3 justify-start mx-4">
         <View className="flex-row flex flex-1 items-center space-x-3">
           <View className="flex-row items-center space-x-3">
@@ -109,7 +115,7 @@ export default function PostCard({
       <View className="flex-row py-2 mx-2">
         <View className="flex flex-1 flex-row">
           <AntDesign name="enviromento" size={20} />
-          <Text style={styles.locationText}>{location}</Text>
+          <Text style={styles.locationText}>{locationId}</Text>
         </View>
 
         <View className="ml-[-55] mr-[10]">
@@ -233,5 +239,18 @@ const styles = StyleSheet.create({
     marginTop: 10,
     fontSize: 16,
     color: 'grey'
+  },
+  pagerView: {
+    height: 200,
+    marginBottom: 10
+  },
+  page: {
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  image: {
+    width: '100%',
+    height: '100%',
+    resizeMode: 'cover'
   }
 })

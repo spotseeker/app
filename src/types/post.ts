@@ -6,11 +6,13 @@ export type Image = {
 }
 
 export type Post = {
-  images: Image[]
+  image: string[]
   body: string
-  locationId: number
+  locationId: string
   score: number
   user: string
+  description: string
+  date: Date
 }
 
 export type PostUpdate = {
@@ -23,6 +25,7 @@ export type PostResponse = {
   id: string
   likes: number
   comments: number
+  rating: number
   isArchived: boolean
 } & Timestamp &
   Post

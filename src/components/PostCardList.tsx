@@ -1,17 +1,24 @@
 import React from 'react'
-
-import { FlatList } from 'react-native'
-import { post } from '@/src/fixtures/post'
+import { Text, ActivityIndicator, FlatList } from 'react-native'
 import PostCard from './PostCard'
+import { usePostList } from '@/src/hooks/usePost'
 
-export default function PostCardList() {
-  const visiblePosts = post.filter((postc) => !postc.isArchive)
+const PostCardList = () => {
+  const { postData, error, isLoading } = usePostList()
 
+  if (isLoading) {
+    return <ActivityIndicator size={'large'} color={'#0000ff'} />
+  }
+
+  if (error) {
+    return <Text> Error: {error.message}</Text>
+  }
   return (
     <FlatList
-      data={visiblePosts}
-      keyExtractor={(postc) => String(postc.id)}
+      data={postData}
+      keyExtractor={(posts) => String(posts.id)}
       renderItem={({ item }) => <PostCard {...item} />}
     />
   )
 }
+export default PostCardList
