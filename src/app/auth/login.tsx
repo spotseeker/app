@@ -9,15 +9,15 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import Screen from '@/src/components/Screen'
 import { Link } from 'expo-router'
-import { useAuth } from '@/src/hooks/useAuth'
+import { useAuthContext } from '@/src/context/context'
 
 export default function Login() {
-  const { login, error, tokens } = useAuth()
+  const { login, error, tokens } = useAuthContext()
   const { LogoIcon } = Icons
 
   const schema_2 = LoginSchema.pick({ username: true, password: true })
 
-  const { control, reset, handleSubmit } = useForm({
+  const { control, handleSubmit } = useForm({
     resolver: zodResolver(schema_2)
   })
 
@@ -28,15 +28,10 @@ export default function Login() {
       await login(data.username, data.password)
 
       if (tokens) {
-        console.log('Tokens después de login:')
-        console.log('Access Token:', tokens.access)
-        console.log('Refresh Token:', tokens.refresh)
         router.push('/(tabs)/home')
       }
     } catch (err) {
       console.error('Error durante el proceso de login', err)
-    } finally {
-      reset()
     }
   }
 

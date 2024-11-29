@@ -31,15 +31,21 @@ export const useAuth = (): UseAuthReturn => {
   const login = async (username: string, password: string): Promise<void> => {
     try {
       setError(null)
-      const { access, refresh } = await authService.login(username, password)
-      await AsyncStorage.setItem('accessToken', access)
-      await AsyncStorage.setItem('refreshToken', refresh)
-      setTokens({ access, refresh })
-      setIsAuthenticated(true)
-    } catch {
-      setError('Error al iniciar sesión')
+      const response = await authService.login(username, password)
+
+      if ('access' in response && 'refresh' in response) {
+        await AsyncStorage.setItem('accessToken', response.access)
+        await AsyncStorage.setItem('refreshToken', response.refresh)
+        setTokens({ access: response.access, refresh: response.refresh })
+        setIsAuthenticated(true)
+      }
+    } catch (err) {
+      if (err instanceof Error) {
+        setError(err.message)
+      }
       setIsAuthenticated(false)
 
+      // Limpia el mensaje de error después de 5 segundos
       setTimeout(() => {
         setError(null)
       }, 5000)

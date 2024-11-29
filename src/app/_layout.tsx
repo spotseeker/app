@@ -3,6 +3,7 @@ import { router, SplashScreen, Stack, usePathname } from 'expo-router'
 import { useFonts } from 'expo-font'
 import React, { useEffect } from 'react'
 import { BackHandler } from 'react-native'
+import { SessionProvider } from '../context/context'
 
 export default function RootLayout() {
   const [fontsLoaded, error] = useFonts({
@@ -18,6 +19,7 @@ export default function RootLayout() {
   })
 
   const pathname = usePathname()
+
   useEffect(() => {
     if (error) throw error
 
@@ -63,9 +65,11 @@ export default function RootLayout() {
   }
 
   return (
-    <Stack screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="(tabs)" />
-      <Stack.Screen name="(aux)" />
-    </Stack>
+    <SessionProvider>
+      <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="(tabs)" />
+        <Stack.Screen name="(aux)" />
+      </Stack>
+    </SessionProvider>
   )
 }
