@@ -109,3 +109,4 @@ export const EditProfileSchema = z.object({
 })
 
 export type UserData = z.infer<typeof RegisterSchema>
+export type loginData = z.infer<typeof LoginSchema>

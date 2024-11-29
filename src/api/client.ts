@@ -1,7 +1,7 @@
-import axios, { InternalAxiosRequestConfig, type AxiosInstance } from 'axios'
+import axios, { InternalAxiosRequestConfig, AxiosInstance } from 'axios'
 import { BASE_URL } from '@/src/settings/settings'
 import { objectToCamel } from 'ts-case-convert'
-import { useStorageState } from '../hooks/useStorageState'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export type ClientConfig = {
   url: string
@@ -27,24 +27,21 @@ export class Client {
         'Content-Type': 'application/json'
       }
     })
+
+    // Configurar el interceptor de autorización globalmente
+    this.client.interceptors.request.use(this.addAuthToken)
   }
 
-  addAuthToken(config: InternalAxiosRequestConfig) {
-    // TODO: Implement session storage
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [session, setSession] = useStorageState('session')
-    config.headers['Authorization'] = `Bearer ${session}`
+  // Obtener el token del almacenamiento y agregarlo a los headers
+  async addAuthToken(config: InternalAxiosRequestConfig) {
+    const session = await AsyncStorage.getItem('session')
+    if (session) {
+      config.headers['Authorization'] = `Bearer ${session}`
+    }
     return config
   }
 
-  handleConfig(clientConfig: ClientConfig) {
-    if (clientConfig.needAuthorization) {
-      this.client.interceptors.request.use((config) => this.addAuthToken(config))
-    }
-  }
-
   async call(method: string, config: ClientConfig): Promise<Response | Pagination> {
-    this.handleConfig(config)
     try {
       const response = await this.client.request({
         method: method,
@@ -53,7 +50,6 @@ export class Client {
         params: config.params
       })
       return response.data
-      // TODO: Implement error handling
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       throw new Error(error)

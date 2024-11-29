@@ -5,9 +5,16 @@ import React, { useEffect, useState } from 'react'
 import { Control } from 'react-hook-form'
 import { View, Text, Pressable, Image } from 'react-native'
 import * as ImagePicker from 'expo-image-picker'
+import { avatar } from '@/src/types/user'
 
 type StepsProps = {
   control: Control
+  setAvatar?: (data: avatar | null) => void
+}
+
+type Step3Props = {
+  control: Control
+  setAvatar: (data: avatar | null) => void
 }
 
 const Step1 = ({ control }: StepsProps) => {
@@ -81,7 +88,7 @@ const Step2 = ({ control }: StepsProps) => {
   )
 }
 
-const Step3 = ({ control }: StepsProps) => {
+const Step3 = ({ control, setAvatar }: Step3Props) => {
   const { ImageIcon2, CrossDeleteIcon } = Icons
   const [image, setImage] = useState<string | null>(null)
 
@@ -96,21 +103,28 @@ const Step3 = ({ control }: StepsProps) => {
 
   const pickImage = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      mediaTypes: ['images'],
       allowsEditing: true,
       aspect: [4, 3],
-      quality: 1
+      quality: 0.5
     })
 
     console.log(result)
 
     if (!result.canceled) {
+      const updateAvatar: avatar = {
+        uri: result.assets[0].uri,
+        fileName: result.assets[0].fileName as string,
+        mimeType: result.assets[0].mimeType as string
+      }
+      setAvatar(updateAvatar as avatar)
       setImage(result.assets[0].uri)
     }
   }
 
   const removeImage = () => {
     setImage(null)
+    setAvatar(null)
   }
   return (
     <>
