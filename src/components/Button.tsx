@@ -8,9 +8,17 @@ type ButtonProps = {
   variant: 'primary' | 'secondary' | 'gray'
   width: number
   height: number
+  disable?: boolean
 }
 
-function Button({ children, onPress, variant, width, height }: ButtonProps) {
+function Button({
+  children,
+  onPress,
+  variant,
+  width,
+  height,
+  disable = false
+}: ButtonProps) {
   return (
     <TouchableOpacity
       onPress={onPress}
@@ -23,6 +31,7 @@ function Button({ children, onPress, variant, width, height }: ButtonProps) {
         borderWidth: variant === 'secondary' ? 2 : 0,
         borderColor: variant === 'secondary' ? '#FB9062' : 'transparent'
       }}
+      disabled={disable}
     >
       {variant === 'primary' ? (
         <LinearGradient

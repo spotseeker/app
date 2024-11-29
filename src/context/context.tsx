@@ -1,28 +1,45 @@
-import { createContext, type PropsWithChildren } from 'react'
+import React, { createContext, useContext, ReactNode, useEffect } from 'react'
+import { useAuth } from '@/src/hooks/useAuth'
 import { useStorageState } from '@/src/hooks/useStorageState'
-import { SpotSeekerAPI } from '../api'
 
-const api = new SpotSeekerAPI()
+interface AuthContextType {
+  login: (username: string, password: string) => Promise<void>
+  logout: () => void
+  session: string | null
+  isAuthenticated: boolean
+  tokens: { access: string; refresh: string } | null
+  error: string | null
+}
 
-export const AuthContext = createContext<{
-  login?: (username: string, password: string) => Promise<void> | null
-  logout?: () => void | null
-  session?: string | null
-}>({})
+export const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
-export function SessionProvider({ children }: PropsWithChildren) {
+// Hook para acceder al contexto
+export const useAuthContext = () => {
+  const context = useContext(AuthContext)
+  if (!context) {
+    throw new Error('useAuthContext must be used within a SessionProvider')
+  }
+  return context
+}
+
+export const SessionProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+  const { isAuthenticated, tokens, login, logout, error } = useAuth()
   const [session, setSession] = useStorageState('session')
-  const login = async (username: string, password: string) => {
-    const result = await api.auth.login(username, password)
-    setSession(result.access)
-  }
-  const logout = () => {
-    setSession(null)
-  }
+
+  useEffect(() => {
+    if (tokens?.access) {
+      setSession(tokens.access)
+    }
+  }, [tokens, setSession])
+
   const value = {
     login,
     logout,
-    session
+    session,
+    isAuthenticated,
+    tokens,
+    error
   }
+
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }

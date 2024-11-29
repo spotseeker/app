@@ -5,10 +5,12 @@ import Screen from '@/src/components/Screen'
 import Icons from '@/src/components/Icons'
 import { router, useNavigation } from 'expo-router'
 import ModalAction from '@/src/components/ModalAction'
+import { useAuth } from '@/src/hooks/useAuth'
 
 export default function Settings() {
   const { ArrowIcon, LogOutIcon, ArrowBack } = Icons
   const navigation = useNavigation()
+  const { logout } = useAuth()
   useEffect(() => {
     navigation.setOptions({
       headerShown: true,
@@ -36,8 +38,8 @@ export default function Settings() {
   }
 
   const handleConfirmLogOut = async () => {
-    // await AsyncStorage.clear();
     setModalVisible(false)
+    await logout()
     router.replace('/auth/login')
   }
 
