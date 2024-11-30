@@ -16,7 +16,7 @@ import { Colors } from '@/src/constants/Colors'
 import BackgroundImage from '@/src/assets/images_app/Rectangle 9 (1).png'
 import ProfileImg from '@/src/assets/images_app/image_profile.png'
 import { post } from '@/src/fixtures/post'
-import PostCard from '@/src/components/PostCard'
+import PostCardProfile from '../../components/profilePostCardTemporal'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { router, useNavigation } from 'expo-router'
 
@@ -184,7 +184,7 @@ const Profile = () => {
         ListHeaderComponent={renderHeader}
         data={filterPosts}
         renderItem={({ item }) => (
-          <PostCard
+          <PostCardProfile
             location={item.location}
             image={item.image}
             user={item.user}

@@ -1,13 +1,19 @@
-import { CreateUser, UpdateUser, UserResponse, Notification } from '../types/user'
+import {
+  UpdateUser,
+  UserResponse,
+  Notification,
+  RegisterUserType,
+  OtpResponse
+} from '../types/user'
 import { Client } from './client'
 import { objectToSnake } from 'ts-case-convert'
 
 export class UserService extends Client {
-  async create(user: CreateUser): Promise<UserResponse> {
+  async create(user: RegisterUserType): Promise<UserResponse> {
     const response = await this.post({
       url: '/user/',
       needAuthorization: true,
-      data: objectToSnake(user)
+      data: user
     })
     return response as unknown as UserResponse
   }
@@ -22,7 +28,7 @@ export class UserService extends Client {
 
   async update(user: UpdateUser): Promise<UserResponse> {
     const response = await this.patch({
-      url: `/user/${user.username}/`,
+      url: `/user/${user.userName}/`,
       needAuthorization: true,
       data: objectToSnake(user)
     })
@@ -47,5 +53,14 @@ export class UserService extends Client {
       needAuthorization: true
     })
     return response as unknown as Notification[]
+  }
+
+  async sendOtp(otp: string): Promise<OtpResponse> {
+    const response = await this.post({
+      url: '/user/otp/',
+      needAuthorization: true,
+      data: { otp }
+    })
+    return response as unknown as OtpResponse
   }
 }

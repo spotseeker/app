@@ -11,26 +11,27 @@ import Rating from './Rating'
 import { router } from 'expo-router'
 import Icons from './Icons'
 import ModalAction from './ModalAction'
+import PagerView from 'react-native-pager-view'
+import { Post } from '../types/post'
 
-type PostCardProps = {
-  location: string
-  user: string
-  date: Date
-  image: string
-  description: string
-  isOwnProfile?: boolean
-  rating: number
-}
+//type PostCardProps = {
+//locationId: string
+//user: string
+// date: Date
+//image: string[]
+//description: string
+//isOwnProfile?: boolean
+//rating: number
+//}
 
 export default function PostCard({
-  location,
-  image,
-  description,
-  user,
-  date,
-  isOwnProfile,
-  rating
-}: PostCardProps) {
+  body,
+  created_at,
+  images,
+  location_id,
+  score,
+  likes
+}: Post) {
   const [count, setCount] = useState(1)
   const [liked, setLiked] = useState(false)
   const [isOptionsModalVisible, setOptionsModalVisible] = useState(false)
@@ -69,16 +70,29 @@ export default function PostCard({
       <View className="flex-row mx-2">
         <View className="flex-row flex-1 items-center space-x-3">
           <Avatar source={ProfileImg} color={Colors.text} radius={30} size={30} />
-          <Text className="text-coloricon font-extrabold">{user}</Text>
+          <Text className="text-coloricon font-extrabold">on test</Text>
         </View>
-        {isOwnProfile && (
+        {likes && (
           <Pressable onPress={() => setOptionsModalVisible(true)}>
             <AntDesign name="ellipsis1" size={28} style={styles.iconEllipsis} />
           </Pressable>
         )}
       </View>
 
-      <Image source={{ uri: image }} className="h-72 mx-2" />
+      <PagerView style={styles.pagerView} initialPage={0}>
+        {(() => {
+          const pages: JSX.Element[] = []
+          for (let i = 0; i < images.length; i++) {
+            const img = images[i]
+            pages.push(
+              <View key={i} style={styles.page}>
+                <Image source={{ uri: img.media }} style={styles.image} />
+              </View>
+            )
+          }
+          return pages
+        })()}
+      </PagerView>
 
       <View className="flex flex-row items-center space-x-3 justify-start mx-4">
         <View className="flex-row flex flex-1 items-center space-x-3">
@@ -101,22 +115,22 @@ export default function PostCard({
           </View>
         </View>
         <View style={styles.ratingContainer} className="mx-2">
-          <RenderStar rating={rating} />
-          <Text style={styles.ratingText}>{rating}</Text>
+          <RenderStar rating={score} />
+          <Text style={styles.ratingText}>{score}</Text>
         </View>
       </View>
 
       <View className="flex-row py-2 mx-2">
         <View className="flex flex-1 flex-row">
           <AntDesign name="enviromento" size={20} />
-          <Text style={styles.locationText}>{location}</Text>
+          <Text style={styles.locationText}>{location_id}</Text>
         </View>
 
         <View className="ml-[-55] mr-[10]">
-          <Text>{date.toLocaleDateString()}</Text>
+          <Text>{created_at}</Text>
         </View>
       </View>
-      <Text className="mx-3 my-3">{description}</Text>
+      <Text className="mx-3 my-3">{body}</Text>
 
       {/* Modal de opciones */}
       <Modal
@@ -233,5 +247,18 @@ const styles = StyleSheet.create({
     marginTop: 10,
     fontSize: 16,
     color: 'grey'
+  },
+  pagerView: {
+    height: 200,
+    marginBottom: 10
+  },
+  page: {
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  image: {
+    width: '100%',
+    height: '100%',
+    resizeMode: 'cover'
   }
 })

@@ -1,14 +1,18 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { View, Text, SafeAreaView, ScrollView, BackHandler } from 'react-native'
 import Button from '@/src/components/Button'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import Screen from '@/src/components/Screen'
-import { RegisterSchema, UserData } from '@/src/schemas/userSchema'
+import { loginData, RegisterSchema, UserData } from '@/src/schemas/userSchema'
 import Icons from '@/src/components/Icons'
 import Steps from './steps'
 import { useRouter } from 'expo-router'
 import { z } from 'zod'
+import { avatar, avatarUploaded, RegisterUserType } from '@/src/types/user'
+import { upload } from 'cloudinary-react-native'
+import { cld } from '@/src/hooks/cloudinary'
+import { useCreateUser, useLogin, useSendOtp } from '@/src/hooks/useUserData'
 
 type registerProps = {
   step: number
@@ -23,6 +27,20 @@ export default function SignupScreen({
   setUserData,
   userData
 }: registerProps) {
+  const [avatar, setAvatar] = useState<avatar | null>(null)
+  const [avatarUploaded, setAvatarUploaded] = useState<avatarUploaded | null>(null)
+  const [createUserData, setCreateUserData] = useState<RegisterUserType | null>(null)
+
+  const { sendOtpMutation } = useSendOtp()
+  const { loginMutation } = useLogin()
+
+  // Hacemos un casting de los datos para que coincidan con el tipo loginData
+  const onRegister = async (data: loginData) => {
+    console.log(data)
+    // Llamamos a loginMutation
+    await loginMutation(data)
+  }
+
   const getSchemaForStep = (step: number) => {
     switch (step) {
       case 1:
@@ -49,6 +67,7 @@ export default function SignupScreen({
         return z.object({})
     }
   }
+
   const { control, handleSubmit, reset } = useForm({
     resolver: zodResolver(getSchemaForStep(step)),
     mode: 'onChange'
@@ -74,6 +93,26 @@ export default function SignupScreen({
       setStep(1)
       router.push('/welcome')
     }
+
+    if (step == 5) {
+      const createUserPayload: RegisterUserType = {
+        username: userData.username, // Cambié userName a username
+        email: userData.email,
+        first_name: userData.firstname, // Cambié firstName a first_name
+        last_name: userData.lastname, // Cambié lastName a last_name
+        birth_date: userData.birthdate
+          ? userData.birthdate.toISOString().split('T')[0]
+          : '', // Convertimos la fecha a string "YYYY-MM-DD"
+        description: userData.aboutme,
+        avatar: avatarUploaded?.url || '', // Usamos la URL del avatar cargado
+        password: userData.password
+      }
+
+      setCreateUserData(createUserPayload) // Almacenamos los datos de creación del usuario
+      console.log(createUserData)
+      registerMutation(createUserPayload) // Realizamos la mutación para registrar al usuario
+      onRegister({ username: userData.username, password: userData.password })
+    }
   }, [step])
 
   useEffect(() => {
@@ -84,12 +123,51 @@ export default function SignupScreen({
       }
       return false
     }
+    if (step == 4) {
+      uploadImage()
+    }
 
     const subscription = BackHandler.addEventListener('hardwareBackPress', backAction)
 
     return () => subscription.remove()
   }, [step])
 
+  const uploadImage = async (): Promise<avatarUploaded | undefined> => {
+    if (!avatar) {
+      return undefined
+    }
+
+    const options = {
+      upload_preset: 'spotseeker',
+      unsigned: true
+    }
+
+    try {
+      const response = await new Promise<avatarUploaded>((resolve, reject) => {
+        upload(cld, {
+          file: avatar.uri,
+          options: options,
+          callback: (error, response) => {
+            if (error || !response) {
+              reject(error)
+            } else {
+              resolve({
+                publicID: response?.public_id,
+                url: response?.secure_url
+              })
+            }
+          }
+        })
+      })
+      console.log('Imagen subida con éxito', response.url)
+      setAvatarUploaded({ publicID: response.publicID, url: response.url })
+      return response
+    } catch (error) {
+      console.error('Error al subir la imagen', error)
+      throw error
+    }
+  }
+  const { registerMutation } = useCreateUser()
   return (
     <SafeAreaView className="h-full">
       <ScrollView>
@@ -109,7 +187,7 @@ export default function SignupScreen({
           </View>
           {step === 1 && <Step1 control={control} />}
           {step === 2 && <Step2 control={control} />}
-          {step === 3 && <Step3 control={control} />}
+          {step === 3 && <Step3 control={control} setAvatar={setAvatar} />}
           {step === 4 && <Step4 control={control} />}
           {step === 5 && <Step5 control={control} />}
           {step >= 1 && step <= 5 && (
@@ -140,8 +218,13 @@ export default function SignupScreen({
                   }
 
                   setUserData(updatedUserData)
-                  console.log(updatedUserData)
-                  setStep(step + 1)
+
+                  if (step === 5) {
+                    sendOtpMutation(userData.code)
+                    setStep(step + 1)
+                  } else {
+                    setStep(step + 1)
+                  }
                 })}
               >
                 Siguiente

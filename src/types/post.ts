@@ -1,28 +1,26 @@
-import { Timestamp } from './timestamp'
-
 export type Image = {
   media: string
   order: number
 }
 
 export type Post = {
+  id: string
+  likes?: number | null
+  comments?: number | null
   images: Image[]
+  created_at: string
+  updated_at?: string
+  deleted_at?: string | null
   body: string
-  locationId: number
+  location_id: string
   score: number
+  is_archived: boolean
   user: string
 }
 
-export type PostUpdate = {
-  body: string
-  locationId: number
-  isArchived: boolean
-}
-
 export type PostResponse = {
-  id: string
-  likes: number
-  comments: number
-  isArchived: boolean
-} & Timestamp &
-  Post
+  count: number
+  next: string | null
+  previous: string | null
+  results: Post[]
+}

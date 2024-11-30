@@ -3,6 +3,7 @@ import { router, SplashScreen, Stack, usePathname } from 'expo-router'
 import { useFonts } from 'expo-font'
 import React, { useEffect } from 'react'
 import { BackHandler } from 'react-native'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { SessionProvider } from '../context/context'
 
 export default function RootLayout() {
@@ -17,6 +18,8 @@ export default function RootLayout() {
     'Poppins-SemiBold': require('../assets/fonts/Poppins-SemiBold.ttf'),
     'Poppins-Thin': require('../assets/fonts/Poppins-Thin.ttf')
   })
+
+  const client = new QueryClient()
 
   const pathname = usePathname()
 
@@ -66,10 +69,12 @@ export default function RootLayout() {
 
   return (
     <SessionProvider>
-      <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="(tabs)" />
-        <Stack.Screen name="(aux)" />
-      </Stack>
+      <QueryClientProvider client={client}>
+        <Stack screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="(tabs)" />
+          <Stack.Screen name="(aux)" />
+        </Stack>
+      </QueryClientProvider>
     </SessionProvider>
   )
 }
