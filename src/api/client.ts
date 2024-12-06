@@ -27,9 +27,6 @@ export class Client {
         'Content-Type': 'application/json'
       }
     })
-
-    // Configurar el interceptor de autorización globalmente
-    this.client.interceptors.request.use(this.addAuthToken)
   }
 
   // Obtener el token del almacenamiento y agregarlo a los headers
@@ -42,6 +39,10 @@ export class Client {
   }
 
   async call(method: string, config: ClientConfig): Promise<Response | Pagination> {
+    if (config.needAuthorization) {
+      // Configurar el interceptor de autorización globalmente
+      this.client.interceptors.request.use(this.addAuthToken)
+    }
     try {
       const response = await this.client.request({
         method: method,
