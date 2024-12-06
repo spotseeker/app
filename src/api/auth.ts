@@ -37,4 +37,25 @@ export class AuthService extends Client {
       )
     }
   }
+
+  async recoverPassword(email: string): Promise<void> {
+    await this.post({
+      url: '/user/password/recover/',
+      needAuthorization: false,
+      data: {
+        email
+      }
+    })
+  }
+
+  async sendPasswordOTP(otp: string): Promise<LoginResponse> {
+    const response = await this.post({
+      url: '/user/password/recover/otp/',
+      needAuthorization: false,
+      data: {
+        otp
+      }
+    })
+    return response as unknown as LoginResponse
+  }
 }

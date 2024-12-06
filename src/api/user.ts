@@ -35,15 +35,19 @@ export class UserService extends Client {
     return response as unknown as UserResponse
   }
 
-  async updatePassword(
-    username: string,
-    password: string,
-    newPassword: string
-  ): Promise<void> {
+  async updatePassword(password: string, newPassword: string): Promise<void> {
     await this.patch({
-      url: `/user/${username}/password/`,
+      url: '/user/password/',
       needAuthorization: true,
       data: objectToSnake({ password, newPassword })
+    })
+  }
+
+  async resetPassword(password: string): Promise<void> {
+    await this.post({
+      url: '/user/password/reset/',
+      needAuthorization: true,
+      data: { password }
     })
   }
 
