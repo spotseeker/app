@@ -2,14 +2,13 @@ import React, { useEffect } from 'react'
 import { View, Text, ScrollView } from 'react-native'
 import { useForm } from 'react-hook-form'
 import { router, useNavigation } from 'expo-router'
-import { useMutation } from '@tanstack/react-query'
 import { zodResolver } from '@hookform/resolvers/zod'
 import Icons from '@/src/components/Icons'
 import Screen from '@/src/components/Screen'
 import { EmailSchema } from '@/src/schemas/userSchema'
 import Input from '@/src/components/Input'
 import Button from '@/src/components/Button'
-import { SpotSeekerAPI } from '@/src/api'
+import { useRecoverPassword } from '@/src/hooks/useAuth'
 
 export default function RecoveryPassword() {
   const navigation = useNavigation()
@@ -20,30 +19,7 @@ export default function RecoveryPassword() {
   const { control, handleSubmit, reset } = useForm({
     resolver: zodResolver(EmailSchema)
   })
-  const recoverPassword = async (email: string): Promise<void> => {
-    const api = new SpotSeekerAPI()
-    try {
-      const response = await api.auth.recoverPassword(email)
-      console.log('API response:', response)
-      return response
-    } catch (error) {
-      console.error('API error:', error)
-      throw error
-    }
-  }
 
-  const useRecoverPassword = () => {
-    const { mutate, status, error, data } = useMutation({
-      mutationFn: recoverPassword,
-      onSuccess: async (response) => {
-        console.log('OTP enviado correctamente:', response)
-      },
-      onError: (error) => {
-        console.error('Error al enviar el OTP:', error)
-      }
-    })
-    return { sendOtpMutation: mutate, status, error, data }
-  }
   const { sendOtpMutation } = useRecoverPassword()
 
   return (
