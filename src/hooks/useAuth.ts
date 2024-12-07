@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { AuthService } from '@/src/api/auth'
+import { SpotSeekerAPI } from '../api'
+import { useMutation } from '@tanstack/react-query'
+
+const api = new SpotSeekerAPI()
 
 interface UseAuthReturn {
   login: (username: string, password: string) => Promise<void>
@@ -70,4 +74,45 @@ export const useAuth = (): UseAuthReturn => {
     isAuthenticated,
     tokens
   }
+}
+
+export const useRecoverPassword = () => {
+  const { mutate, status, error, data } = useMutation({
+    mutationFn: api.auth.recoverPassword,
+    onSuccess: (data) => {
+      console.log('OTP enviado correctamente:', data)
+    },
+    onError: (error) => {
+      console.error('Error al enviar el OTP:', error)
+    }
+  })
+  return { sendOtpMutation: mutate, status, error, data }
+}
+
+export const useSendPasswordOTP = () => {
+  const { mutate, status, error, data } = useMutation({
+    mutationFn: api.auth.sendPasswordOTP,
+    onSuccess: async (data) => {
+      await AsyncStorage.setItem('accessToken', data.access)
+      await AsyncStorage.setItem('refreshToken', data.refresh)
+      console.log('OTP validado correctamente:', data)
+    },
+    onError: (error) => {
+      console.error('Error al validar el OTP:', error)
+    }
+  })
+  return { validateOTPMutation: mutate, status, error, data }
+}
+
+export const useResetPassword = () => {
+  const { mutate, status, error, data } = useMutation({
+    mutationFn: api.user.resetPassword,
+    onSuccess: async (data) => {
+      console.log('Contraseña restablecida correctamente:', data)
+    },
+    onError: (error) => {
+      console.error('Error al restablecer la contraseña:', error)
+    }
+  })
+  return { resetPasswordMutation: mutate, status, error, data }
 }
