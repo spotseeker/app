@@ -18,6 +18,12 @@ export type Post = {
   user: string
 }
 
+export type PostUpdate = {
+  body: string
+  isArchived: boolean
+  score: number
+}
+
 export type PostResponse = {
   count: number
   next: string | null
