@@ -8,6 +8,7 @@ import Screen from '@/src/components/Screen'
 import { ResetPasswordSchema } from '@/src/schemas/userSchema'
 import Input from '@/src/components/Input'
 import Button from '@/src/components/Button'
+import { useResetPassword } from '@/src/hooks/useAuth'
 
 export default function ResetPassword() {
   const navigation = useNavigation()
@@ -18,6 +19,8 @@ export default function ResetPassword() {
   const { control, handleSubmit, reset } = useForm({
     resolver: zodResolver(ResetPasswordSchema)
   })
+
+  const { resetPasswordMutation } = useResetPassword()
 
   return (
     <ScrollView>
@@ -63,6 +66,7 @@ export default function ResetPassword() {
             variant="primary"
             onPress={handleSubmit((data) => {
               if (data) {
+                resetPasswordMutation(data.newPassword)
                 reset()
                 router.push('/(tabs)/home')
               }

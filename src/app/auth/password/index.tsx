@@ -8,6 +8,7 @@ import Screen from '@/src/components/Screen'
 import { EmailSchema } from '@/src/schemas/userSchema'
 import Input from '@/src/components/Input'
 import Button from '@/src/components/Button'
+import { useRecoverPassword } from '@/src/hooks/useAuth'
 
 export default function RecoveryPassword() {
   const navigation = useNavigation()
@@ -18,6 +19,8 @@ export default function RecoveryPassword() {
   const { control, handleSubmit, reset } = useForm({
     resolver: zodResolver(EmailSchema)
   })
+
+  const { sendOtpMutation } = useRecoverPassword()
 
   return (
     <ScrollView>
@@ -64,7 +67,9 @@ export default function RecoveryPassword() {
             height={47}
             variant="primary"
             onPress={handleSubmit((data) => {
+              console.log('Form data:', data)
               if (data) {
+                sendOtpMutation(data.email)
                 reset()
                 router.push('/auth/password/otp')
               }

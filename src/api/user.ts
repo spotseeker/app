@@ -8,9 +8,21 @@ import {
 import { Client } from './client'
 import { objectToSnake } from 'ts-case-convert'
 
-export class UserService extends Client {
+export class UserService {
+  private client: Client
+  constructor() {
+    this.client = new Client()
+    this.create = this.create.bind(this)
+    this.getByUsername = this.getByUsername.bind(this)
+    this.update = this.update.bind(this)
+    this.updatePassword = this.updatePassword.bind(this)
+    this.resetPassword = this.resetPassword.bind(this)
+    this.getNotifications = this.getNotifications.bind(this)
+    this.sendOtp = this.sendOtp.bind(this)
+  }
+
   async create(user: RegisterUserType): Promise<UserResponse> {
-    const response = await this.post({
+    const response = await this.client.post({
       url: '/user/',
       needAuthorization: true,
       data: user
@@ -19,7 +31,7 @@ export class UserService extends Client {
   }
 
   async getByUsername(username: string): Promise<UserResponse> {
-    const response = await this.get({
+    const response = await this.client.get({
       url: `/user/${username}/`,
       needAuthorization: true
     })
@@ -27,7 +39,7 @@ export class UserService extends Client {
   }
 
   async update(user: UpdateUser): Promise<UserResponse> {
-    const response = await this.patch({
+    const response = await this.client.patch({
       url: `/user/${user.userName}/`,
       needAuthorization: true,
       data: objectToSnake(user)
@@ -35,20 +47,24 @@ export class UserService extends Client {
     return response as unknown as UserResponse
   }
 
-  async updatePassword(
-    username: string,
-    password: string,
-    newPassword: string
-  ): Promise<void> {
-    await this.patch({
-      url: `/user/${username}/password/`,
+  async updatePassword(password: string, newPassword: string): Promise<void> {
+    await this.client.patch({
+      url: '/user/password/',
       needAuthorization: true,
       data: objectToSnake({ password, newPassword })
     })
   }
 
+  async resetPassword(password: string): Promise<void> {
+    await this.client.post({
+      url: '/user/password/reset/',
+      needAuthorization: true,
+      data: { password }
+    })
+  }
+
   async getNotifications() {
-    const response = await this.get({
+    const response = await this.client.get({
       url: '/user/notification/',
       needAuthorization: true
     })
@@ -56,7 +72,7 @@ export class UserService extends Client {
   }
 
   async sendOtp(otp: string): Promise<OtpResponse> {
-    const response = await this.post({
+    const response = await this.client.post({
       url: '/user/otp/',
       needAuthorization: true,
       data: { otp }

@@ -2,10 +2,18 @@ import type { LoginResponse } from '@/src/types/auth'
 import { Client } from './client'
 import axios from 'axios'
 
-export class AuthService extends Client {
+export class AuthService {
+  private client: Client
+  constructor() {
+    this.client = new Client()
+    this.login = this.login.bind(this)
+    this.recoverPassword = this.recoverPassword.bind(this)
+    this.sendPasswordOTP = this.sendPasswordOTP.bind(this)
+  }
+
   async login(username: string, password: string): Promise<LoginResponse> {
     try {
-      const response = await this.post({
+      const response = await this.client.post({
         url: '/login/',
         needAuthorization: false,
         data: {
@@ -36,5 +44,26 @@ export class AuthService extends Client {
         'Error usuario/credenciales no validas. Verifique su usuario y contraseña ingresadas.'
       )
     }
+  }
+
+  async recoverPassword(email: string): Promise<void> {
+    await this.client.post({
+      url: '/user/password/recover/',
+      needAuthorization: false,
+      data: {
+        email
+      }
+    })
+  }
+
+  async sendPasswordOTP(otp: string): Promise<LoginResponse> {
+    const response = await this.client.post({
+      url: '/user/password/recover/otp/',
+      needAuthorization: false,
+      data: {
+        otp
+      }
+    })
+    return response as unknown as LoginResponse
   }
 }

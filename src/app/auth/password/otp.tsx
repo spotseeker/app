@@ -8,6 +8,7 @@ import Screen from '@/src/components/Screen'
 import { OTPSchema } from '@/src/schemas/userSchema'
 import Input from '@/src/components/Input'
 import Button from '@/src/components/Button'
+import { useSendPasswordOTP } from '@/src/hooks/useAuth'
 
 export default function ValidateOTP() {
   const navigation = useNavigation()
@@ -18,6 +19,8 @@ export default function ValidateOTP() {
   const { control, handleSubmit, reset } = useForm({
     resolver: zodResolver(OTPSchema)
   })
+
+  const { validateOTPMutation } = useSendPasswordOTP()
 
   return (
     <ScrollView>
@@ -57,6 +60,7 @@ export default function ValidateOTP() {
             variant="primary"
             onPress={handleSubmit((data) => {
               if (data) {
+                validateOTPMutation(data.otp)
                 reset()
                 router.push('/auth/password/reset')
               }

@@ -1,10 +1,23 @@
-import { Post, PostResponse } from '../types/post'
+import { Post, PostResponse, PostUpdate } from '../types/post'
 import { Client } from './client'
 import { objectToSnake } from 'ts-case-convert'
 
-export class PostService extends Client {
+export class PostService {
+  private client: Client
+
+  constructor() {
+    this.client = new Client()
+    this.list = this.list.bind(this)
+    this.create = this.create.bind(this)
+    this.getPost = this.getPost.bind(this)
+    this.updatePost = this.updatePost.bind(this)
+    this.deletePost = this.deletePost.bind(this)
+    this.like = this.like.bind(this)
+    this.bookmark = this.bookmark.bind(this)
+  }
+
   async list(page: number): Promise<PostResponse> {
-    const response = await this.get({
+    const response = await this.client.get({
       url: '/post/',
       needAuthorization: true,
       params: { page }
@@ -13,7 +26,7 @@ export class PostService extends Client {
   }
 
   async create(post: Post): Promise<PostResponse> {
-    const response = await this.post({
+    const response = await this.client.post({
       url: '/post/',
       needAuthorization: true,
       data: objectToSnake(post)
@@ -22,38 +35,38 @@ export class PostService extends Client {
   }
 
   async getPost(id: string): Promise<PostResponse> {
-    const response = await this.get({
+    const response = await this.client.get({
       url: `/post/${id}/`,
       needAuthorization: true
     })
     return response as unknown as PostResponse
   }
 
-  // async updatePost(id: string, post: PostUpdate): Promise<PostResponse> {
-  // const response = await this.patch({
-  //   url: `/post/${id}/`,
-  //   needAuthorization: true,
-  //   data: objectToSnake(post)
-  // })
-  //  return response as unknown as PostResponse
-  //}
+  async updatePost(id: string, post: PostUpdate): Promise<PostResponse> {
+    const response = await this.client.patch({
+      url: `/post/${id}/`,
+      needAuthorization: true,
+      data: objectToSnake(post)
+    })
+    return response as unknown as PostResponse
+  }
 
   async deletePost(id: string): Promise<void> {
-    await this.delete({
+    await this.client.delete({
       url: `/post/${id}/`,
       needAuthorization: true
     })
   }
 
   async like(id: string): Promise<void> {
-    await this.post({
+    await this.client.post({
       url: `/post/${id}/like/`,
       needAuthorization: true
     })
   }
 
   async bookmark(id: string): Promise<void> {
-    await this.post({
+    await this.client.post({
       url: `/post/${id}/bookmark/`,
       needAuthorization: true
     })
