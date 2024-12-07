@@ -18,7 +18,7 @@ export type Pagination = {
 }
 
 export class Client {
-  client: AxiosInstance
+  private client: AxiosInstance
 
   constructor() {
     this.client = axios.create({
@@ -31,9 +31,9 @@ export class Client {
 
   // Obtener el token del almacenamiento y agregarlo a los headers
   async addAuthToken(config: InternalAxiosRequestConfig) {
-    const session = await AsyncStorage.getItem('session')
-    if (session) {
-      config.headers['Authorization'] = `Bearer ${session}`
+    const accessToken = await AsyncStorage.getItem('accessToken')
+    if (accessToken) {
+      config.headers['Authorization'] = `Bearer ${accessToken}`
     }
     return config
   }
