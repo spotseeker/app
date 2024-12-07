@@ -16,11 +16,16 @@ export class PostService {
     this.bookmark = this.bookmark.bind(this)
   }
 
-  async list(page: number): Promise<PostResponse> {
+  async list(
+    page: number,
+    user?: string,
+    isArchived?: boolean,
+    isBookmarked?: boolean
+  ): Promise<PostResponse> {
     const response = await this.client.get({
       url: '/post/',
       needAuthorization: true,
-      params: { page }
+      params: { page, user, isArchived, isBookmarked }
     })
     return response as unknown as PostResponse
   }
