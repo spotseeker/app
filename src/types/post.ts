@@ -8,13 +8,13 @@ export type Post = {
   likes?: number | null
   comments?: number | null
   images: Image[]
-  created_at: string
-  updated_at?: string
-  deleted_at?: string | null
+  createdAt: string
+  updatedAt?: string
+  deletedAt?: string | null
   body: string
-  location_id: string
+  locationId: string
   score: number
-  is_archived: boolean
+  isArchived: boolean
   user: string
 }
 
