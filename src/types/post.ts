@@ -30,3 +30,12 @@ export type PostResponse = {
   previous: string | null
   results: Post[]
 }
+
+export type CommentsBody = {
+  user: string
+  comment: string
+}
+
+export type PostComments = {
+  comments: CommentsBody[]
+}
