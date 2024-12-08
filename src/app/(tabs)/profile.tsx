@@ -15,15 +15,16 @@ import Icons from '@/src/components/Icons'
 import { Colors } from '@/src/constants/Colors'
 import BackgroundImage from '@/src/assets/images_app/Rectangle 9 (1).png'
 import ProfileImg from '@/src/assets/images_app/image_profile.png'
-import { post } from '@/src/fixtures/post'
-import PostCardProfile from '../../components/profilePostCardTemporal'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { router, useNavigation } from 'expo-router'
+import { usePostsUser, usePostsArchived, usePostsBookmarked } from '@/src/hooks/usePost'
+import PostCard from '@/src/components/PostCard'
+import { PostResponse } from '@/src/types/post'
 
 const Profile = () => {
   const userData = {
     id: 'Abc234',
-    username: 'Ricardodlpj',
+    username: 'andres1',
     fullName: 'Ricardo Jimenez',
     description: 'Estudiante de Ing. Informática | UCLA',
     followers: 3,
@@ -58,20 +59,19 @@ const Profile = () => {
     })
   }, [navigation])
   const [currentTypePost, setCurrentTypePost] = useState<string>('all')
-  const [filterPosts, setFilterPost] = useState(post)
+  const [posts, setPosts] = useState<PostResponse>()
+  const userPosts = usePostsUser(1, userData.username)
+  const archivedPosts = usePostsArchived(1)
+  const bookmarkedPosts = usePostsBookmarked(1)
 
   useEffect(() => {
-    const filteredPosts = post.filter((post) => {
-      if (currentTypePost === 'all') {
-        return post && post.isArchive == false && post.userid == userData.id
-      } else if (currentTypePost === 'favorites') {
-        return post.isFavorite == true && post.userid == userData.id
-      } else if (currentTypePost === 'archived') {
-        return post.isArchive === true && post.userid == userData.id
-      }
-    })
-
-    setFilterPost(filteredPosts)
+    if (currentTypePost === 'all') {
+      setPosts(userPosts.posts)
+    } else if (currentTypePost === 'favorites') {
+      setPosts(bookmarkedPosts.posts)
+    } else if (currentTypePost === 'archived') {
+      setPosts(archivedPosts.posts)
+    }
   }, [currentTypePost])
 
   const handlePostButton = (type: string) => {
@@ -182,19 +182,20 @@ const Profile = () => {
       {/* FlatList con encabezado y lista de posts */}
       <FlatList
         ListHeaderComponent={renderHeader}
-        data={filterPosts}
+        data={posts?.results}
         renderItem={({ item }) => (
-          <PostCardProfile
-            location={item.location}
-            image={item.image}
+          <PostCard
+            locationId={item.locationId}
+            images={item.images}
             user={item.user}
-            date={item.date}
-            description={item.description}
-            isOwnProfile={true}
-            rating={item.rating}
+            createdAt={item.createdAt}
+            body={item.body}
+            score={item.score}
+            id={item.id}
+            isArchived={item.isArchived}
           />
         )}
-        keyExtractor={(item, index) => index.toString()}
+        keyExtractor={(item) => item.id}
         showsVerticalScrollIndicator={false}
       />
     </SafeAreaView>

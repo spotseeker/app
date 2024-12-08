@@ -26,9 +26,9 @@ import { Post } from '../types/post'
 
 export default function PostCard({
   body,
-  created_at,
+  createdAt,
   images,
-  location_id,
+  locationId,
   score,
   likes
 }: Post) {
@@ -123,11 +123,11 @@ export default function PostCard({
       <View className="flex-row py-2 mx-2">
         <View className="flex flex-1 flex-row">
           <AntDesign name="enviromento" size={20} />
-          <Text style={styles.locationText}>{location_id}</Text>
+          <Text style={styles.locationText}>{locationId}</Text>
         </View>
 
         <View className="ml-[-55] mr-[10]">
-          <Text>{created_at}</Text>
+          <Text>{createdAt}</Text>
         </View>
       </View>
       <Text className="mx-3 my-3">{body}</Text>
