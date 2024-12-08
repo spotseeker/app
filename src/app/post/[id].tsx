@@ -2,7 +2,7 @@ import CommentCard from '@/src/components/CommentCard'
 import Icons from '@/src/components/Icons'
 import { router, useLocalSearchParams, useNavigation } from 'expo-router'
 import React, { useEffect, useState } from 'react'
-import { ScrollView, TouchableOpacity, View, Text } from 'react-native'
+import { TouchableOpacity, View, Text, ScrollView } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useForm } from 'react-hook-form'
 import { Avatar } from '@kolking/react-native-avatar'
@@ -46,8 +46,8 @@ function Comments() {
 
   useEffect(() => {
     if (commentsList) {
-      console.log(commentsList)
-      setComments(commentsList)
+      console.log(commentsList.results)
+      setComments(commentsList.results)
     }
   }, [commentsList])
 
@@ -150,6 +150,7 @@ function Comments() {
         {comments &&
           comments.map((comment, index) => (
             <CommentCard
+              key={comment.id}
               comments={{
                 comment: comment.comment,
                 alignLeft: index % 2 === 0

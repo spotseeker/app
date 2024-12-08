@@ -37,8 +37,11 @@ export type CommentsBody = {
   comment: string
 }
 
-export type PostComments = {
-  comments: CommentsBody[]
+export type CommentsResponse = {
+  count: number
+  next: string | null
+  previous: string | null
+  results: CommentsBody[]
 }
 
 //type para comentar

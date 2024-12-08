@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { CommentsBody, PostResponse } from '../types/post'
+import { CommentsBody, CommentsResponse, PostResponse } from '../types/post'
 import { SpotSeekerAPI } from '../api'
 
 const api = new SpotSeekerAPI()
@@ -49,7 +49,7 @@ export const usePostsBookmarked = (page: number) => {
 // hooks de comentarios
 
 export const useCommentsList = (postID: string | string[]) => {
-  const { data, isLoading, error } = useQuery<CommentsBody[]>({
+  const { data, isLoading, error } = useQuery<CommentsResponse>({
     queryKey: ['comments'],
     queryFn: () => api.comment.list(postID)
   })

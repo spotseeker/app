@@ -1,4 +1,4 @@
-import { CommentsBody } from '../types/post'
+import { CommentsResponse } from '../types/post'
 import { Client } from './client'
 import { objectToSnake } from 'ts-case-convert'
 
@@ -13,12 +13,12 @@ export class CommentService {
     this.deleteComment = this.deleteComment.bind(this)
   }
 
-  async list(postId: string | string[]): Promise<CommentsBody[]> {
+  async list(postId: string | string[]): Promise<CommentsResponse> {
     const response = await this.client.get({
       url: `/post/${postId}/comment/`,
       needAuthorization: true
     })
-    return response as unknown as CommentsBody[]
+    return response as unknown as CommentsResponse
   }
 
   async create(postId: string | string[], comment: string): Promise<CommentsBody> {
