@@ -46,7 +46,6 @@ function Comments() {
 
   useEffect(() => {
     if (commentsList) {
-      console.log(commentsList.results)
       setComments(commentsList.results)
     }
   }, [commentsList])

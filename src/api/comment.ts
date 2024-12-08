@@ -1,4 +1,4 @@
-import { CommentsResponse } from '../types/post'
+import { CommentsBody, CommentsResponse } from '../types/post'
 import { Client } from './client'
 import { objectToSnake } from 'ts-case-convert'
 
