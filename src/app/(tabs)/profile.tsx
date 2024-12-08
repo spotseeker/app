@@ -24,7 +24,7 @@ import { PostResponse } from '@/src/types/post'
 const Profile = () => {
   const userData = {
     id: 'Abc234',
-    username: 'andres1',
+    username: 'andres3',
     fullName: 'Ricardo Jimenez',
     description: 'Estudiante de Ing. Informática | UCLA',
     followers: 3,
@@ -212,7 +212,7 @@ const styles = StyleSheet.create({
     width: '100%',
     shadowColor: 'black',
     shadowRadius: 4,
-    height: 80
+    height: 70
   },
   iconStyles: {
     marginLeft: -13,

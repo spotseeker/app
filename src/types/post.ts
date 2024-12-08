@@ -32,10 +32,16 @@ export type PostResponse = {
 }
 
 export type CommentsBody = {
+  id: string
   user: string
   comment: string
 }
 
 export type PostComments = {
   comments: CommentsBody[]
+}
+
+//type para comentar
+export type Comment = {
+  comment: string
 }

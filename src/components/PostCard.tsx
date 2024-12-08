@@ -8,7 +8,7 @@ import ProfileImg from '@/src/assets/images_app/avatar_users/image_profile.png'
 import { Colors } from '@/src/constants/Colors'
 import Modal from '@/src/components/Modal'
 import Rating from './Rating'
-import { router } from 'expo-router'
+import { Href, Link, router } from 'expo-router'
 import Icons from './Icons'
 import ModalAction from './ModalAction'
 import PagerView from 'react-native-pager-view'
@@ -25,6 +25,7 @@ import { Post } from '../types/post'
 //}
 
 export default function PostCard({
+  id,
   body,
   createdAt,
   images,
@@ -105,11 +106,14 @@ export default function PostCard({
             />
             <Text style={styles.likeCount}>{count}</Text>
           </View>
-          <Pressable onPress={() => router.push('/post/Comments')}>
-            <View style={styles.commentButton}>
-              <AntDesign name="message1" size={28} />
-            </View>
-          </Pressable>
+          <Link href={`/post/${id}` as Href} asChild>
+            <Pressable>
+              <View style={styles.commentButton}>
+                <AntDesign name="message1" size={28} />
+              </View>
+            </Pressable>
+          </Link>
+
           <View style={styles.actionGroup}>
             <AntDesign name="staro" size={28} />
           </View>
