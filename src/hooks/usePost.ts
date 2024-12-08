@@ -30,7 +30,7 @@ export const usePostsUser = (page: number, username: string) => {
 
 export const usePostsArchived = (page: number) => {
   const { data, isLoading, error } = useQuery({
-    queryKey: ['posts', page, 'archived'],
+    queryKey: ['archivedPosts', page, 'archived'],
     queryFn: () => api.post.list(page, undefined, true)
   })
 
@@ -39,7 +39,7 @@ export const usePostsArchived = (page: number) => {
 
 export const usePostsBookmarked = (page: number) => {
   const { data, isLoading, error } = useQuery({
-    queryKey: ['posts', page, 'bookmarked'],
+    queryKey: ['bookmarkedPosts', page, 'bookmarked'],
     queryFn: () => api.post.list(page, undefined, undefined, true)
   })
 

@@ -25,7 +25,7 @@ export class PostService {
     const response = await this.client.get({
       url: '/post/',
       needAuthorization: true,
-      params: { page, user, isArchived, isBookmarked }
+      params: objectToSnake({ page, user, isArchived, isBookmarked })
     })
     return response as unknown as PostResponse
   }
