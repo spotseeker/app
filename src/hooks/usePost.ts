@@ -45,3 +45,12 @@ export const usePostsBookmarked = (page: number) => {
 
   return { posts: data, isLoading, error }
 }
+
+export const useSearch = (page: number, query: string) => {
+  const { data, isLoading, error } = useQuery({
+    queryKey: ['search', page, query],
+    queryFn: () => api.post.list(page, undefined, undefined, undefined, query)
+  })
+
+  return { results: data, isLoading, error }
+}
