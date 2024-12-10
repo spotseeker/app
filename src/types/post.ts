@@ -1,3 +1,5 @@
+import { User } from './user'
+
 export type Image = {
   media: string
   order: number
@@ -15,7 +17,7 @@ export type Post = {
   locationId: string
   score: number
   isArchived: boolean
-  user: string
+  user: User
 }
 
 export type PostUpdate = {

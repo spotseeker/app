@@ -1,9 +1,6 @@
 import React from 'react'
 import { Image, StyleSheet } from 'react-native'
-
-type ImageGridProps = {
-  url: string
-}
+import { Post } from '../types/post'
 
 const style = StyleSheet.create({
   image: {
@@ -12,8 +9,8 @@ const style = StyleSheet.create({
   }
 })
 
-function ImageGrid({ item }: { item: ImageGridProps }) {
-  return <Image style={style.image} source={{ uri: item.url }} />
+function ImageGrid({ item }: { item: Post }) {
+  return <Image style={style.image} source={{ uri: item.images[0].media }} />
 }
 
 export default ImageGrid

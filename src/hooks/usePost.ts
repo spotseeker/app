@@ -45,3 +45,21 @@ export const usePostsBookmarked = (page: number) => {
 
   return { posts: data, isLoading, error }
 }
+
+export const useSearch = (page: number, query: string) => {
+  const { data, isLoading, error } = useQuery({
+    queryKey: ['search', page, query],
+    queryFn: () => api.post.list(page, undefined, undefined, undefined, undefined, query)
+  })
+
+  return { results: data, isLoading, error }
+}
+
+export const useDiscover = (page: number) => {
+  const { data, isLoading, error } = useQuery({
+    queryKey: ['discover', page],
+    queryFn: () => api.post.list(page, undefined, undefined, undefined, true)
+  })
+
+  return { discover: data, isLoading, error }
+}
