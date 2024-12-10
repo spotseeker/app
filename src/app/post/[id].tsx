@@ -1,26 +1,54 @@
 import CommentCard from '@/src/components/CommentCard'
 import Icons from '@/src/components/Icons'
-import { router, useNavigation } from 'expo-router'
+import { router, useLocalSearchParams, useNavigation } from 'expo-router'
 import React, { useEffect, useState } from 'react'
-import { ScrollView, TouchableOpacity, View } from 'react-native'
+import { TouchableOpacity, View, Text, ScrollView } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useForm } from 'react-hook-form'
 import { Avatar } from '@kolking/react-native-avatar'
 import avatar1 from '../../assets/images_app/avatar_users/image_profile.png'
 import { Colors } from '@/src/constants/Colors'
 import Input from '@/src/components/Input'
-import commentsFixture from '@/src/fixtures/comments'
 import ModalAction from '@/src/components/ModalAction'
+import {
+  useCommentPost,
+  useCommentsList,
+  useDeleteComment,
+  useUpdateComment
+} from '@/src/hooks/usePost'
+import { CommentsBody } from '@/src/types/post'
 
 function Comments() {
   const navigation = useNavigation()
   const { ArrowBack, SendIcon } = Icons
   const { control, handleSubmit, reset, getValues } = useForm({})
-  const [comments, setComments] = useState(commentsFixture)
+  const [comments, setComments] = useState<CommentsBody[]>()
   const [isModalVisible, setModalVisible] = useState(false)
-  const [commentIndex, setCommentIndex] = useState<number>()
+  const [commentIndex, setCommentIndex] = useState<number>(-1)
   const [editIndex, setEditIndex] = useState<number | null>(null) // Índice del comentario en edición
   const [editText, setEditText] = useState<string>('') // Texto temporal del comentario en edición
+  const [commentText, setCommentText] = useState('')
+
+  const { id } = useLocalSearchParams()
+
+  const { commentsList, isLoading } = useCommentsList(id)
+  const { createComment, data } = useCommentPost(id, commentText)
+  const { deleteCommentApi } = useDeleteComment(
+    id,
+    (comments && comments[commentIndex!]?.id) || ''
+  )
+
+  const { updateComment } = useUpdateComment(
+    id,
+    (comments && comments[commentIndex!]?.id) || '',
+    editText
+  )
+
+  useEffect(() => {
+    if (commentsList) {
+      setComments(commentsList.results)
+    }
+  }, [commentsList])
 
   useEffect(() => {
     navigation.setOptions({
@@ -40,29 +68,53 @@ function Comments() {
     })
   }, [navigation])
 
-  const onSubmit = () => {
-    const newComment = {
-      avatar: avatar1,
-      name: 'Ricardolpj',
-      commentText: getValues('comment')
+  useEffect(() => {
+    const response = async () => {
+      try {
+        const commentValue = getValues('comment')
+        if (commentValue.trim() === '') {
+          console.log('El comentario no puede estar vacío.')
+          return
+        }
+
+        await createComment(commentValue)
+        reset({ comment: '' })
+        if (data && comments) {
+          setComments([...comments, data])
+        }
+      } catch (err) {
+        console.log(err)
+      }
     }
 
-    setComments([...comments, newComment])
-    reset({ comment: '' })
+    if (commentText) {
+      response() // Llamar la función asíncrona cuando el comentario cambie
+    }
+  }, [commentText])
+
+  const onSubmit = () => {
+    setCommentText(getValues('comment'))
   }
 
   const handleEditComment = (index: number) => {
+    setCommentIndex(index)
     setEditIndex(index)
-    setEditText(comments[index].commentText)
+    if (comments) {
+      setEditText(comments[index].comment)
+    }
   }
 
-  const saveEditedComment = (index: number) => {
-    setComments((prevComments) =>
-      prevComments.map((comment, i) =>
-        i === index ? { ...comment, commentText: editText } : comment
-      )
-    )
-    setEditIndex(null) // Salir del modo edición
+  const saveEditedComment = async () => {
+    if (comments) {
+      try {
+        await updateComment()
+      } catch (err) {
+        console.log(err)
+      } finally {
+        setCommentIndex(-1)
+      }
+    }
+    setEditIndex(null)
   }
 
   const handleDeleteComment = (index: number) => {
@@ -70,8 +122,16 @@ function Comments() {
     setModalVisible(true)
   }
 
-  const deleteComment = (index: number) => {
-    setComments((prevComments) => prevComments.filter((_, i) => i !== index))
+  const deleteComment = async () => {
+    if (comments) {
+      try {
+        await deleteCommentApi()
+      } catch (err) {
+        console.log(err)
+      } finally {
+        setCommentIndex(-1)
+      }
+    }
     handleCloseModal()
   }
 
@@ -79,16 +139,20 @@ function Comments() {
     setModalVisible(false)
   }
 
-  return (
+  return isLoading ? (
+    <View>
+      <Text>Cargando...</Text>
+    </View>
+  ) : (
     <SafeAreaView edges={['bottom']} className="flex-1 bg-white">
       <ScrollView contentContainerStyle={{ paddingBottom: 80 }} className="space-y-5">
-        {comments.map((comment, index) => (
-          <View className="my-5 mx-5" key={index}>
+        {comments &&
+          comments.map((comment, index) => (
             <CommentCard
+              key={comment.id}
               comments={{
-                avatar: comment.avatar,
-                name: comment.name,
-                commentText: comment.commentText,
+                user: comment.user,
+                comment: comment.comment,
                 alignLeft: index % 2 === 0
               }}
               deleteComment={() => handleDeleteComment(index)}
@@ -96,16 +160,15 @@ function Comments() {
               isEditing={editIndex === index}
               editText={editText}
               setEditText={setEditText}
-              saveEdit={() => saveEditedComment(index)}
+              saveEdit={() => saveEditedComment()}
             />
-          </View>
-        ))}
+          ))}
         <ModalAction
           action="confirmation"
           visible={isModalVisible}
           onClose={handleCloseModal}
           message="¿Seguro que quieres eliminar este comentario?"
-          onConfirm={() => deleteComment(commentIndex as number)}
+          onConfirm={() => deleteComment()}
         />
       </ScrollView>
 

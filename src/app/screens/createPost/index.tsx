@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import Steps from './steps'
 import { BackHandler, View } from 'react-native'
-import { useForm } from 'react-hook-form'
+
 import { router } from 'expo-router'
 
 type Props = {
@@ -13,6 +13,9 @@ type Props = {
   setLocation: (id: string) => void
   hashtags: string[]
   setHashtags: (hashtags: string[]) => void
+  score: number
+  setScore: (score: number) => void
+  setDescription: (description: string) => void
 }
 
 export default function CreatePosts({
@@ -22,9 +25,11 @@ export default function CreatePosts({
   setImage,
   setLocation,
   hashtags,
-  setHashtags
+  setHashtags,
+  score,
+  setScore,
+  setDescription
 }: Props) {
-  const { control } = useForm({})
   const {
     CreatePostScreen1,
     SelectImageScreen,
@@ -52,9 +57,17 @@ export default function CreatePosts({
   return (
     <View className="flex flex-1 my-6">
       {step == 1 && (
-        <CreatePostScreen1 image={image} control={control} setStep={setStep} />
+        <CreatePostScreen1
+          image={image}
+          setStep={setStep}
+          score={score}
+          setScore={setScore}
+          setDescription={setDescription}
+        />
       )}
+
       {step == 2 && <SelectImageScreen image={image} setImage={setImage} />}
+
       {step == 3 && <SelectLocationScreen setLocation={setLocation} setStep={setStep} />}
       {step == 4 && (
         <SelectHashtagsScreen hashtags={hashtags} setHashtags={setHashtags} />

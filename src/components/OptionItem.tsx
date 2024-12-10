@@ -1,5 +1,5 @@
 import React, { ReactNode, useState } from 'react'
-import { View, Text, Pressable } from 'react-native'
+import { View, Text, TouchableWithoutFeedback } from 'react-native'
 import Icons from './Icons'
 
 type optionTypes = {
@@ -21,18 +21,17 @@ function OptionItem({ children, leftItem, title, setNavigator }: optionTypes) {
   }
   return (
     <>
-      <View className=" flex flex-row  justify-between items-center mx-2">
-        <View className=" flex flex-row flex-1 items-center">
-          <View className="p-[10px] items-center">{leftItem}</View>
-          <Text className="text-helper font-bold text-center text-[16px]">{title}</Text>
-        </View>
-        <View className=" flex flex-row items-center">
-          <Pressable onPress={children ? handleDeploy : setNavigator}>
+      <TouchableWithoutFeedback onPress={children ? handleDeploy : setNavigator}>
+        <View className=" flex flex-row  justify-between items-center mx-2">
+          <View className=" flex flex-row flex-1 items-center">
+            <View className="p-[10px] items-center">{leftItem}</View>
+            <Text className="text-helper font-bold text-center text-[16px]">{title}</Text>
+          </View>
+          <View className=" flex flex-row items-center">
             <ArrowIcon shown={renderItem} />
-          </Pressable>
+          </View>
         </View>
-      </View>
-
+      </TouchableWithoutFeedback>
       {renderItem && <View className="">{children}</View>}
     </>
   )

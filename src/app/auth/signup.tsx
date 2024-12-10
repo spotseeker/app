@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Screen from '@/src/components/Screen'
-import SignupScreen from '@/src/screens/signup'
+import SignupScreen from '@/src/app/screens/signup'
 import { UserData } from '@/src/schemas/userSchema'
 
 export default function SignUp() {

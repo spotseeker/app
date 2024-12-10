@@ -4,19 +4,22 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import Button from '@/src/components/Button'
 import Input from '@/src/components/Input'
 import Icons from '@/src/components/Icons'
-import { Control, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import OptionItem from '@/src/components/OptionItem'
 import * as MediaLibrary from 'expo-media-library'
 import * as ImagePicker from 'expo-image-picker'
 import Rating from '@/src/components/Rating'
 import SearchInput from '@/src/components/SearchInput'
 import { locations } from '@/src/fixtures/locations'
-import { HashtagSchema } from '@/src/schemas/hashtagSchema'
+import { HashtagSchema, postSchema } from '@/src/schemas/hashtagSchema'
 import HashtagInput from '@/src/components/HashtagInput'
+
 type createPostScreenProps = {
   image: string[]
-  control: Control
+  score: number
   setStep: (step: number) => void
+  setScore: (score: number) => void
+  setDescription: (description: string) => void
 }
 
 interface SelectImageScreenProps {
@@ -34,10 +37,18 @@ type SelectHashtagsScreenProps = {
   setHashtags: (hashtags: string[]) => void
 }
 
-const CreatePostScreen1 = ({ image, control, setStep }: createPostScreenProps) => {
+const CreatePostScreen1 = ({
+  image,
+  setStep,
+  setScore,
+  score,
+  setDescription
+}: createPostScreenProps) => {
   const { ImageIcon1, ImageIcon2, HashTagIcon, StarIconColorized, MapMarkerIcon } = Icons
-  const [rate, setRate] = useState(0)
   const { SetRating } = Rating
+  const { control, handleSubmit, reset } = useForm({
+    resolver: zodResolver(postSchema) // Usar el resolver Zod
+  })
   return (
     <View className="w-full h-full bg-white ">
       <View className="flex justify-center items-center ">
@@ -64,7 +75,7 @@ const CreatePostScreen1 = ({ image, control, setStep }: createPostScreenProps) =
         <Input
           variant="description"
           placeholder="Escribe un texto o descripcion"
-          name="desciption"
+          name="body"
           control={control}
         >
           {}
@@ -90,11 +101,19 @@ const CreatePostScreen1 = ({ image, control, setStep }: createPostScreenProps) =
           title="Puntuar experiencia"
           leftItem={<StarIconColorized shown={true} />}
         >
-          <SetRating rating={rate} setRating={setRate} />
+          <SetRating rating={score} setRating={setScore} />
         </OptionItem>
       </View>
       <View className="flex justify-center items-center my-[25px]">
-        <Button width={288} height={48} variant="primary">
+        <Button
+          width={288}
+          height={48}
+          variant="primary"
+          onPress={handleSubmit((data) => {
+            setDescription(data.body)
+            reset()
+          })}
+        >
           Publicar
         </Button>
       </View>
@@ -165,7 +184,9 @@ const SelectImageScreen = ({ image, setImage }: SelectImageScreenProps) => {
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsMultipleSelection: true,
       selectionLimit: 3,
-      quality: 1
+      aspect: [4, 3],
+      quality: 0.7,
+      allowsEditing: true
     })
 
     if (!result.canceled && result.assets) {

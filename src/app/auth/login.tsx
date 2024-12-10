@@ -81,7 +81,7 @@ export default function Login() {
           {error && <Text className="text-red-500 text-center">{error}</Text>}
 
           {/* Botón de ingreso */}
-          <View className="flex justify-center ml-3 p-2">
+          <View className="flex justify-center ">
             <Button
               width={330}
               height={47}

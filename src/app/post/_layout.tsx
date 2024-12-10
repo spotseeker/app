@@ -12,7 +12,7 @@ const PostingLayout = () => {
           }}
         />
         <Stack.Screen
-          name="Comments"
+          name="[id]"
           options={{
             headerShown: false
           }}
