@@ -4,8 +4,7 @@ import { router, useNavigation } from 'expo-router'
 import React, { useEffect, useState } from 'react'
 import { View, TouchableOpacity } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { images } from '@/src/fixtures/images'
-import { useSearch } from '@/src/hooks/usePost'
+import { useDiscover, useSearch } from '@/src/hooks/usePost'
 import { PostResponse } from '@/src/types/post'
 import ImageGridList from '@/src/components/ImageGridList'
 
@@ -31,6 +30,7 @@ export default function Search() {
   const [posts, setPosts] = useState<PostResponse>()
   const [discoverPosts, setDiscoverPosts] = useState<PostResponse>()
   const { results, isLoading } = useSearch(1, query)
+  const { discover } = useDiscover(1)
 
   useEffect(() => {
     if (query != '' && results) {
@@ -38,7 +38,7 @@ export default function Search() {
       setDiscoverPosts(undefined)
     } else {
       setPosts(undefined)
-      setDiscoverPosts(images)
+      setDiscoverPosts(discover)
     }
   }, [results])
 
