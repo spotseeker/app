@@ -31,7 +31,7 @@ export default function Search() {
   )
   return (
     <SafeAreaView className="bg-white h-full">
-      <View className="flex justify-center items-center mt-[-10%]">
+      <View className="flex justify-center items-center ">
         <SearchInput
           placeholder="Buscar usuarios, lugares o publicaciones"
           value={query}

@@ -4,11 +4,10 @@ import { View, Text, Image, Pressable, StyleSheet } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import AntDesign from '@expo/vector-icons/AntDesign'
 import { Avatar } from '@kolking/react-native-avatar'
-import ProfileImg from '@/src/assets/images_app/avatar_users/image_profile.png'
 import { Colors } from '@/src/constants/Colors'
 import Modal from '@/src/components/Modal'
 import Rating from './Rating'
-import { router } from 'expo-router'
+import { Href, Link, router } from 'expo-router'
 import Icons from './Icons'
 import ModalAction from './ModalAction'
 import PagerView from 'react-native-pager-view'
@@ -25,23 +24,27 @@ import { Post } from '../types/post'
 //}
 
 export default function PostCard({
+  id,
   body,
   createdAt,
   images,
   locationId,
   score,
-  likes
+  likes,
+  user
 }: Post) {
-  const [count, setCount] = useState(1)
+  /*  const [count, setCount] = useState() */
   const [liked, setLiked] = useState(false)
   const [isOptionsModalVisible, setOptionsModalVisible] = useState(false)
   const [isConfirmationModalVisible, setConfirmationModalVisible] = useState(false)
   const [modalAction, setModalAction] = useState<'archive' | 'delete' | null>(null)
   const { RenderStar } = Rating
   const { TrashIcon, EditIcon, ArchiveIcon2 } = Icons
+  const createdAtDate = new Date(createdAt)
 
+  //modificar para el endpoint de like
   const handleLike = () => {
-    setCount(liked ? count - 1 : count + 1)
+    /*     setCount(liked ? count - 1 : count + 1) */
     setLiked(!liked)
   }
 
@@ -66,20 +69,31 @@ export default function PostCard({
   }
 
   return (
-    <SafeAreaView className="w-80% bg-white border border-gray-300 justify-center m-2 space-y-3">
-      <View className="flex-row mx-2">
-        <View className="flex-row flex-1 items-center space-x-3">
-          <Avatar source={ProfileImg} color={Colors.text} radius={30} size={30} />
-          <Text className="text-coloricon font-extrabold">on test</Text>
+    <SafeAreaView
+      className="w-80% bg-white border border-gray-300 justify-center m-2 "
+      style={{ elevation: 4 }}
+    >
+      <View className="flex-row mx-1 my-2">
+        <View className="flex-row flex-1 items-center space-x-1">
+          <Avatar
+            source={{ uri: user.avatar }}
+            color={Colors.text}
+            radius={30}
+            size={35}
+          />
+          <Text className="text-coloricon font-extrabold">{user.username}</Text>
         </View>
-        {likes && (
-          <Pressable onPress={() => setOptionsModalVisible(true)}>
-            <AntDesign name="ellipsis1" size={28} style={styles.iconEllipsis} />
-          </Pressable>
-        )}
+        <View className="flex-row  items-center space-x-1">
+          {/* modificar para que muestre si los username non distintos el del post y el usuario logeado. */}
+          {user.username && (
+            <Pressable onPress={() => setOptionsModalVisible(true)}>
+              <AntDesign name="ellipsis1" size={28} style={styles.iconEllipsis} />
+            </Pressable>
+          )}
+        </View>
       </View>
 
-      <PagerView style={styles.pagerView} initialPage={0}>
+      <PagerView style={styles.pagerView} initialPage={0} className="mx-2">
         {(() => {
           const pages: JSX.Element[] = []
           for (let i = 0; i < images.length; i++) {
@@ -103,13 +117,16 @@ export default function PostCard({
               color={liked ? 'red' : 'black'}
               onPress={handleLike}
             />
-            <Text style={styles.likeCount}>{count}</Text>
+            <Text style={styles.likeCount}>{likes}</Text>
           </View>
-          <Pressable onPress={() => router.push('/post/Comments')}>
-            <View style={styles.commentButton}>
-              <AntDesign name="message1" size={28} />
-            </View>
-          </Pressable>
+          <Link href={`/post/${id}` as Href} asChild>
+            <Pressable>
+              <View style={styles.commentButton}>
+                <AntDesign name="message1" size={28} />
+              </View>
+            </Pressable>
+          </Link>
+
           <View style={styles.actionGroup}>
             <AntDesign name="staro" size={28} />
           </View>
@@ -127,7 +144,7 @@ export default function PostCard({
         </View>
 
         <View className="ml-[-55] mr-[10]">
-          <Text>{createdAt}</Text>
+          <Text>{createdAtDate.toLocaleDateString()}</Text>
         </View>
       </View>
       <Text className="mx-3 my-3">{body}</Text>

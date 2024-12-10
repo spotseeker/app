@@ -37,13 +37,13 @@ const MenuIcon = ({ color = themeIconColor, size = 25 }: Props) => {
   )
 }
 
-const SearchIcon = ({ color, size = 25 }: Props) => {
+const SearchIcon = ({ color, size = 25, padding = 11 }: Props) => {
   return (
     <AntDesign
       name="search1"
       size={size}
       color={color}
-      style={{ padding: 11, backgroundColor: 'white' }}
+      style={{ padding: padding, backgroundColor: 'white' }}
     />
   )
 }
