@@ -25,6 +25,7 @@ export default function Login() {
   // Función para manejar el envío del formulario
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onSubmit: SubmitHandler<any> = async (data) => {
+    console.log(data)
     try {
       setLoading(true)
       await login(data.username, data.password)
@@ -81,7 +82,7 @@ export default function Login() {
           {error && <Text className="text-red-500 text-center">{error}</Text>}
 
           {/* Botón de ingreso */}
-          <View className="flex justify-center ">
+          <View className="flex justify-center items-center">
             <Button
               width={330}
               height={47}

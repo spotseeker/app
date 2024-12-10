@@ -1,20 +1,8 @@
+import { User } from './user'
+
 export type Image = {
   media: string
   order: number
-}
-
-export type userData = {
-  username: string
-  email: string
-  first_name: string
-  last_name: string
-  birth_date: string
-  description: string
-  avatar: string
-  is_validated: boolean
-  created_at: string
-  updated_at: string
-  deleted_at?: string
 }
 
 export type Post = {
@@ -29,7 +17,7 @@ export type Post = {
   locationId: string
   score: number
   isArchived: boolean
-  user: userData
+  user: User
 }
 
 export type createPost = {

@@ -2,10 +2,11 @@ import Icons from '@/src/components/Icons'
 import SearchInput from '@/src/components/SearchInput'
 import { router, useNavigation } from 'expo-router'
 import React, { useEffect, useState } from 'react'
-import { View, TouchableOpacity, FlatList } from 'react-native'
+import { View, TouchableOpacity } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import ImageGrid from '@/src/components/ImageGrid'
-import { images } from '@/src/fixtures/images'
+import { useDiscover, useSearch } from '@/src/hooks/usePost'
+import { PostResponse } from '@/src/types/post'
+import ImageGridList from '@/src/components/ImageGridList'
 
 export default function Search() {
   const { ArrowBack } = Icons
@@ -26,9 +27,21 @@ export default function Search() {
     })
   }, [navigation])
   const [query, setQuery] = useState('')
-  const imagesFiltered = images.filter((image) =>
-    image.alt.toLowerCase().includes(query.toLowerCase())
-  )
+  const [posts, setPosts] = useState<PostResponse>()
+  const [discoverPosts, setDiscoverPosts] = useState<PostResponse>()
+  const { results, isLoading } = useSearch(1, query)
+  const { discover } = useDiscover(1)
+
+  useEffect(() => {
+    if (query != '' && results) {
+      setPosts(results)
+      setDiscoverPosts(undefined)
+    } else {
+      setPosts(undefined)
+      setDiscoverPosts(discover)
+    }
+  }, [results])
+
   return (
     <SafeAreaView className="bg-white h-full">
       <View className="flex justify-center items-center ">
@@ -38,14 +51,11 @@ export default function Search() {
           onChangeText={setQuery}
         />
       </View>
-      <View className="flex justify-center items-center">
-        <FlatList
-          numColumns={3}
-          renderItem={ImageGrid}
-          data={imagesFiltered}
-          keyExtractor={(item) => item.url}
-        />
-      </View>
+      <ImageGridList
+        isLoading={isLoading}
+        posts={posts?.results}
+        discoverPosts={discoverPosts?.results}
+      />
     </SafeAreaView>
   )
 }

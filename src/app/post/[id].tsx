@@ -28,7 +28,6 @@ function Comments() {
   const [editIndex, setEditIndex] = useState<number | null>(null) // Índice del comentario en edición
   const [editText, setEditText] = useState<string>('') // Texto temporal del comentario en edición
   const [commentText, setCommentText] = useState('')
-
   const { id } = useLocalSearchParams()
 
   const { commentsList, isLoading } = useCommentsList(id)
@@ -61,7 +60,7 @@ function Comments() {
         fontWeight: 'bold'
       },
       headerLeft: () => (
-        <TouchableOpacity onPress={() => router.push('/(tabs)/home')}>
+        <TouchableOpacity onPress={() => router.replace('/(tabs)/home')}>
           <ArrowBack size={35} />
         </TouchableOpacity>
       )

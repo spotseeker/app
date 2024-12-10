@@ -10,12 +10,10 @@ import { SpotSeekerAPI } from '../api'
 
 const api = new SpotSeekerAPI()
 
-// Función para obtener los posts desde el servicio
 const postsList = async (): Promise<PostResponse> => {
-  return api.post.list(1) // Asumiendo que 'list' toma un parámetro (páginas o algo similar)
+  return api.post.list(1)
 }
 
-//crear post
 export const usecreatePostApi = (postData: createPost) => {
   const queryClient = useQueryClient()
   const { mutate, error, data, isSuccess, isPending } = useMutation<Post>({
@@ -32,7 +30,6 @@ export const usecreatePostApi = (postData: createPost) => {
   return { createPost: mutate, error, data, isSuccess, isPending }
 }
 
-// Hook para obtener los posts
 export const usePostsList = () => {
   const { data, isLoading, error } = useQuery({
     queryKey: ['posts'],
@@ -69,7 +66,23 @@ export const usePostsBookmarked = (page: number) => {
   return { posts: data, isLoading, error }
 }
 
-// hooks de comentarios
+export const useSearch = (page: number, query: string) => {
+  const { data, isLoading, error } = useQuery({
+    queryKey: ['search', page, query],
+    queryFn: () => api.post.list(page, undefined, undefined, undefined, undefined, query)
+  })
+
+  return { results: data, isLoading, error }
+}
+
+export const useDiscover = (page: number) => {
+  const { data, isLoading, error } = useQuery({
+    queryKey: ['discover', page],
+    queryFn: () => api.post.list(page, undefined, undefined, undefined, true)
+  })
+
+  return { discover: data, isLoading, error }
+}
 
 export const useCommentsList = (postID: string | string[]) => {
   const { data, isLoading, error } = useQuery<CommentsResponse>({
