@@ -10,7 +10,7 @@ const authService = new AuthService()
 const userService = new UserService()
 
 const loginUser = async (loginData: loginData): Promise<LoginResponse> => {
-  return authService.login(loginData)
+  return authService.login(loginData.username, loginData.password)
 }
 
 const registerUser = async (userData: RegisterUserType): Promise<UserResponse> => {

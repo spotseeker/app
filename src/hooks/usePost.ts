@@ -1,15 +1,35 @@
-import { useQuery } from '@tanstack/react-query'
-import { PostResponse } from '../types/post'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import {
+  CommentsBody,
+  CommentsResponse,
+  createPost,
+  Post,
+  PostResponse
+} from '../types/post'
 import { SpotSeekerAPI } from '../api'
 
 const api = new SpotSeekerAPI()
 
-// Función para obtener los posts desde el servicio
 const postsList = async (): Promise<PostResponse> => {
-  return api.post.list(1) // Asumiendo que 'list' toma un parámetro (páginas o algo similar)
+  return api.post.list(1)
 }
 
-// Hook para obtener los posts
+export const usecreatePostApi = (postData: createPost) => {
+  const queryClient = useQueryClient()
+  const { mutate, error, data, isSuccess, isPending } = useMutation<Post>({
+    mutationFn: () => api.post.create(postData),
+    onSuccess: async (data: Post) => {
+      try {
+        console.log('Creacion del post exitosa', data)
+        queryClient.invalidateQueries({ queryKey: ['posts'] })
+      } catch (err) {
+        console.error('Error al crear post comentario', err)
+      }
+    }
+  })
+  return { createPost: mutate, error, data, isSuccess, isPending }
+}
+
 export const usePostsList = () => {
   const { data, isLoading, error } = useQuery({
     queryKey: ['posts'],
@@ -62,4 +82,68 @@ export const useDiscover = (page: number) => {
   })
 
   return { discover: data, isLoading, error }
+}
+
+export const useCommentsList = (postID: string | string[]) => {
+  const { data, isLoading, error } = useQuery<CommentsResponse>({
+    queryKey: ['comments'],
+    queryFn: () => api.comment.list(postID)
+  })
+
+  return { commentsList: data, isLoading, error }
+}
+
+export const useCommentPost = (postID: string | string[], comment: string) => {
+  const queryClient = useQueryClient()
+  const { mutate, error, data } = useMutation<CommentsBody>({
+    mutationFn: () => api.comment.create(postID, comment),
+    onSuccess: async (data) => {
+      try {
+        console.log('comentario exitoso', data)
+        queryClient.invalidateQueries({ queryKey: ['comments'] })
+      } catch (err) {
+        console.error('error al comentar', err)
+      }
+    }
+  })
+
+  return { createComment: mutate, error, data }
+}
+
+export const useUpdateComment = (
+  postId: string | string[],
+  id: string,
+  comment: string
+) => {
+  const queryClient = useQueryClient()
+  const { mutate, error } = useMutation<CommentsBody>({
+    mutationFn: () => api.comment.updateComment(postId, id, comment),
+    onSuccess: async (data: CommentsBody) => {
+      try {
+        console.log('Actualizacion de comentario exitosa', data)
+        queryClient.invalidateQueries({ queryKey: ['comments'] })
+      } catch (err) {
+        console.error('Error al guardar actualizar comentario', err)
+      }
+    }
+  })
+
+  return { updateComment: mutate, error }
+}
+
+export const useDeleteComment = (postId: string | string[], id: string) => {
+  const queryClient = useQueryClient()
+  const { mutate, error } = useMutation<void>({
+    mutationFn: () => api.comment.deleteComment(postId, id),
+    onSuccess: async (data: void) => {
+      try {
+        console.log('Eliminacion de comentario exitosa', data)
+        queryClient.invalidateQueries({ queryKey: ['comments'] })
+      } catch (err) {
+        console.error('Error al elimnar actualizar comentario', err)
+      }
+    }
+  })
+
+  return { deleteCommentApi: mutate, error }
 }
