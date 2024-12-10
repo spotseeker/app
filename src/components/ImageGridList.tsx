@@ -8,8 +8,8 @@ function ImageGridList({
   posts,
   discoverPosts
 }: {
-  isLoading: boolean,
-  posts: Post[] | undefined,
+  isLoading: boolean
+  posts: Post[] | undefined
   discoverPosts: Post[] | undefined
 }) {
   if (isLoading) {
