@@ -5,10 +5,12 @@ import ImageGrid from './ImageGrid'
 
 function ImageGridList({
   isLoading,
-  posts
+  posts,
+  discoverPosts
 }: {
-  isLoading: boolean
-  posts: Post[] | undefined
+  isLoading: boolean,
+  posts: Post[] | undefined,
+  discoverPosts: Post[] | undefined
 }) {
   if (isLoading) {
     return <ActivityIndicator size="large" color="blue" />
@@ -16,12 +18,13 @@ function ImageGridList({
   if (posts?.length == 0) {
     return <Text>Sin resultados</Text>
   }
+  const postsDisplayed = posts ? posts : discoverPosts
   return (
     <View className="flex justify-center items-center">
       <FlatList
         numColumns={3}
         renderItem={ImageGrid}
-        data={posts}
+        data={postsDisplayed}
         keyExtractor={(item) => item.id}
       />
     </View>
