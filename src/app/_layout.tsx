@@ -54,6 +54,13 @@ export default function RootLayout() {
         return true
       }
 
+      const postPattern = /^\/post\/[a-zA-Z0-9_-]+$/
+      if (postPattern.test(pathname)) {
+        router.replace('/home')
+
+        return true
+      }
+
       return false
     }
 
