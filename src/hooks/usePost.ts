@@ -1,5 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { CommentsBody, CommentsResponse, PostResponse } from '../types/post'
+import {
+  CommentsBody,
+  CommentsResponse,
+  createPost,
+  Post,
+  PostResponse
+} from '../types/post'
 import { SpotSeekerAPI } from '../api'
 
 const api = new SpotSeekerAPI()
@@ -7,6 +13,23 @@ const api = new SpotSeekerAPI()
 // Función para obtener los posts desde el servicio
 const postsList = async (): Promise<PostResponse> => {
   return api.post.list(1) // Asumiendo que 'list' toma un parámetro (páginas o algo similar)
+}
+
+//crear post
+export const usecreatePostApi = (postData: createPost) => {
+  const queryClient = useQueryClient()
+  const { mutate, error, data } = useMutation<Post>({
+    mutationFn: () => api.post.create(postData),
+    onSuccess: async (data: Post) => {
+      try {
+        console.log('Creacion del post exitosa', data)
+        queryClient.invalidateQueries({ queryKey: ['posts'] })
+      } catch (err) {
+        console.error('Error al crear post comentario', err)
+      }
+    }
+  })
+  return { createPost: mutate, error, data }
 }
 
 // Hook para obtener los posts

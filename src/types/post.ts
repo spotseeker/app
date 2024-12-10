@@ -32,6 +32,14 @@ export type Post = {
   user: userData
 }
 
+export type createPost = {
+  images: Image[]
+  body: string
+  location_id: string
+  score: number
+  is_archived: boolean
+}
+
 export type PostUpdate = {
   body: string
   isArchived: boolean
@@ -47,7 +55,7 @@ export type PostResponse = {
 
 export type CommentsBody = {
   id: string
-  user: string
+  user: userData
   comment: string
 }
 
@@ -56,9 +64,4 @@ export type CommentsResponse = {
   next: string | null
   previous: string | null
   results: CommentsBody[]
-}
-
-//type para comentar
-export type Comment = {
-  comment: string
 }

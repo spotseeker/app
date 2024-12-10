@@ -3,8 +3,10 @@ import { View, Text, TextInput, Pressable } from 'react-native'
 import { Avatar } from '@kolking/react-native-avatar'
 import { Colors } from '@/src/constants/Colors'
 import Icons from './Icons'
+import { userData } from '../types/post'
 
 type commentProps = {
+  user: userData
   comment: string
   alignLeft?: boolean
 }
@@ -41,13 +43,13 @@ function CommentCard({
         <View className="flex flex-row items-center space-x-2">
           <Avatar
             source={{
-              uri: 'https://res.cloudinary.com/dm8bzhxwp/image/upload/v1732858108/qttsmh9z3zdhz8tbdrux.jpg'
+              uri: comments.user.avatar
             }}
             color={Colors.text}
             radius={30}
             size={30}
           />
-          <Text className="font-bold">{'NamesUnderDevelopment'}</Text>
+          <Text className="font-bold">{comments.user.username}</Text>
         </View>
 
         {isEditing ? (

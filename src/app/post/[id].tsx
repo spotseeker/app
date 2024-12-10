@@ -151,6 +151,7 @@ function Comments() {
             <CommentCard
               key={comment.id}
               comments={{
+                user: comment.user,
                 comment: comment.comment,
                 alignLeft: index % 2 === 0
               }}
