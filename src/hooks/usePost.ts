@@ -66,6 +66,60 @@ export const usePostsBookmarked = (page: number) => {
   return { posts: data, isLoading, error }
 }
 
+//flujo like y bookmark
+
+export const useBookmarkPost = (postID: string) => {
+  const queryClient = useQueryClient()
+  const { mutate } = useMutation({
+    mutationFn: () => api.post.bookmark(postID),
+    onSuccess: async (data) => {
+      try {
+        console.log('Agregado a favoritos con exito', data)
+        queryClient.invalidateQueries({
+          queryKey: ['posts']
+        })
+
+        queryClient.invalidateQueries({
+          queryKey: ['bookmarked']
+        })
+
+        queryClient.invalidateQueries({
+          queryKey: ['archived']
+        })
+      } catch (err) {
+        console.error('error al agregar a favoritos', err)
+      }
+    }
+  })
+  return { bookMark: mutate }
+}
+
+export const useLikePost = (postID: string) => {
+  const queryClient = useQueryClient()
+  const { mutate } = useMutation({
+    mutationFn: () => api.post.like(postID),
+    onSuccess: async (data) => {
+      try {
+        console.log('Exito al darle like', data)
+        queryClient.invalidateQueries({
+          queryKey: ['posts']
+        })
+
+        queryClient.invalidateQueries({
+          queryKey: ['bookmarked']
+        })
+
+        queryClient.invalidateQueries({
+          queryKey: ['archived']
+        })
+      } catch (err) {
+        console.error('error al dar like', err)
+      }
+    }
+  })
+  return { like: mutate }
+}
+
 export const useSearch = (page: number, query: string) => {
   const { data, isLoading, error } = useQuery({
     queryKey: ['search', page, query],

@@ -40,6 +40,7 @@ export const useAuth = (): UseAuthReturn => {
       if ('access' in response && 'refresh' in response) {
         await AsyncStorage.setItem('accessToken', response.access)
         await AsyncStorage.setItem('refreshToken', response.refresh)
+        await AsyncStorage.setItem('usernameStorage', username)
         setTokens({ access: response.access, refresh: response.refresh })
         setIsAuthenticated(true)
       }
