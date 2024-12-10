@@ -61,5 +61,5 @@ export const useDiscover = (page: number) => {
     queryFn: () => api.post.list(page, undefined, undefined, undefined, true)
   })
 
-  return { results: data, isLoading, error }
+  return { discover: data, isLoading, error }
 }
