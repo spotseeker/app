@@ -21,12 +21,13 @@ export class PostService {
     user?: string,
     isArchived?: boolean,
     isBookmarked?: boolean,
+    isDiscover?: boolean,
     q?: string
   ): Promise<PostResponse> {
     const response = await this.client.get({
       url: '/post/',
       needAuthorization: true,
-      params: objectToSnake({ page, user, isArchived, isBookmarked, q })
+      params: objectToSnake({ page, user, isArchived, isBookmarked, isDiscover, q })
     })
     return response as unknown as PostResponse
   }
