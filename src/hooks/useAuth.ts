@@ -60,6 +60,7 @@ export const useAuth = (): UseAuthReturn => {
   const logout = async () => {
     await AsyncStorage.removeItem('accessToken')
     await AsyncStorage.removeItem('refreshToken')
+    await AsyncStorage.removeItem('usernameStorage')
     setTokens(null)
     setIsAuthenticated(false)
   }

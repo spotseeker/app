@@ -1,31 +1,38 @@
 import React, { useEffect, useState } from 'react'
-import {
-  View,
-  Text,
-  FlatList,
-  StyleSheet,
-  TouchableOpacity,
-  ImageSourcePropType
-} from 'react-native'
+import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Avatar } from '@kolking/react-native-avatar'
 import Icons from '@/src/components/Icons'
 import { router, useNavigation } from 'expo-router'
-import Img1 from '@/src/assets/images_app/avatar_users/Ellipse 11.png'
-import Img2 from '@/src/assets/images_app/avatar_users/Ellipse 14.png'
-import Img3 from '@/src/assets/images_app/avatar_users/Ellipse 14 (1).png'
-
-type Notification = {
-  id: string
-  username: string
-  uri: ImageSourcePropType
-  interaction: string
-  date: Date
-}
+import { useNotificationsList } from '@/src/hooks/useUserData'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { NotificacionResponse, Result } from '@/src/types/user'
 
 const NotificationsScreen = () => {
-  const { ArrowBack, TrashIcon } = Icons
+  const { ArrowBack /* TrashIcon  */ } = Icons
   const navigation = useNavigation()
+  const [userName, setUserName] = useState<string | undefined>()
+  const [notifications, setNotifications] = useState<NotificacionResponse>()
+
+  useEffect(() => {
+    const response = async () => {
+      const data = await AsyncStorage.getItem('usernameStorage')
+      if (data!) {
+        setUserName(data)
+      }
+    }
+
+    response()
+  }, [userName])
+
+  console.log(userName)
+  const { notificationsList } = useNotificationsList(userName as string)
+
+  useEffect(() => {
+    if (notificationsList && userName) {
+      setNotifications(notificationsList)
+    }
+  }, [notificationsList, userName])
 
   useEffect(() => {
     navigation.setOptions({
@@ -45,56 +52,33 @@ const NotificationsScreen = () => {
     })
   }, [navigation])
 
-  const [notifications, setNotifications] = useState<Notification[]>([
-    {
-      id: '1',
-      username: 'Andresjpg',
-      uri: Img1,
-      interaction: 'le dio like a tu publicación',
-      date: new Date('2024-11-01')
-    },
-    {
-      id: '2',
-      username: 'Yohanna33',
-      uri: Img2,
-      interaction: 'comentó en tu publicación',
-      date: new Date('2024-10-28')
-    },
-    {
-      id: '3',
-      username: 'Davidbqto',
-      uri: Img3,
-      interaction: 'te empezó a seguir',
-      date: new Date('2024-10-20')
-    }
-  ])
-
+  /* 
   const removeNotification = (id: string) => {
     setNotifications((prevNotifications) =>
       prevNotifications.filter((item) => item.id !== id)
     )
   }
-
-  const renderNotification = ({ item }: { item: Notification }) => (
+ */
+  const renderNotification = ({ item }: { item: Result }) => (
     <View style={styles.notificationItem}>
-      <Avatar source={item.uri} size={40} />
+      <Avatar source={{ uri: item.userInteraction.avatar }} size={40} />
       <View style={styles.notificationContent}>
         <Text style={styles.notificationText}>
-          <Text style={styles.username}>{item.username}</Text> {item.interaction}
+          <Text style={styles.username}>{item.userInteraction.username}</Text>{' '}
+          {item.content}
         </Text>
-        <Text style={styles.notificationDate}>{item.date.toLocaleDateString()}</Text>
       </View>
-      <TouchableOpacity onPress={() => removeNotification(item.id)}>
+      {/* <TouchableOpacity onPress={() => removeNotification(item.id)}>
         <TrashIcon size={20} color="#999" />
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </View>
   )
 
   return (
     <SafeAreaView edges={['bottom']} className="flex-1 bg-white">
       <FlatList
-        data={notifications}
-        keyExtractor={(item) => item.id}
+        data={notifications?.results}
+        keyExtractor={(item, index) => index.toString()}
         renderItem={renderNotification}
         style={styles.notificationList}
         contentContainerStyle={{ paddingBottom: 20 }}
