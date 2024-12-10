@@ -29,14 +29,18 @@ export default function Search() {
   }, [navigation])
   const [query, setQuery] = useState('')
   const [posts, setPosts] = useState<PostResponse>()
+  const [discoverPosts, setDiscoverPosts] = useState<PostResponse>()
   const { results, isLoading } = useSearch(1, query)
+
   useEffect(() => {
-    if (query === '') {
-      setPosts(images)
-    } else {
+    if (query != '' && results) {
       setPosts(results)
+      setDiscoverPosts(undefined)
+    } else {
+      setPosts(undefined)
+      setDiscoverPosts(images)
     }
-  }, [query])
+  }, [results])
 
   return (
     <SafeAreaView className="bg-white h-full">
@@ -47,7 +51,11 @@ export default function Search() {
           onChangeText={setQuery}
         />
       </View>
-      <ImageGridList isLoading={isLoading} posts={posts?.results} />
+      <ImageGridList
+        isLoading={isLoading}
+        posts={posts?.results}
+        discoverPosts={discoverPosts?.results}
+      />
     </SafeAreaView>
   )
 }
