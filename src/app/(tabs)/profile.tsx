@@ -24,7 +24,7 @@ import { PostResponse } from '@/src/types/post'
 const Profile = () => {
   const userData = {
     id: 'Abc234',
-    username: 'andres3',
+    username: 'Davidsitoucla',
     fullName: 'Ricardo Jimenez',
     description: 'Estudiante de Ing. Informática | UCLA',
     followers: 3,

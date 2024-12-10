@@ -18,7 +18,7 @@ const postsList = async (): Promise<PostResponse> => {
 //crear post
 export const usecreatePostApi = (postData: createPost) => {
   const queryClient = useQueryClient()
-  const { mutate, error, data } = useMutation<Post>({
+  const { mutate, error, data, isSuccess, isPending } = useMutation<Post>({
     mutationFn: () => api.post.create(postData),
     onSuccess: async (data: Post) => {
       try {
@@ -29,7 +29,7 @@ export const usecreatePostApi = (postData: createPost) => {
       }
     }
   })
-  return { createPost: mutate, error, data }
+  return { createPost: mutate, error, data, isSuccess, isPending }
 }
 
 // Hook para obtener los posts

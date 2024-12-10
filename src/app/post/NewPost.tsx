@@ -133,17 +133,17 @@ function NewPost() {
       try {
         if (description?.trim() === '') {
           console.log('El comentario no puede estar vacío.')
-          return false
+          return
         }
 
         if (!postDataForm.images.length) {
           console.log('Al menos una imagen es necesaria para realizar el post.')
-          return false
+          return
         }
 
         if (location.trim() === '') {
           console.log('Selecciona una ubicación.')
-          return false
+          return
         }
 
         // Subir todas las imágenes de manera asincrónica
@@ -170,14 +170,24 @@ function NewPost() {
 
         // Crear el post solo si todo es válido
         await createPost()
+        setModlVisible(true)
+        setDescription('')
+        return false
       } catch (err) {
         console.log(err)
       }
     }
 
     if (description) {
-      response() // Llamar la función asíncrona cuando el comentario cambie
-      setModlVisible(true)
+      response()
+        .then((modal) => {
+          if (modal) {
+            setModlVisible(modal)
+          }
+        })
+        .catch((err) => {
+          console.error('Error al obtener la respuesta:', err)
+        })
     }
   }, [description])
 
