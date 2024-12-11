@@ -88,3 +88,31 @@ export type FollowingResponse = {
   previous: string | null
   results: Follower[]
 }
+
+// Types para las notificaciones
+export interface NotificacionResponse {
+  count: number
+  next: string
+  previous: string
+  results: Result[]
+}
+
+export interface Result {
+  userInteraction: UserInteraction
+  content: string
+}
+
+export interface UserInteraction {
+  id: string
+  username: string
+  email: string
+  firstName: string
+  lastName: string
+  birthDate: string
+  description: string
+  avatar: string
+  isValidated: boolean
+  createdAt: string
+  updatedAt: string
+  deletedAt: string
+}

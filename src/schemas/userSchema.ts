@@ -48,7 +48,8 @@ export const EmailSchema = z.object({
 export const OTPSchema = z.object({
   otp: z
     .string({ message: 'Campo requerido' })
-    .max(6, { message: 'Campo requerido por favor introduzca correo' })
+    .min(6, { message: 'OTP invalido minimo 6 caracteres' })
+    .max(6, { message: 'OTP invalido minimo 6 caracteres' })
 })
 
 export const ResetPasswordSchema = z

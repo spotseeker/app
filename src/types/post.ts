@@ -43,7 +43,7 @@ export type PostResponse = {
 
 export type CommentsBody = {
   id: string
-  user: userData
+  user: User
   comment: string
 }
 

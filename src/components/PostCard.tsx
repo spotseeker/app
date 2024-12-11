@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { View, Text, Image, Pressable, StyleSheet } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import AntDesign from '@expo/vector-icons/AntDesign'
@@ -12,16 +12,7 @@ import Icons from './Icons'
 import ModalAction from './ModalAction'
 import PagerView from 'react-native-pager-view'
 import { Post } from '../types/post'
-
-//type PostCardProps = {
-//locationId: string
-//user: string
-// date: Date
-//image: string[]
-//description: string
-//isOwnProfile?: boolean
-//rating: number
-//}
+import { useBookmarkPost, useLikePost } from '../hooks/usePost'
 
 export default function PostCard({
   id,
@@ -33,19 +24,36 @@ export default function PostCard({
   likes,
   user
 }: Post) {
-  /*  const [count, setCount] = useState() */
+  const [count, setCount] = useState(likes)
   const [liked, setLiked] = useState(false)
+  const [taps, setTaps] = useState(0)
+  const [bookmark, setBookmark] = useState(false)
   const [isOptionsModalVisible, setOptionsModalVisible] = useState(false)
   const [isConfirmationModalVisible, setConfirmationModalVisible] = useState(false)
   const [modalAction, setModalAction] = useState<'archive' | 'delete' | null>(null)
   const { RenderStar } = Rating
   const { TrashIcon, EditIcon, ArchiveIcon2 } = Icons
+  const { bookMark } = useBookmarkPost(id)
+  const { like } = useLikePost(id)
+
   const createdAtDate = new Date(createdAt)
 
-  //modificar para el endpoint de like
-  const handleLike = () => {
-    /*     setCount(liked ? count - 1 : count + 1) */
+  const handleLike = async () => {
+    await like()
+    if (likes) setCount(liked ? likes - 1 : likes + 1)
     setLiked(!liked)
+  }
+
+  useEffect(() => {
+    if (taps == 2) {
+      handleLike()
+      setTaps(0)
+    }
+  }, [taps])
+
+  const handleBookmark = async () => {
+    await bookMark()
+    setBookmark(true)
   }
 
   const openConfirmationModal = (action: 'archive' | 'delete') => {
@@ -95,20 +103,22 @@ export default function PostCard({
         </View>
       </View>
 
-      <PagerView style={styles.pagerView} initialPage={0} className="mx-2">
-        {(() => {
-          const pages: JSX.Element[] = []
-          for (let i = 0; i < images.length; i++) {
-            const img = images[i]
-            pages.push(
-              <View key={i} style={styles.page}>
-                <Image source={{ uri: img.media }} style={styles.image} />
-              </View>
-            )
-          }
-          return pages
-        })()}
-      </PagerView>
+      <Pressable onPress={() => setTaps(taps + 1)} className="mx-2">
+        <PagerView style={styles.pagerView} initialPage={0}>
+          {(() => {
+            const pages: JSX.Element[] = []
+            for (let i = 0; i < images.length; i++) {
+              const img = images[i]
+              pages.push(
+                <View key={i} style={styles.page}>
+                  <Image source={{ uri: img.media }} style={styles.image} />
+                </View>
+              )
+            }
+            return pages
+          })()}
+        </PagerView>
+      </Pressable>
 
       <View className="flex flex-row items-center space-x-3 justify-start mx-4">
         <View className="flex-row flex flex-1 items-center space-x-3">
@@ -119,7 +129,7 @@ export default function PostCard({
               color={liked ? 'red' : 'black'}
               onPress={handleLike}
             />
-            <Text style={styles.likeCount}>{likes}</Text>
+            <Text style={styles.likeCount}>{count}</Text>
           </View>
           <Link href={`/post/${id}` as Href} asChild>
             <Pressable>
@@ -130,7 +140,12 @@ export default function PostCard({
           </Link>
 
           <View style={styles.actionGroup}>
-            <AntDesign name="staro" size={28} />
+            <AntDesign
+              name={`${bookmark ? 'star' : 'staro'}`}
+              color={`${bookmark ? '#eeaf61' : 'black'}`}
+              size={28}
+              onPress={handleBookmark}
+            />
           </View>
         </View>
         <View style={styles.ratingContainer} className="mx-2">

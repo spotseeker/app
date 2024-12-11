@@ -98,9 +98,9 @@ export const useRecoverPassword = () => {
   return { sendOtpMutation: mutate, status, error, data }
 }
 
-export const useSendPasswordOTP = () => {
+export const useSendPasswordOTP = (otp: string) => {
   const { mutate, status, error, data } = useMutation({
-    mutationFn: api.auth.sendPasswordOTP,
+    mutationFn: () => api.auth.sendPasswordOTP(otp),
     onSuccess: async (data) => {
       await AsyncStorage.setItem('accessToken', data.access)
       await AsyncStorage.setItem('refreshToken', data.refresh)
@@ -113,9 +113,9 @@ export const useSendPasswordOTP = () => {
   return { validateOTPMutation: mutate, status, error, data }
 }
 
-export const useResetPassword = () => {
+export const useResetPassword = (newPassword: string, username: string) => {
   const { mutate, status, error, data } = useMutation({
-    mutationFn: api.user.resetPassword,
+    mutationFn: () => api.user.resetPassword(newPassword, username),
     onSuccess: async (data) => {
       console.log('Contraseña restablecida correctamente:', data)
     },
