@@ -17,6 +17,8 @@ export type Post = {
   locationId: string
   score: number
   isArchived: boolean
+  isLiked: boolean
+  isBookmarked: boolean
   user: User
 }
 
