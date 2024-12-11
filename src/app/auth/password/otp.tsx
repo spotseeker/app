@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { View, Text, ScrollView } from 'react-native'
 import { useForm } from 'react-hook-form'
 import { router, useNavigation } from 'expo-router'
@@ -19,8 +19,32 @@ export default function ValidateOTP() {
   const { control, handleSubmit, reset } = useForm({
     resolver: zodResolver(OTPSchema)
   })
+  const [showError, setShowError] = useState<string | null>('')
+  const [otp, setOTP] = useState('')
+  const onSubmit = (otp: string) => {
+    setOTP(otp)
+  }
+  const { validateOTPMutation, error } = useSendPasswordOTP(otp)
+  const handleValidateOTP = () => {
+    const response = async () => {
+      try {
+        await validateOTPMutation()
+      } catch (error) {
+        console.error('Error al validar el código:', error)
+        setShowError('Código incorrecto')
+      }
+    }
 
-  const { validateOTPMutation } = useSendPasswordOTP()
+    if (otp) {
+      response()
+    }
+
+    if (!error) {
+      setShowError('')
+      reset()
+      router.push('/auth/password/reset')
+    }
+  }
 
   return (
     <ScrollView>
@@ -41,6 +65,7 @@ export default function ValidateOTP() {
             control={control}
             name="otp"
           />
+          <Text className="text-lightc font-pbold text-[16px]">{showError}</Text>
         </View>
         <View className="flex flex-row justify-around mt-20">
           <Button
@@ -59,11 +84,8 @@ export default function ValidateOTP() {
             height={47}
             variant="primary"
             onPress={handleSubmit((data) => {
-              if (data) {
-                validateOTPMutation(data.otp)
-                reset()
-                router.push('/auth/password/reset')
-              }
+              onSubmit(data.otp)
+              handleValidateOTP()
             })}
           >
             Siguiente

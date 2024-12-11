@@ -25,6 +25,9 @@ export type CreateUser = {
 export type UserResponse = {
   id: string
   isValidated: boolean
+  followers: number
+  following: number
+  avatar: string
 } & User &
   Timestamp
 
@@ -57,6 +60,33 @@ export type RegisterUserType = {
 
 export type OtpResponse = {
   otp: string[] // Cambia el tipo de acuerdo con la estructura real de la respuesta
+}
+
+export type Follower = {
+  id: string
+  username: string
+  email: string
+  first_name: string
+  last_name: string
+  birth_date: string
+  password: string
+  description: string
+  avatar: string
+  isFollowing: boolean
+}
+
+export type FollowersResponse = {
+  count: number
+  next: string | null
+  previous: string | null
+  results: Follower[]
+}
+
+export type FollowingResponse = {
+  count: number
+  next: string | null
+  previous: string | null
+  results: Follower[]
 }
 
 // Types para las notificaciones

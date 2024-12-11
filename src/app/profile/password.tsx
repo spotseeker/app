@@ -51,7 +51,7 @@ export default function UpdatePassword() {
 
   useEffect(() => {
     const response = async () => {
-      const data = await AsyncStorage.getItem('usernameStorage')
+      const data = await AsyncStorage.getItem('username')
       if (data!) {
         setUserName(data)
       }

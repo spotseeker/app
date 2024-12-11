@@ -12,10 +12,12 @@ interface UseAuthReturn {
   error: string | null
   isAuthenticated: boolean
   tokens: { access: string; refresh: string } | null
+  username: string
 }
 
 export const useAuth = (): UseAuthReturn => {
   const [error, setError] = useState<string | null>(null)
+  const [username, setUsername] = useState<string | null>(null)
   const [tokens, setTokens] = useState<{ access: string; refresh: string } | null>(null)
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false)
   const authService = new AuthService()
@@ -23,9 +25,11 @@ export const useAuth = (): UseAuthReturn => {
   const checkAuth = async () => {
     const accessToken = await AsyncStorage.getItem('accessToken')
     const refreshToken = await AsyncStorage.getItem('refreshToken')
+    const storedUsername = await AsyncStorage.getItem('username')
 
-    if (accessToken && refreshToken) {
+    if (accessToken && refreshToken && storedUsername) {
       setTokens({ access: accessToken, refresh: refreshToken })
+      setUsername(storedUsername)
       setIsAuthenticated(true)
     } else {
       setIsAuthenticated(false)
@@ -40,8 +44,9 @@ export const useAuth = (): UseAuthReturn => {
       if ('access' in response && 'refresh' in response) {
         await AsyncStorage.setItem('accessToken', response.access)
         await AsyncStorage.setItem('refreshToken', response.refresh)
-        await AsyncStorage.setItem('usernameStorage', username)
+        await AsyncStorage.setItem('username', username)
         setTokens({ access: response.access, refresh: response.refresh })
+        setUsername(username)
         setIsAuthenticated(true)
       }
     } catch (err) {
@@ -60,8 +65,9 @@ export const useAuth = (): UseAuthReturn => {
   const logout = async () => {
     await AsyncStorage.removeItem('accessToken')
     await AsyncStorage.removeItem('refreshToken')
-    await AsyncStorage.removeItem('usernameStorage')
+    await AsyncStorage.removeItem('username')
     setTokens(null)
+    setUsername(null)
     setIsAuthenticated(false)
   }
 
@@ -74,7 +80,8 @@ export const useAuth = (): UseAuthReturn => {
     logout,
     error,
     isAuthenticated,
-    tokens
+    tokens,
+    username: username || ''
   }
 }
 
@@ -91,9 +98,9 @@ export const useRecoverPassword = () => {
   return { sendOtpMutation: mutate, status, error, data }
 }
 
-export const useSendPasswordOTP = () => {
+export const useSendPasswordOTP = (otp: string) => {
   const { mutate, status, error, data } = useMutation({
-    mutationFn: api.auth.sendPasswordOTP,
+    mutationFn: () => api.auth.sendPasswordOTP(otp),
     onSuccess: async (data) => {
       await AsyncStorage.setItem('accessToken', data.access)
       await AsyncStorage.setItem('refreshToken', data.refresh)
@@ -106,9 +113,9 @@ export const useSendPasswordOTP = () => {
   return { validateOTPMutation: mutate, status, error, data }
 }
 
-export const useResetPassword = () => {
+export const useResetPassword = (newPassword: string, username: string) => {
   const { mutate, status, error, data } = useMutation({
-    mutationFn: api.user.resetPassword,
+    mutationFn: () => api.user.resetPassword(newPassword, username),
     onSuccess: async (data) => {
       console.log('Contraseña restablecida correctamente:', data)
     },
@@ -117,4 +124,14 @@ export const useResetPassword = () => {
     }
   })
   return { resetPasswordMutation: mutate, status, error, data }
+}
+
+{
+  /*export const useGetProfile=(username:string) => {
+  const {data,isLoading,error} = useQuery({
+    queryKey: [username],
+    queryFn: () => api.user.getByUsername(username)
+  })
+  return {profile:data,isLoading,error}
+  } */
 }

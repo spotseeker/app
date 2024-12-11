@@ -3,6 +3,8 @@ import {
   UserResponse,
   RegisterUserType,
   OtpResponse,
+  FollowersResponse,
+  FollowingResponse,
   NotificacionResponse
 } from '../types/user'
 import { Client } from './client'
@@ -19,6 +21,7 @@ export class UserService {
     this.resetPassword = this.resetPassword.bind(this)
     this.getNotifications = this.getNotifications.bind(this)
     this.sendOtp = this.sendOtp.bind(this)
+    this.list = this.list.bind(this)
   }
 
   async create(user: RegisterUserType): Promise<UserResponse> {
@@ -59,18 +62,19 @@ export class UserService {
     })
   }
 
-  async resetPassword(password: string): Promise<void> {
+  async resetPassword(newPassword: string, username: string): Promise<void> {
     await this.client.post({
-      url: '/user/password/reset/',
+      url: `/user/${username}/password/`,
       needAuthorization: true,
-      data: { password }
+      data: objectToSnake({ newPassword })
     })
   }
 
-  async getNotifications(username: string): Promise<NotificacionResponse> {
+  async getNotifications(page: number, username: string): Promise<NotificacionResponse> {
     const response = await this.client.get({
       url: `/user/${username}/notification/`,
-      needAuthorization: true
+      needAuthorization: true,
+      params: objectToSnake({ page })
     })
     return response as unknown as NotificacionResponse
   }
@@ -82,5 +86,30 @@ export class UserService {
       data: { otp }
     })
     return response as unknown as OtpResponse
+  }
+
+  async list(page: number, username: string): Promise<FollowersResponse> {
+    const response = await this.client.get({
+      url: `user/${username}/followers/`,
+      needAuthorization: true,
+      params: objectToSnake({ page, username })
+    })
+    return response as unknown as FollowersResponse
+  }
+
+  async followingList(page: number, username?: string): Promise<FollowingResponse> {
+    const response = await this.client.get({
+      url: `user/${username}/following/`,
+      needAuthorization: true,
+      params: objectToSnake({ page, username })
+    })
+    return response as unknown as FollowingResponse
+  }
+
+  async follow(username: string): Promise<void> {
+    await this.client.post({
+      url: `user/${username}/follow/`,
+      needAuthorization: true
+    })
   }
 }

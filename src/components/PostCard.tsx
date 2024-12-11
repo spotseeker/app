@@ -131,12 +131,14 @@ export default function PostCard({
     >
       <View className="flex-row mx-1 my-2">
         <View className="flex-row flex-1 items-center space-x-1">
-          <Avatar
-            source={{ uri: user.avatar }}
-            color={Colors.text}
-            radius={30}
-            size={35}
-          />
+          <Pressable onPress={() => router.push(`/profile/${user.username}`)}>
+            <Avatar
+              source={{ uri: user.avatar }}
+              color={Colors.text}
+              radius={30}
+              size={35}
+            />
+          </Pressable>
           <Text className="text-coloricon font-extrabold">{user.username}</Text>
         </View>
         <View className="flex-row  items-center space-x-1">

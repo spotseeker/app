@@ -16,12 +16,6 @@ const ProfileLayout = () => {
           headerShown: false
         }}
       />
-      <Stack.Screen
-        name="otherUser/OtherProfile"
-        options={{
-          headerShown: false
-        }}
-      />
     </Stack>
   )
 }

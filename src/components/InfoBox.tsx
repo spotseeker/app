@@ -4,17 +4,19 @@ import { Colors } from '../constants/Colors'
 import { router } from 'expo-router'
 
 interface InfoBoxProps {
-  title: string
+  username: string | undefined
+  title: string | undefined
   subtitle: string
-  info: string
-  followers: number
-  following: number
-  posts: number
+  info: string | undefined
+  followers?: number
+  following?: number
+  posts?: number
   containerStyles?: ViewStyle // Cambiado para aceptar estilos en línea
   titleStyles?: TextStyle // Cambiado para aceptar estilos en línea
 }
 
 const InfoBox: React.FC<InfoBoxProps> = ({
+  username,
   title,
   subtitle,
   info,
@@ -25,7 +27,7 @@ const InfoBox: React.FC<InfoBoxProps> = ({
   titleStyles
 }) => {
   return (
-    <View style={[{ padding: 20 }, containerStyles, titleStyles]}>
+    <View style={[{ padding: 20 }, containerStyles]}>
       <Text
         className="text-lightc font-bold"
         style={[
@@ -80,7 +82,7 @@ const InfoBox: React.FC<InfoBoxProps> = ({
           {posts}
           {'\n'}Publicaciones
         </Text>
-        <TouchableOpacity onPress={() => router.push('/profile/followers')}>
+        <TouchableOpacity onPress={() => router.push(`/${username}/followers`)}>
           <Text
             className="text-lightc font-pbold"
             style={{
@@ -95,7 +97,7 @@ const InfoBox: React.FC<InfoBoxProps> = ({
             {'\n'}Seguidores
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => router.push('/profile/following')}>
+        <TouchableOpacity onPress={() => router.push(`/${username}/following`)}>
           <Text
             className="text-lightc font-pbold"
             style={{
