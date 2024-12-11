@@ -28,12 +28,14 @@ export default function PostCard({
   locationId,
   score,
   likes,
-  user
+  user,
+  isLiked,
+  isBookmarked
 }: Post) {
   const [count, setCount] = useState(likes)
-  const [liked, setLiked] = useState(false)
+  const [liked, setLiked] = useState(isLiked)
   const [taps, setTaps] = useState(0)
-  const [bookmark, setBookmark] = useState(false)
+  const [bookmark, setBookmark] = useState(isBookmarked)
   const [isOptionsModalVisible, setOptionsModalVisible] = useState(false)
   const [isConfirmationModalVisible, setConfirmationModalVisible] = useState(false)
   const [modalAction, setModalAction] = useState<'archive' | 'delete' | null>(null)
@@ -74,7 +76,7 @@ export default function PostCard({
 
   const handleBookmark = async () => {
     await bookMark()
-    setBookmark(true)
+    setBookmark(!bookmark)
   }
 
   const openConfirmationModal = (action: 'archive' | 'delete') => {
@@ -179,7 +181,7 @@ export default function PostCard({
             />
             <Text style={styles.likeCount}>{count}</Text>
           </View>
-          <Link href={`/post/${id}` as Href} asChild>
+          <Link href={`/post/${id}/comments` as Href} asChild>
             <Pressable>
               <View style={styles.commentButton}>
                 <AntDesign name="message1" size={28} />
@@ -225,7 +227,7 @@ export default function PostCard({
             className="text-lightc font-pbold"
             onPress={() => {
               setOptionsModalVisible(false)
-              router.push(`/post/edit/${id}}` as Href)
+              router.push(`/post/${id}}/edit` as Href)
             }}
             style={styles.modalOption}
           >
