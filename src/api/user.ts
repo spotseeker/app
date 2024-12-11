@@ -35,7 +35,7 @@ export class UserService {
 
   async getByUsername(username: string): Promise<UserResponse> {
     const response = await this.client.get({
-      url: `https://api-ryw6.onrender.com/user/${username}/`,
+      url: `/user/${username}/`,
       needAuthorization: true
     })
     return response as unknown as UserResponse
@@ -85,7 +85,7 @@ export class UserService {
 
   async list(page: number, username: string): Promise<FollowersResponse> {
     const response = await this.client.get({
-      url: `https://api-ryw6.onrender.com/user/${username}/followers/`,
+      url: `user/${username}/followers/`,
       needAuthorization: true,
       params: objectToSnake({ page, username })
     })
@@ -94,7 +94,7 @@ export class UserService {
 
   async followingList(page: number, username?: string): Promise<FollowingResponse> {
     const response = await this.client.get({
-      url: `https://api-ryw6.onrender.com/user/${username}/following/`,
+      url: `user/${username}/following/`,
       needAuthorization: true,
       params: objectToSnake({ page, username })
     })
@@ -103,7 +103,7 @@ export class UserService {
 
   async unfollowUser(username: string): Promise<void> {
     await this.client.delete({
-      url: `https://api-ryw6.onrender.com/user/${username}/follow/`,
+      url: `user/${username}/follow/`,
       needAuthorization: true
     })
   }
