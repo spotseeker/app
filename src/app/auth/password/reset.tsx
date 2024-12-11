@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { View, Text, ScrollView } from 'react-native'
 import { useForm } from 'react-hook-form'
 import { router, useNavigation } from 'expo-router'
@@ -9,6 +9,7 @@ import { ResetPasswordSchema } from '@/src/schemas/userSchema'
 import Input from '@/src/components/Input'
 import Button from '@/src/components/Button'
 import { useResetPassword } from '@/src/hooks/useAuth'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export default function ResetPassword() {
   const navigation = useNavigation()
@@ -19,8 +20,46 @@ export default function ResetPassword() {
   const { control, handleSubmit, reset } = useForm({
     resolver: zodResolver(ResetPasswordSchema)
   })
+  const [newPassword, setNewPassword] = useState('')
+  const [username, setUsername] = useState<string | undefined>()
+  useEffect(() => {
+    const response = async () => {
+      const data = await AsyncStorage.getItem('usernameStorage')
+      if (data!) {
+        setUsername(data)
+      }
+    }
 
-  const { resetPasswordMutation } = useResetPassword()
+    response()
+  }, [username])
+
+  const { resetPasswordMutation, error } = useResetPassword(
+    newPassword,
+    username as string
+  )
+
+  const onSubmit = (newPassword: string) => {
+    setNewPassword(newPassword)
+  }
+
+  const handleUpdatePassword = async () => {
+    const response = async () => {
+      try {
+        await resetPasswordMutation()
+        console.log('Contraseña actualizada exitosamente')
+      } catch (error) {
+        console.error('Error al actualizar la contraseña:', error)
+      }
+    }
+
+    if (newPassword) {
+      await response()
+    }
+    if (!error) {
+      reset()
+      router.replace('/(tabs)/home')
+    }
+  }
 
   return (
     <ScrollView>
@@ -65,11 +104,8 @@ export default function ResetPassword() {
             height={47}
             variant="primary"
             onPress={handleSubmit((data) => {
-              if (data) {
-                resetPasswordMutation(data.newPassword)
-                reset()
-                router.push('/(tabs)/home')
-              }
+              onSubmit(data.newPassword)
+              handleUpdatePassword()
             })}
           >
             Actualizar
