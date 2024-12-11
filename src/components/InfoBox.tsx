@@ -4,12 +4,12 @@ import { Colors } from '../constants/Colors'
 import { router } from 'expo-router'
 
 interface InfoBoxProps {
-  title: string
+  title: string | undefined
   subtitle: string
-  info: string
-  followers: number
-  following: number
-  posts: number
+  info: string | undefined
+  followers?: number
+  following?: number
+  posts?: number
   containerStyles?: ViewStyle // Cambiado para aceptar estilos en línea
   titleStyles?: TextStyle // Cambiado para aceptar estilos en línea
 }
@@ -25,7 +25,7 @@ const InfoBox: React.FC<InfoBoxProps> = ({
   titleStyles
 }) => {
   return (
-    <View style={[{ padding: 20 }, containerStyles, titleStyles]}>
+    <View style={[{ padding: 20 }, containerStyles]}>
       <Text
         className="text-lightc font-bold"
         style={[

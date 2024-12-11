@@ -15,79 +15,95 @@ import Icons from '@/src/components/Icons'
 import { Colors } from '@/src/constants/Colors'
 import BackgroundImage from '@/src/assets/images_app/Rectangle 9 (1).png'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { router, useNavigation } from 'expo-router'
+import { router, useNavigation, useLocalSearchParams } from 'expo-router'
 import { usePostsUser, usePostsArchived, usePostsBookmarked } from '@/src/hooks/usePost'
 import PostCard from '@/src/components/PostCard'
 import { PostResponse } from '@/src/types/post'
 import { useUserProfile } from '@/src/hooks/useProfile'
 import { UserResponse } from '@/src/types/user'
-//import { useAuthContext } from '@/src/context/context'
+import { useAuthContext } from '@/src/context/context'
+import Button from '@/src/components/Button'
 
 const Profile = () => {
-  const userData = {
-    id: 'Abc234',
-    username: 'andres1',
-    fullName: 'Ricardo Jimenez',
-    description: 'Estudiante de Ing. Informática | UCLA',
-    followers: 3,
-    following: 3,
-    posts: 6,
-    defaultImage:
-      'https://static-00.iconduck.com/assets.00/profile-circle-icon-512x512-zxne30hp.png'
-  }
+  const { username } = useLocalSearchParams()
+  const normalizedUsername = Array.isArray(username) ? username[0] : username
+  const [isFollowing, setIsFollowing] = useState(false)
 
-  //const router = useRouter();
+  const { myUsername } = useAuthContext()
 
-  //const usernameParam = router.params?.username;
-
-  // const { username } = useAuthContext();
-
-  // const isMyProfile = username === usernameParam;
-  const { ArchiveIcon2, PostsIcon, StarIcon, FourLinesIcon, ArrowBack } = Icons
-  const navigation = useNavigation()
-  useEffect(() => {
-    navigation.setOptions({
-      headerShown: true,
-      title: '',
-      headerTitle: 'Mi Perfil',
-      headerTintColor: '#FB9062',
-      headerTitleStyle: {
-        fontWeight: 'bold'
-      },
-      headerRightContainerStyle: {
-        marginRight: '9%',
-        paddingRight: '10%'
-      },
-      headerRight: () => (
-        <Pressable onPress={() => router.replace('/profile/settings')}>
-          <FourLinesIcon size={35} />
-        </Pressable>
-      ),
-      headerLeft: () => (
-        <TouchableOpacity onPress={() => router.replace('/(tabs)/home')}>
-          <ArrowBack size={35} />
-        </TouchableOpacity>
-      )
-    })
-  }, [navigation])
+  const isMyProfile = normalizedUsername === myUsername
+  const userInfo = isMyProfile ? myUsername : normalizedUsername
   const [currentTypePost, setCurrentTypePost] = useState<string>('all')
   const [posts, setPosts] = useState<PostResponse>()
-  const userPosts = usePostsUser(1, userData.username)
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const userPosts = usePostsUser(1, userInfo)
   const [profile, setProfile] = useState<UserResponse>()
-  const { profile: userProfile } = useUserProfile(userData.username)
+  const { profile: userProfile } = useUserProfile(userInfo)
   const archivedPosts = usePostsArchived(1)
   const bookmarkedPosts = usePostsBookmarked(1)
+  const { ArchiveIcon2, PostsIcon, StarIcon, FourLinesIcon, ArrowBack } = Icons
+  const navigation = useNavigation()
 
   useEffect(() => {
-    if (currentTypePost === 'all') {
-      setPosts(userPosts.posts)
-    } else if (currentTypePost === 'favorites') {
-      setPosts(bookmarkedPosts.posts)
-    } else if (currentTypePost === 'archived') {
-      setPosts(archivedPosts.posts)
+    if (isMyProfile == false) {
+      navigation.setOptions({
+        headerShown: true,
+        title: '',
+        headerTitle: normalizedUsername,
+        headerTintColor: '#FB9062',
+        headerTitleStyle: {
+          fontWeight: 'bold'
+        },
+        headerRightContainerStyle: {
+          marginRight: '9%',
+          paddingRight: '10%'
+        },
+        headerRight: '',
+        headerLeft: () => (
+          <TouchableOpacity onPress={() => router.replace('/(tabs)/home')}>
+            <ArrowBack size={35} />
+          </TouchableOpacity>
+        )
+      })
+    } else {
+      navigation.setOptions({
+        headerShown: true,
+        title: '',
+        headerTitle: ' Mi Perfil',
+        headerTintColor: '#FB9062',
+        headerTitleStyle: {
+          fontWeight: 'bold'
+        },
+        headerRightContainerStyle: {
+          marginRight: '9%',
+          paddingRight: '10%'
+        },
+        headerRight: () => (
+          <Pressable onPress={() => router.replace('/profile/settings')}>
+            <FourLinesIcon size={35} />
+          </Pressable>
+        ),
+        headerLeft: () => (
+          <TouchableOpacity onPress={() => router.replace('/(tabs)/home')}>
+            <ArrowBack size={35} />
+          </TouchableOpacity>
+        )
+      })
     }
-  }, [currentTypePost])
+  }, [navigation, isMyProfile])
+
+  useEffect(() => {
+    if (isMyProfile) {
+      if (currentTypePost === 'all') {
+        setPosts(userPosts.posts)
+      } else if (currentTypePost === 'favorites') {
+        setPosts(bookmarkedPosts.posts)
+      } else if (currentTypePost === 'archived') {
+        setPosts(archivedPosts.posts)
+      }
+    } else {
+      setPosts(userPosts.posts)
+    }
+  }, [currentTypePost, userPosts])
 
   useEffect(() => {
     if (userProfile) {
@@ -97,6 +113,10 @@ const Profile = () => {
 
   const handlePostButton = (type: string) => {
     setCurrentTypePost(type)
+  }
+
+  const toggleFollow = () => {
+    setIsFollowing((prev) => !prev)
   }
 
   const textLight = 'text-lightc font-pbold text-[14px]'
@@ -140,49 +160,7 @@ const Profile = () => {
           </View>
 
           {/* Iconos de opciones */}
-          <View className="left-[2%]" style={styles.iconTabContainer}>
-            <TouchableOpacity
-              style={{ height: '100%', width: '33%' }}
-              onPress={() => {
-                handlePostButton('all')
-              }}
-            >
-              <View style={styles.iconStyles}>
-                <PostsIcon size={40} />
-                <Text className={textLight} style={{ alignSelf: 'center' }}>
-                  Publicaciones
-                </Text>
-              </View>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={{ height: '100%', width: '33%' }}
-              onPress={() => {
-                handlePostButton('favorites')
-              }}
-            >
-              <View style={styles.iconStyles}>
-                <StarIcon size={40} />
-                <Text className={textLight} style={{ alignSelf: 'center' }}>
-                  Favoritas
-                </Text>
-              </View>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={{ height: '100%', width: '33%' }}
-              onPress={() => {
-                handlePostButton('archived')
-              }}
-            >
-              <View style={styles.iconStyles}>
-                <ArchiveIcon2 size={40} />
-                <Text className={textLight} style={{ alignSelf: 'center' }}>
-                  Archivadas
-                </Text>
-              </View>
-            </TouchableOpacity>
-          </View>
+          {isMyProfile ? renderOptionIcons() : renderFollowButton()}
 
           {/* Línea divisoria */}
           <View
@@ -197,6 +175,67 @@ const Profile = () => {
           />
         </View>
       </Screen>
+    </View>
+  )
+
+  const renderOptionIcons = () => (
+    <View className="left-[2%]" style={styles.iconTabContainer}>
+      <TouchableOpacity
+        style={{ height: '100%', width: '33%' }}
+        onPress={() => {
+          handlePostButton('all')
+        }}
+      >
+        <View style={styles.iconStyles}>
+          <PostsIcon size={40} />
+          <Text className={textLight} style={{ alignSelf: 'center' }}>
+            Publicaciones
+          </Text>
+        </View>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={{ height: '100%', width: '33%' }}
+        onPress={() => {
+          handlePostButton('favorites')
+        }}
+      >
+        <View style={styles.iconStyles}>
+          <StarIcon size={40} />
+          <Text className={textLight} style={{ alignSelf: 'center' }}>
+            Favoritas
+          </Text>
+        </View>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={{ height: '100%', width: '33%' }}
+        onPress={() => {
+          handlePostButton('archived')
+        }}
+      >
+        <View style={styles.iconStyles}>
+          <ArchiveIcon2 size={40} />
+          <Text className={textLight} style={{ alignSelf: 'center' }}>
+            Archivadas
+          </Text>
+        </View>
+      </TouchableOpacity>
+    </View>
+  )
+
+  const renderFollowButton = () => (
+    <View style={styles.iconTabContainer}>
+      <Button
+        onPress={toggleFollow}
+        variant={isFollowing ? 'gray' : 'primary'}
+        width={150}
+        height={47}
+      >
+        <Text className="text-white font-pbold">
+          {isFollowing ? 'Dejar de seguir' : 'Seguir'}
+        </Text>
+      </Button>
     </View>
   )
 

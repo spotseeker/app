@@ -1,7 +1,7 @@
 import { Timestamp } from './timestamp'
 
 export type UpdateUser = {
-  userName: string
+  username: string
   firstName: string
   lastName: string
   avatar: string
@@ -20,8 +20,11 @@ export type CreateUser = {
 export type UserResponse = {
   id: string
   isValidated: boolean
+  followers: number
+  following: number
 } & User &
-  Timestamp
+  Timestamp &
+  avatar
 
 export type Notification = {
   user: string
@@ -52,4 +55,30 @@ export type RegisterUserType = {
 
 export type OtpResponse = {
   otp: string[] // Cambia el tipo de acuerdo con la estructura real de la respuesta
+}
+
+export type Follower = {
+  id: string
+  username: string
+  email: string
+  first_name: string
+  last_name: string
+  birth_date: string
+  password: string
+  description: string
+  avatar: string
+}
+
+export type FollowersResponse = {
+  count: number
+  next: string | null
+  previous: string | null
+  results: Follower[]
+}
+
+export type FollowingResponse = {
+  count: number
+  next: string | null
+  previous: string | null
+  results: Follower[]
 }

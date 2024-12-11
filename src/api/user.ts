@@ -3,7 +3,9 @@ import {
   UserResponse,
   Notification,
   RegisterUserType,
-  OtpResponse
+  OtpResponse,
+  FollowersResponse,
+  FollowingResponse
 } from '../types/user'
 import { Client } from './client'
 import { objectToSnake } from 'ts-case-convert'
@@ -19,6 +21,7 @@ export class UserService {
     this.resetPassword = this.resetPassword.bind(this)
     this.getNotifications = this.getNotifications.bind(this)
     this.sendOtp = this.sendOtp.bind(this)
+    this.list = this.list.bind(this)
   }
 
   async create(user: RegisterUserType): Promise<UserResponse> {
@@ -32,7 +35,7 @@ export class UserService {
 
   async getByUsername(username: string): Promise<UserResponse> {
     const response = await this.client.get({
-      url: `/user/${username}/`,
+      url: `https://api-ryw6.onrender.com/user/${username}/`,
       needAuthorization: true
     })
     return response as unknown as UserResponse
@@ -40,7 +43,7 @@ export class UserService {
 
   async update(user: UpdateUser): Promise<UserResponse> {
     const response = await this.client.patch({
-      url: `/user/${user.userName}/`,
+      url: `/user/${user.username}/`,
       needAuthorization: true,
       data: objectToSnake(user)
     })
@@ -78,5 +81,30 @@ export class UserService {
       data: { otp }
     })
     return response as unknown as OtpResponse
+  }
+
+  async list(page: number, username: string): Promise<FollowersResponse> {
+    const response = await this.client.get({
+      url: `https://api-ryw6.onrender.com/user/${username}/followers/`,
+      needAuthorization: true,
+      params: objectToSnake({ page, username })
+    })
+    return response as unknown as FollowersResponse
+  }
+
+  async followingList(page: number, username?: string): Promise<FollowingResponse> {
+    const response = await this.client.get({
+      url: `https://api-ryw6.onrender.com/user/${username}/following/`,
+      needAuthorization: true,
+      params: objectToSnake({ page, username })
+    })
+    return response as unknown as FollowingResponse
+  }
+
+  async unfollowUser(username: string): Promise<void> {
+    await this.client.delete({
+      url: `https://api-ryw6.onrender.com/user/${username}/follow/`,
+      needAuthorization: true
+    })
   }
 }

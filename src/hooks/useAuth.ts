@@ -12,10 +12,12 @@ interface UseAuthReturn {
   error: string | null
   isAuthenticated: boolean
   tokens: { access: string; refresh: string } | null
+  username: string
 }
 
 export const useAuth = (): UseAuthReturn => {
   const [error, setError] = useState<string | null>(null)
+  const [username, setUsername] = useState<string | null>(null)
   const [tokens, setTokens] = useState<{ access: string; refresh: string } | null>(null)
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false)
   const authService = new AuthService()
@@ -23,9 +25,11 @@ export const useAuth = (): UseAuthReturn => {
   const checkAuth = async () => {
     const accessToken = await AsyncStorage.getItem('accessToken')
     const refreshToken = await AsyncStorage.getItem('refreshToken')
+    const storedUsername = await AsyncStorage.getItem('username')
 
-    if (accessToken && refreshToken) {
+    if (accessToken && refreshToken && storedUsername) {
       setTokens({ access: accessToken, refresh: refreshToken })
+      setUsername(storedUsername)
       setIsAuthenticated(true)
     } else {
       setIsAuthenticated(false)
@@ -40,7 +44,9 @@ export const useAuth = (): UseAuthReturn => {
       if ('access' in response && 'refresh' in response) {
         await AsyncStorage.setItem('accessToken', response.access)
         await AsyncStorage.setItem('refreshToken', response.refresh)
+        await AsyncStorage.setItem('username', username)
         setTokens({ access: response.access, refresh: response.refresh })
+        setUsername(username)
         setIsAuthenticated(true)
       }
     } catch (err) {
@@ -59,6 +65,9 @@ export const useAuth = (): UseAuthReturn => {
   const logout = async () => {
     await AsyncStorage.removeItem('accessToken')
     await AsyncStorage.removeItem('refreshToken')
+    await AsyncStorage.removeItem('username')
+    setTokens(null)
+    setUsername(null)
     setTokens(null)
     setIsAuthenticated(false)
   }
@@ -72,7 +81,8 @@ export const useAuth = (): UseAuthReturn => {
     logout,
     error,
     isAuthenticated,
-    tokens
+    tokens,
+    username: username || ''
   }
 }
 
@@ -115,4 +125,14 @@ export const useResetPassword = () => {
     }
   })
   return { resetPasswordMutation: mutate, status, error, data }
+}
+
+{
+  /*export const useGetProfile=(username:string) => {
+  const {data,isLoading,error} = useQuery({
+    queryKey: [username],
+    queryFn: () => api.user.getByUsername(username)
+  })
+  return {profile:data,isLoading,error}
+  } */
 }

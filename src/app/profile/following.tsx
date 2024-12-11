@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from 'react'
 import {
   View,
@@ -13,57 +15,49 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { Avatar } from '@kolking/react-native-avatar'
 import Screen from '@/src/components/Screen'
 import Button from '@/src/components/Button'
-import Img1 from '@/src/assets/images_app/avatar_users/Ellipse 11.png'
-import Img2 from '@/src/assets/images_app/avatar_users/Ellipse 14.png'
-import Img3 from '@/src/assets/images_app/avatar_users/Ellipse 14 (1).png'
 import Icons from '@/src/components/Icons'
+import { useFollowingList } from '@/src/hooks/useProfile'
 import { router, useNavigation } from 'expo-router'
+import { UserService } from '@/src/api/user'
+import { User } from '@/src/types/user'
+import { userListFollowers } from '@/src/hooks/useProfile'
+import { useAuthContext } from '@/src/context/context'
 
-type Following = {
-  id: string
-  username: string
-  uri: ImageSourcePropType
-  isFollowing: boolean
-}
-
-const UserFollowing = () => {
+const UserFollowing = ({ username }: User) => {
   const { ArrowBack } = Icons
+  const { myUsername } = useAuthContext()
   const navigation = useNavigation()
+  const { followers } = useFollowingList(1, myUsername)
+  const api = new UserService()
+
   useEffect(() => {
     navigation.setOptions({
       headerShown: true,
       gestureEnabled: false,
       title: '',
-      headerTitle: 'Seguidores',
+      headerTitle: 'Siguiendo',
       headerTintColor: '#EEAF61',
       headerTitleStyle: {
         fontWeight: 'bold'
       },
       headerLeft: () => (
-        <TouchableOpacity onPress={() => router.push('/(tabs)/profile')}>
+        <TouchableOpacity onPress={() => router.push(`/(tabs)/${myUsername}`)}>
           <ArrowBack size={35} />
         </TouchableOpacity>
       )
     })
   }, [navigation])
-  const images = [Img1, Img2, Img3]
 
-  const [followingData, setFollowingData] = useState<Following[]>([
-    { id: '1', username: 'Andresjpg', uri: images[0], isFollowing: true },
-    { id: '2', username: 'Yohanna33', uri: images[1], isFollowing: true },
-    { id: '3', username: 'Davidbqto', uri: images[2], isFollowing: false }
-  ])
-
-  const toggleFollow = (id: string) => {
-    setFollowingData((prevData) =>
-      prevData.map((user) =>
-        user.id === id ? { ...user, isFollowing: !user.isFollowing } : user
-      )
-    )
+  const toggleFollow = (username: string) => {
+    api.unfollowUser(username)
   }
 
-  const renderFollowing = ({ item }: { item: Following }) => (
-    <Pressable onPress={() => router.push('/profile/otherUser/OtherProfile')}>
+  const handleNavigateToProfile = (username: string) => {
+    router.push(`/(tabs)/${username}`)
+  }
+
+  const renderFollowing = ({ item }: any) => (
+    <Pressable onPress={() => handleNavigateToProfile(item.username)}>
       <View className="flex-1 justify-start content-start" style={styles.followingItem}>
         <Avatar source={item.uri} size={40} />
         <View style={styles.userInfo}>
@@ -87,7 +81,7 @@ const UserFollowing = () => {
     <SafeAreaView>
       <Screen>
         <FlatList
-          data={followingData}
+          data={followers?.results}
           keyExtractor={(item) => item.id}
           renderItem={renderFollowing}
           style={styles.followingList}
