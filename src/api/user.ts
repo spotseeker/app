@@ -1,9 +1,9 @@
 import {
   UpdateUser,
   UserResponse,
-  Notification,
   RegisterUserType,
-  OtpResponse
+  OtpResponse,
+  NotificacionResponse
 } from '../types/user'
 import { Client } from './client'
 import { objectToSnake } from 'ts-case-convert'
@@ -40,35 +40,39 @@ export class UserService {
 
   async update(user: UpdateUser): Promise<UserResponse> {
     const response = await this.client.patch({
-      url: `/user/${user.userName}/`,
+      url: `/user/${user.username}/`,
       needAuthorization: true,
       data: objectToSnake(user)
     })
     return response as unknown as UserResponse
   }
 
-  async updatePassword(password: string, newPassword: string): Promise<void> {
+  async updatePassword(
+    password: string,
+    newPassword: string,
+    username: string
+  ): Promise<void> {
     await this.client.patch({
-      url: '/user/password/',
+      url: `/user/${username}/password/`,
       needAuthorization: true,
       data: objectToSnake({ password, newPassword })
     })
   }
 
-  async resetPassword(password: string): Promise<void> {
+  async resetPassword(newPassword: string, username: string): Promise<void> {
     await this.client.post({
-      url: '/user/password/reset/',
+      url: `/user/${username}/password/`,
       needAuthorization: true,
-      data: { password }
+      data: objectToSnake({ newPassword })
     })
   }
 
-  async getNotifications() {
+  async getNotifications(username: string): Promise<NotificacionResponse> {
     const response = await this.client.get({
-      url: '/user/notification/',
+      url: `/user/${username}/notification/`,
       needAuthorization: true
     })
-    return response as unknown as Notification[]
+    return response as unknown as NotificacionResponse
   }
 
   async sendOtp(otp: string): Promise<OtpResponse> {

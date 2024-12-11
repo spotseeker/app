@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { View, ScrollView, TouchableOpacity } from 'react-native'
-import { useForm } from 'react-hook-form'
+import { FieldValues, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import Screen from '@/src/components/Screen'
 import { UpdatePasswordSchema } from '@/src/schemas/userSchema'
@@ -13,6 +13,8 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import ModalAction from '@/src/components/ModalAction'
 import { router, useNavigation } from 'expo-router'
 import Icons from '@/src/components/Icons'
+import { useUpdatePassword } from '@/src/hooks/useUserData'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export default function UpdatePassword() {
   const { ArrowBack } = Icons
@@ -22,7 +24,7 @@ export default function UpdatePassword() {
       headerShown: true,
       gestureEnabled: false,
       title: '',
-      headerTitle: 'Cambio de  Contraseña',
+      headerTitle: 'Cambio de Contraseña',
       headerTintColor: '#EEAF61',
       headerTitleStyle: {
         fontWeight: 'bold'
@@ -34,6 +36,7 @@ export default function UpdatePassword() {
       )
     })
   }, [navigation])
+
   const { control, handleSubmit, reset } = useForm({
     resolver: zodResolver(UpdatePasswordSchema),
     mode: 'onChange'
@@ -42,22 +45,65 @@ export default function UpdatePassword() {
   const [isConfirmationVisible, setConfirmationVisible] = useState(false)
   const [isSuccessVisible, setSuccessVisible] = useState(false)
   const [isErrorVisible, setErrorVisible] = useState(false)
+  const [password, setPassword] = useState('')
+  const [newPassword, setNewPassword] = useState('')
+  const [userName, setUserName] = useState<string | undefined>()
+
+  useEffect(() => {
+    const response = async () => {
+      const data = await AsyncStorage.getItem('usernameStorage')
+      if (data!) {
+        setUserName(data)
+      }
+    }
+
+    response()
+  }, [userName])
+
+  const { UpdatePassword, isError, isPending } = useUpdatePassword(
+    password,
+    newPassword,
+    userName as string
+  )
 
   const handleUpdatePassword = () => {
+    setConfirmationVisible(false)
+    const response = async () => {
+      try {
+        await UpdatePassword()
+        console.log('Contraseña actualizada exitosamente')
+      } catch (error) {
+        console.error('Error al actualizar la contraseña:', error)
+      }
+    }
+
+    if (password && newPassword) {
+      response()
+    }
+    if (!isPending) {
+      if (isError == true) {
+        setSuccessVisible(false)
+        setErrorVisible(true)
+      } else {
+        setSuccessVisible(true)
+        setErrorVisible(false)
+      }
+    }
     reset()
-    setSuccessVisible(true)
   }
 
   const handleError = () => {
     setErrorVisible(true)
   }
 
-  const onSubmit = () => {
+  const onSubmit = (data: FieldValues) => {
+    setPassword(data.currentPassword)
+    setNewPassword(data.newPassword)
     setConfirmationVisible(true)
   }
 
   return (
-    <SafeAreaView className=" w-full bg-white">
+    <SafeAreaView className="w-full bg-white">
       <ScrollView className="mt-[-10%]">
         <Screen>
           <View className="flex justify-center items-center mt-[5%]">
@@ -69,7 +115,8 @@ export default function UpdatePassword() {
                 text="Ingresa Tu Clave Actual"
                 variant="password"
                 control={control}
-                name="actualPassword"
+                name="currentPassword" // Cambié el nombre a 'currentPassword'
+                placeholder="Clave actual"
               />
 
               <Input
@@ -77,12 +124,14 @@ export default function UpdatePassword() {
                 variant="password"
                 control={control}
                 name="newPassword"
+                placeholder="Nueva clave"
               />
               <Input
                 text="Confirma Tu Nueva Clave"
                 variant="password"
                 control={control}
                 name="confirmNewPassword"
+                placeholder="Confirme la nueva clave"
               />
             </View>
           </View>
@@ -103,18 +152,18 @@ export default function UpdatePassword() {
       <ModalAction
         visible={isConfirmationVisible}
         onClose={() => setConfirmationVisible(false)}
-        onConfirm={handleSubmit(() => {
+        onConfirm={handleSubmit((data) => {
+          onSubmit(data)
           handleUpdatePassword()
-          setConfirmationVisible(false)
         }, handleError)}
         action="confirmation"
-        message="La proxima vez que ingreses usaras esta clave ¿Estás seguro de realizar este cambio?"
+        message="La próxima vez que ingreses usarás esta clave. ¿Estás seguro de realizar este cambio?"
       />
 
       {/* Modal de éxito */}
       <ModalAction
         action="success"
-        message="Contraseña Actualizada con exito"
+        message="Contraseña Actualizada con éxito"
         visible={isSuccessVisible}
         onClose={() => {
           setSuccessVisible(false)

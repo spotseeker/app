@@ -24,7 +24,7 @@ import { PostResponse } from '@/src/types/post'
 const Profile = () => {
   const userData = {
     id: 'Abc234',
-    username: 'Davidsitoucla',
+    username: 'andres1',
     fullName: 'Ricardo Jimenez',
     description: 'Estudiante de Ing. Informática | UCLA',
     followers: 3,
@@ -66,13 +66,19 @@ const Profile = () => {
 
   useEffect(() => {
     if (currentTypePost === 'all') {
-      setPosts(userPosts.posts)
+      if (userPosts) {
+        setPosts(userPosts.posts)
+      }
     } else if (currentTypePost === 'favorites') {
-      setPosts(bookmarkedPosts.posts)
+      if (bookmarkedPosts) {
+        setPosts(bookmarkedPosts.posts)
+      }
     } else if (currentTypePost === 'archived') {
-      setPosts(archivedPosts.posts)
+      if (archivedPosts) {
+        setPosts(archivedPosts.posts)
+      }
     }
-  }, [currentTypePost])
+  }, [currentTypePost, userPosts, bookmarkedPosts, archivedPosts])
 
   const handlePostButton = (type: string) => {
     setCurrentTypePost(type)
@@ -212,7 +218,7 @@ const styles = StyleSheet.create({
     width: '100%',
     shadowColor: 'black',
     shadowRadius: 4,
-    height: 70
+    height: 80
   },
   iconStyles: {
     marginLeft: -13,
