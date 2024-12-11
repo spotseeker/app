@@ -70,10 +70,11 @@ export class UserService {
     })
   }
 
-  async getNotifications(username: string): Promise<NotificacionResponse> {
+  async getNotifications(page: number, username: string): Promise<NotificacionResponse> {
     const response = await this.client.get({
       url: `/user/${username}/notification/`,
-      needAuthorization: true
+      needAuthorization: true,
+      params: objectToSnake({ page })
     })
     return response as unknown as NotificacionResponse
   }

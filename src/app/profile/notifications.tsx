@@ -9,9 +9,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { NotificacionResponse, Result } from '@/src/types/user'
 
 const NotificationsScreen = () => {
-  const { ArrowBack /* TrashIcon  */ } = Icons
+  const { ArrowBack } = Icons
   const navigation = useNavigation()
   const [userName, setUserName] = useState<string | undefined>()
+  const [showMessage, setShowMessage] = useState("")
   const [notifications, setNotifications] = useState<NotificacionResponse>()
 
   useEffect(() => {
@@ -26,10 +27,14 @@ const NotificationsScreen = () => {
   }, [userName])
 
   console.log(userName)
-  const { notificationsList } = useNotificationsList(userName as string)
+  const { notificationsList } = useNotificationsList(1, userName as string)
 
   useEffect(() => {
+    if (notificationsList?.results.length === 0) {
+      setShowMessage("No tienes notificaciones")
+    }
     if (notificationsList && userName) {
+      console.log(notificationsList)
       setNotifications(notificationsList)
     }
   }, [notificationsList, userName])
@@ -66,6 +71,7 @@ const NotificationsScreen = () => {
 
   return (
     <SafeAreaView edges={['bottom']} className="flex-1 bg-white">
+      <Text>{showMessage}</Text>
       <FlatList
         data={notifications?.results}
         keyExtractor={(item, index) => index.toString()}
