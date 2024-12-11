@@ -11,10 +11,16 @@ import { Href, Link, router } from 'expo-router'
 import Icons from './Icons'
 import ModalAction from './ModalAction'
 import PagerView from 'react-native-pager-view'
-import { Post } from '../types/post'
-import { useBookmarkPost, useLikePost } from '../hooks/usePost'
+import { Post, PostPatch } from '../types/post'
+import {
+  useBookmarkPost,
+  useDeletePost,
+  useLikePost,
+  useUpdatePost
+} from '../hooks/usePost'
 
 export default function PostCard({
+  isArchived,
   id,
   body,
   createdAt,
@@ -31,12 +37,27 @@ export default function PostCard({
   const [isOptionsModalVisible, setOptionsModalVisible] = useState(false)
   const [isConfirmationModalVisible, setConfirmationModalVisible] = useState(false)
   const [modalAction, setModalAction] = useState<'archive' | 'delete' | null>(null)
+  const [postPatchData, setPostPatchData] = useState<PostPatch>()
   const { RenderStar } = Rating
   const { TrashIcon, EditIcon, ArchiveIcon2 } = Icons
   const { bookMark } = useBookmarkPost(id)
   const { like } = useLikePost(id)
-
+  const { useDelete } = useDeletePost(id)
+  const { updatePost, isError, isPending } = useUpdatePost(id, postPatchData as PostPatch)
   const createdAtDate = new Date(createdAt)
+
+  const handleDeletePost = async () => {
+    const response = async () => {
+      try {
+        await useDelete()
+      } catch (err) {
+        console.log('no se pudo eliminar el post', err)
+      }
+    }
+    if (id) {
+      response()
+    }
+  }
 
   const handleLike = async () => {
     await like()
@@ -57,6 +78,14 @@ export default function PostCard({
   }
 
   const openConfirmationModal = (action: 'archive' | 'delete') => {
+    setPostPatchData({
+      ...postPatchData,
+      body: body,
+      score: score,
+      isArchived: isArchived ? false : true, // Actualiza si es archivado
+      location_id: locationId || '', // Ubicación, si está disponible
+      images: images || [] // Si hay imágenes asociadas
+    })
     setModalAction(action)
     setOptionsModalVisible(false)
     setConfirmationModalVisible(true)
@@ -67,12 +96,31 @@ export default function PostCard({
   }
 
   const handleArchive = () => {
-    console.log('Post archivado')
-    setConfirmationModalVisible(false)
+    const response = async () => {
+      try {
+        await updatePost()
+      } catch (err) {
+        console.log('fallo al editar post', err)
+      }
+    }
+    if (postPatchData) {
+      response()
+    }
+    if (isPending) {
+      if (!isError) {
+        setConfirmationModalVisible(false)
+      }
+    }
   }
 
-  const handleDelete = () => {
-    console.log('Post eliminado')
+  const handleDelete = async () => {
+    try {
+      await handleDeletePost()
+      console.log('Post eliminado')
+    } catch (err) {
+      console.log(err, 'error al eliminar post postcard')
+    }
+
     setConfirmationModalVisible(false)
   }
 
@@ -175,7 +223,7 @@ export default function PostCard({
             className="text-lightc font-pbold"
             onPress={() => {
               setOptionsModalVisible(false)
-              router.push('/post/EditPost')
+              router.push(`/post/edit/${id}}` as Href)
             }}
             style={styles.modalOption}
           >

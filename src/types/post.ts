@@ -53,3 +53,11 @@ export type CommentsResponse = {
   previous: string | null
   results: CommentsBody[]
 }
+
+export interface PostPatch {
+  body: string
+  isArchived: boolean
+  score: number
+  images: Image[]
+  location_id: string
+}
