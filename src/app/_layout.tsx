@@ -53,9 +53,32 @@ export default function RootLayout() {
       if (pathname == '/profile/edit' || pathname === '/profile/password') {
         return true
       }
-      const postPattern = /^\/post\/[a-zA-Z0-9_-]+$/
+      const postPattern = /^\/post\/[a-zA-Z0-9_-]+\/comments$/
       if (postPattern.test(pathname)) {
-        router.replace('/home')
+        router.back()
+        return true
+      }
+      const postSolo = /^\/post\/[a-zA-Z0-9_-]+\/solo$/
+
+      if (postSolo.test(pathname)) {
+        router.back()
+        return true
+      }
+
+      // eslint-disable-next-line no-useless-escape
+      const searchRoute = /^\/post\/[a-f0-9\-]{36}\}\/edit$/
+      if (searchRoute.test(pathname)) {
+        router.back()
+        return true
+      }
+
+      if (pathname == '/search') {
+        router.back()
+        return true
+      }
+
+      if (pathname.endsWith('wers') || pathname.endsWith('ing')) {
+        router.back()
         return true
       }
 

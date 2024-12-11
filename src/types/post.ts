@@ -33,7 +33,7 @@ export type Post = {
 export type createPost = {
   images: Image[]
   body: string
-  location_id: string
+  location_code: string
   score: number
   is_archived: boolean
 }
@@ -70,4 +70,11 @@ export interface PostPatch {
   score: number
   images: Image[]
   location_id: string
+}
+
+export type LocResponse = LocationData[]
+
+export interface LocationData {
+  name: string
+  placeId: string
 }

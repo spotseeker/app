@@ -16,7 +16,7 @@ const postsList = async (): Promise<PostResponse> => {
 
 export const usecreatePostApi = (postData: createPost) => {
   const queryClient = useQueryClient()
-  const { mutate, error, data, isSuccess, isPending } = useMutation<Post>({
+  const { mutate, error, data, isSuccess, isPending, isError } = useMutation<Post>({
     mutationFn: () => api.post.create(postData),
     onSuccess: async (data: Post) => {
       try {
@@ -27,7 +27,7 @@ export const usecreatePostApi = (postData: createPost) => {
       }
     }
   })
-  return { createPost: mutate, error, data, isSuccess, isPending }
+  return { createPost: mutate, error, data, isSuccess, isPending, isError }
 }
 
 export const usePostsList = () => {

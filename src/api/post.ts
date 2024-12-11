@@ -1,4 +1,4 @@
-import { createPost, Post, PostPatch, PostResponse } from '../types/post'
+import { createPost, LocResponse, Post, PostPatch, PostResponse } from '../types/post'
 import { Client } from './client'
 import { objectToSnake } from 'ts-case-convert'
 
@@ -77,5 +77,14 @@ export class PostService {
       url: `/post/${id}/bookmark/`,
       needAuthorization: true
     })
+  }
+
+  async getLoc(q: string): Promise<LocResponse> {
+    const response = await this.client.get({
+      url: '/location/',
+      needAuthorization: true,
+      params: objectToSnake({ q })
+    })
+    return response as unknown as LocResponse
   }
 }
