@@ -1,4 +1,4 @@
-import { createPost, Post, PostResponse, PostUpdate } from '../types/post'
+import { createPost, Post, PostPatch, PostResponse } from '../types/post'
 import { Client } from './client'
 import { objectToSnake } from 'ts-case-convert'
 
@@ -41,21 +41,21 @@ export class PostService {
     return response as unknown as Post
   }
 
-  async getPost(id: string): Promise<PostResponse> {
+  async getPost(id: string | string[]): Promise<Post> {
     const response = await this.client.get({
       url: `/post/${id}/`,
       needAuthorization: true
     })
-    return response as unknown as PostResponse
+    return response as unknown as Post
   }
 
-  async updatePost(id: string, post: PostUpdate): Promise<PostResponse> {
+  async updatePost(id: string | string[], post: PostPatch): Promise<Post> {
     const response = await this.client.patch({
       url: `/post/${id}/`,
       needAuthorization: true,
       data: objectToSnake(post)
     })
-    return response as unknown as PostResponse
+    return response as unknown as Post
   }
 
   async deletePost(id: string): Promise<void> {

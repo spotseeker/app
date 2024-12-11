@@ -238,7 +238,7 @@ const Profile = ({ username }: { username: string }) => {
         data={posts?.results}
         renderItem={({ item }) => (
           <PostCard
-            locationId={item.locationId}
+            location={item.location}
             images={item.images}
             user={item.user}
             createdAt={item.createdAt}
@@ -246,6 +246,8 @@ const Profile = ({ username }: { username: string }) => {
             score={item.score}
             id={item.id}
             isArchived={item.isArchived}
+            isLiked={item.isLiked}
+            isBookmarked={item.isBookmarked}
           />
         )}
         keyExtractor={(item) => item.id}

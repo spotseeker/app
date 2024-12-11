@@ -4,10 +4,10 @@ import {
   CommentsResponse,
   createPost,
   Post,
+  PostPatch,
   PostResponse
 } from '../types/post'
 import { SpotSeekerAPI } from '../api'
-
 const api = new SpotSeekerAPI()
 
 const postsList = async (): Promise<PostResponse> => {
@@ -50,7 +50,7 @@ export const usePostsUser = (page: number, username: string) => {
 
 export const usePostsArchived = (page: number) => {
   const { data, isLoading, error } = useQuery({
-    queryKey: ['archivedPosts', page, 'archived'],
+    queryKey: ['archived'],
     queryFn: () => api.post.list(page, undefined, true)
   })
 
@@ -59,7 +59,7 @@ export const usePostsArchived = (page: number) => {
 
 export const usePostsBookmarked = (page: number) => {
   const { data, isLoading, error } = useQuery({
-    queryKey: ['bookmarkedPosts', page, 'bookmarked'],
+    queryKey: ['bookmarked'],
     queryFn: () => api.post.list(page, undefined, undefined, true)
   })
 
@@ -200,4 +200,57 @@ export const useDeleteComment = (postId: string | string[], id: string) => {
   })
 
   return { deleteCommentApi: mutate, error }
+}
+
+export const useDeletePost = (postID: string) => {
+  const queryClient = useQueryClient()
+  const { mutate } = useMutation({
+    mutationFn: () => api.post.deletePost(postID),
+    onSuccess: async (data: void) => {
+      try {
+        console.log('Eliminacion de post exitosa', data)
+        queryClient.invalidateQueries({ queryKey: ['posts'] })
+      } catch (err) {
+        console.error('Error al elimnar  post', err)
+      }
+    }
+  })
+  return { useDelete: mutate }
+}
+
+export const useGetPostById = (postId: string | string[]) => {
+  const { data, isLoading, error } = useQuery<Post>({
+    queryKey: ['postData', postId], // Incluimos el `postId` en la clave de la consulta
+    queryFn: () => api.post.getPost(postId) // Llamamos a la API para obtener el post
+  })
+
+  // Retornamos los datos, el estado de carga y los errores
+  return { postData: data, isLoading, error }
+}
+
+export const useUpdatePost = (
+  postID: string | string[],
+  dataToUpdate: PostPatch
+): { updatePost: () => void; isPending: boolean; isError: boolean } => {
+  const queryClient = useQueryClient()
+
+  const { mutate, isPending, isError } = useMutation({
+    mutationFn: () => api.post.updatePost(postID, dataToUpdate),
+    onSuccess: async (data: Post) => {
+      try {
+        console.log('Actualización de post exitosa', data)
+        // Invalida las consultas relacionadas con los posts, para forzar la actualización de los datos en caché
+        queryClient.invalidateQueries({ queryKey: ['posts'] })
+        queryClient.invalidateQueries({ queryKey: ['postData'] })
+      } catch (err) {
+        console.error('Error al actualizar el post', err)
+      }
+    },
+    onError: (error) => {
+      console.error('Error en la mutación de post:', error)
+    }
+  })
+
+  // Retornamos la función mutate renombrada como `updatePost` junto con los estados de la mutación
+  return { updatePost: mutate, isPending, isError }
 }

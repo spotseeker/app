@@ -5,6 +5,14 @@ export type Image = {
   order: number
 }
 
+export type Location = {
+  id: string
+  name: string
+  latitude: number
+  longitude: number
+  code: string
+}
+
 export type Post = {
   id: string
   likes?: number | null
@@ -14,9 +22,11 @@ export type Post = {
   updatedAt?: string
   deletedAt?: string | null
   body: string
-  locationId: string
+  location: Location
   score: number
   isArchived: boolean
+  isLiked: boolean
+  isBookmarked: boolean
   user: User
 }
 
@@ -52,4 +62,12 @@ export type CommentsResponse = {
   next: string | null
   previous: string | null
   results: CommentsBody[]
+}
+
+export interface PostPatch {
+  body: string
+  isArchived: boolean
+  score: number
+  images: Image[]
+  location_id: string
 }

@@ -53,11 +53,9 @@ export default function RootLayout() {
       if (pathname == '/profile/edit' || pathname === '/profile/password') {
         return true
       }
-
       const postPattern = /^\/post\/[a-zA-Z0-9_-]+$/
       if (postPattern.test(pathname)) {
         router.replace('/home')
-
         return true
       }
 

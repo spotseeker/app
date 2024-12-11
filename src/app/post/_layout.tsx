@@ -18,7 +18,7 @@ const PostingLayout = () => {
           }}
         />
         <Stack.Screen
-          name="EditPost"
+          name="edit"
           options={{
             headerShown: false
           }}
