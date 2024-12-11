@@ -9,14 +9,15 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { NotificacionResponse, Result } from '@/src/types/user'
 
 const NotificationsScreen = () => {
-  const { ArrowBack /* TrashIcon  */ } = Icons
+  const { ArrowBack } = Icons
   const navigation = useNavigation()
   const [userName, setUserName] = useState<string | undefined>()
+  const [showMessage, setShowMessage] = useState('')
   const [notifications, setNotifications] = useState<NotificacionResponse>()
 
   useEffect(() => {
     const response = async () => {
-      const data = await AsyncStorage.getItem('usernameStorage')
+      const data = await AsyncStorage.getItem('username')
       if (data!) {
         setUserName(data)
       }
@@ -26,10 +27,14 @@ const NotificationsScreen = () => {
   }, [userName])
 
   console.log(userName)
-  const { notificationsList } = useNotificationsList(userName as string)
+  const { notificationsList } = useNotificationsList(1, userName as string)
 
   useEffect(() => {
+    if (notificationsList?.results.length === 0) {
+      setShowMessage('No tienes notificaciones')
+    }
     if (notificationsList && userName) {
+      console.log(notificationsList)
       setNotifications(notificationsList)
     }
   }, [notificationsList, userName])
@@ -52,13 +57,6 @@ const NotificationsScreen = () => {
     })
   }, [navigation])
 
-  /* 
-  const removeNotification = (id: string) => {
-    setNotifications((prevNotifications) =>
-      prevNotifications.filter((item) => item.id !== id)
-    )
-  }
- */
   const renderNotification = ({ item }: { item: Result }) => (
     <View style={styles.notificationItem}>
       <Avatar source={{ uri: item.userInteraction.avatar }} size={40} />
@@ -68,14 +66,12 @@ const NotificationsScreen = () => {
           {item.content}
         </Text>
       </View>
-      {/* <TouchableOpacity onPress={() => removeNotification(item.id)}>
-        <TrashIcon size={20} color="#999" />
-      </TouchableOpacity> */}
     </View>
   )
 
   return (
     <SafeAreaView edges={['bottom']} className="flex-1 bg-white">
+      <Text>{showMessage}</Text>
       <FlatList
         data={notifications?.results}
         keyExtractor={(item, index) => index.toString()}

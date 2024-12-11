@@ -55,7 +55,7 @@ export default function EditProfile() {
 
   useEffect(() => {
     const response = async () => {
-      const data = await AsyncStorage.getItem('usernameStorage')
+      const data = await AsyncStorage.getItem('username')
       if (data!) {
         setUserName(data)
       }

@@ -8,6 +8,7 @@ interface AuthContextType {
   session: string | null
   isAuthenticated: boolean
   tokens: { access: string; refresh: string } | null
+  myUsername: string
   error: string | null
 }
 
@@ -23,8 +24,9 @@ export const useAuthContext = () => {
 }
 
 export const SessionProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const { isAuthenticated, tokens, login, logout, error } = useAuth()
+  const { isAuthenticated, tokens, username, login, logout, error } = useAuth()
   const [session, setSession] = useStorageState('session')
+  const myUsername = username
 
   useEffect(() => {
     if (tokens?.access) {
@@ -38,6 +40,7 @@ export const SessionProvider: React.FC<{ children: ReactNode }> = ({ children })
     session,
     isAuthenticated,
     tokens,
+    myUsername,
     error
   }
 

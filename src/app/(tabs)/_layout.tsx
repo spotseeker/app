@@ -2,14 +2,17 @@ import React, { useEffect } from 'react'
 import { View, StyleSheet, BackHandler } from 'react-native'
 import { router, Tabs } from 'expo-router'
 import Icons from '@/src/components/Icons'
-import { Avatar } from '@kolking/react-native-avatar'
 import { Colors } from '@/src/constants/Colors'
-import ProfileImg from '@/src/assets/images_app/image_profile.png'
 import AntDesign from '@expo/vector-icons/AntDesign'
 import { Pressable } from 'react-native'
+import { Avatar } from '@kolking/react-native-avatar'
+import { useAuthContext } from '@/src/context/context'
+import { useUserProfile } from '@/src/hooks/useProfile'
 
 export default function TabLayout() {
   const { SearchIcon, HomeIcon, PlusIcon, MapMarkerIcon, LogoNomIcon } = Icons
+  const { myUsername } = useAuthContext()
+  const { profile } = useUserProfile(myUsername)
 
   useEffect(() => {
     const onBackPress = () => {
@@ -52,7 +55,7 @@ export default function TabLayout() {
             tabBarIcon: ({ color }) => <HomeIcon color={color} size={30} />,
             headerLeft: () => <LogoNomIcon width={200} height={30} mr={10} />,
             headerRight: () => (
-              <Pressable onPress={() => router.push('/profile/Notifications')}>
+              <Pressable onPress={() => router.push('/profile/notifications')}>
                 <AntDesign
                   name="bells"
                   size={28}
@@ -104,7 +107,12 @@ export default function TabLayout() {
             title: '',
             tabBarShowLabel: false,
             tabBarIcon: ({ color }) => (
-              <Avatar source={ProfileImg} color={color} radius={50} size={30} />
+              <Avatar
+                source={profile?.avatar ? { uri: profile.avatar } : undefined}
+                color={color}
+                radius={50}
+                size={50}
+              />
             )
           }}
         />

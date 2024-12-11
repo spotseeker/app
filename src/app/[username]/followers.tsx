@@ -4,30 +4,26 @@ import {
   Text,
   FlatList,
   StyleSheet,
-  ImageSourcePropType,
   Dimensions,
-  TouchableOpacity,
-  Pressable
+  TouchableOpacity
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Avatar } from '@kolking/react-native-avatar'
 import Screen from '@/src/components/Screen'
-import Img1 from '@/src/assets/images_app/avatar_users/Ellipse 11.png'
-import Img2 from '@/src/assets/images_app/avatar_users/Ellipse 14.png'
-import Img3 from '@/src/assets/images_app/avatar_users/Ellipse 14 (1).png'
-import Icons from '@/src/components/Icons'
-import { router, useNavigation } from 'expo-router'
 
-type Follower = {
-  id: string
-  username: string
-  uri: ImageSourcePropType
-}
+import Icons from '@/src/components/Icons'
+import { router, useNavigation, Link, useLocalSearchParams } from 'expo-router'
+import { Follower } from '@/src/types/user'
+import { userListFollowers } from '@/src/hooks/useProfile'
 
 const UserFollowers = () => {
   const { ArrowBack } = Icons
   const navigation = useNavigation()
+  const { username } = useLocalSearchParams()
+  const normalizedUsername = Array.isArray(username) ? username[0] : username
+  const { followers } = userListFollowers(1, normalizedUsername)
   useEffect(() => {
+    console.log('Data de los seguidores', followers)
     navigation.setOptions({
       headerShown: true,
       gestureEnabled: false,
@@ -38,27 +34,20 @@ const UserFollowers = () => {
         fontWeight: 'bold'
       },
       headerLeft: () => (
-        <TouchableOpacity onPress={() => router.push('/(tabs)/profile')}>
+        <TouchableOpacity onPress={() => router.back()}>
           <ArrowBack size={35} />
         </TouchableOpacity>
       )
     })
   }, [navigation])
-  const images = [Img1, Img2, Img3]
-
-  const followersData: Follower[] = [
-    { id: '1', username: 'Andresjpg', uri: images[0] },
-    { id: '2', username: 'Yohanna33', uri: images[1] },
-    { id: '3', username: 'Davidbqto', uri: images[2] }
-  ]
 
   const renderFollower = ({ item }: { item: Follower }) => (
-    <Pressable onPress={() => router.push('/profile/otherUser/OtherProfile')}>
+    <Link href={`/profile/${item.username}`} asChild>
       <View style={styles.followerItem}>
-        <Avatar source={item.uri} size={40} />
+        <Avatar source={{ uri: item?.avatar }} size={40} />
         <Text className="text-primary font-pbold ml-[10]">{item.username}</Text>
       </View>
-    </Pressable>
+    </Link>
   )
 
   return (
@@ -66,8 +55,8 @@ const UserFollowers = () => {
       <Screen>
         <View className="flex-1 justify-start content-start mt-[-20%]">
           <FlatList
-            data={followersData}
-            keyExtractor={(item) => item.id}
+            data={followers?.results}
+            keyExtractor={(item) => item.username}
             renderItem={renderFollower}
             style={styles.followersList}
           />
