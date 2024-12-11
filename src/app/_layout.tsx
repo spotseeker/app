@@ -40,12 +40,12 @@ export default function RootLayout() {
         return true
       }
 
-      if (pathname === '/profile/Notifications') {
+      if (pathname === '/profile/notifications') {
         router.replace('/home')
         return true
       }
 
-      if (pathname.startsWith('/profile') && pathname !== '/profile/Notifications') {
+      if (pathname.startsWith('/profile') && pathname !== '/profile/notifications') {
         router.replace('/profile')
         return true
       }

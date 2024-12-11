@@ -4,6 +4,7 @@ import { Colors } from '../constants/Colors'
 import { router } from 'expo-router'
 
 interface InfoBoxProps {
+  username: string | undefined
   title: string | undefined
   subtitle: string
   info: string | undefined
@@ -15,6 +16,7 @@ interface InfoBoxProps {
 }
 
 const InfoBox: React.FC<InfoBoxProps> = ({
+  username,
   title,
   subtitle,
   info,
@@ -80,7 +82,7 @@ const InfoBox: React.FC<InfoBoxProps> = ({
           {posts}
           {'\n'}Publicaciones
         </Text>
-        <TouchableOpacity onPress={() => router.push('/profile/followers')}>
+        <TouchableOpacity onPress={() => router.push(`/${username}/followers`)}>
           <Text
             className="text-lightc font-pbold"
             style={{
@@ -95,7 +97,7 @@ const InfoBox: React.FC<InfoBoxProps> = ({
             {'\n'}Seguidores
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => router.push('/profile/following')}>
+        <TouchableOpacity onPress={() => router.push(`/${username}/following`)}>
           <Text
             className="text-lightc font-pbold"
             style={{

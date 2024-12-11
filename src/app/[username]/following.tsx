@@ -1,12 +1,9 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import {
   View,
   Text,
   FlatList,
   StyleSheet,
-  ImageSourcePropType,
   Dimensions,
   TouchableOpacity,
   Pressable
@@ -14,21 +11,16 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Avatar } from '@kolking/react-native-avatar'
 import Screen from '@/src/components/Screen'
-import Button from '@/src/components/Button'
 import Icons from '@/src/components/Icons'
 import { useFollowingList } from '@/src/hooks/useProfile'
-import { router, useNavigation } from 'expo-router'
-import { UserService } from '@/src/api/user'
-import { User } from '@/src/types/user'
-import { userListFollowers } from '@/src/hooks/useProfile'
-import { useAuthContext } from '@/src/context/context'
+import { router, useLocalSearchParams, useNavigation } from 'expo-router'
 
-const UserFollowing = ({ username }: User) => {
+const UserFollowing = () => {
   const { ArrowBack } = Icons
-  const { myUsername } = useAuthContext()
+  const { username } = useLocalSearchParams()
+  const normalizedUsername = Array.isArray(username) ? username[0] : username
   const navigation = useNavigation()
-  const { followers } = useFollowingList(1, myUsername)
-  const api = new UserService()
+  const { followers } = useFollowingList(1, normalizedUsername)
 
   useEffect(() => {
     navigation.setOptions({
@@ -41,38 +33,25 @@ const UserFollowing = ({ username }: User) => {
         fontWeight: 'bold'
       },
       headerLeft: () => (
-        <TouchableOpacity onPress={() => router.push(`/(tabs)/${myUsername}`)}>
+        <TouchableOpacity onPress={() => router.back()}>
           <ArrowBack size={35} />
         </TouchableOpacity>
       )
     })
   }, [navigation])
 
-  const toggleFollow = (username: string) => {
-    api.unfollowUser(username)
-  }
-
   const handleNavigateToProfile = (username: string) => {
-    router.push(`/(tabs)/${username}`)
+    router.push(`/profile/${username}`)
   }
 
+  /* eslint-disable @typescript-eslint/no-explicit-any */
   const renderFollowing = ({ item }: any) => (
     <Pressable onPress={() => handleNavigateToProfile(item.username)}>
       <View className="flex-1 justify-start content-start" style={styles.followingItem}>
-        <Avatar source={item.uri} size={40} />
+        <Avatar source={{ uri: item?.avatar }} size={40} />
         <View style={styles.userInfo}>
           <Text className="text-primary font-pbold">{item.username}</Text>
         </View>
-        <Button
-          onPress={() => toggleFollow(item.id)}
-          variant={item.isFollowing ? 'gray' : 'primary'}
-          width={118}
-          height={44}
-        >
-          <Text className="text-white font-pbold">
-            {item.isFollowing ? 'Dejar de seguir' : 'Seguir'}
-          </Text>
-        </Button>
       </View>
     </Pressable>
   )

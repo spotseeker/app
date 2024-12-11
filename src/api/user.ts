@@ -101,8 +101,8 @@ export class UserService {
     return response as unknown as FollowingResponse
   }
 
-  async unfollowUser(username: string): Promise<void> {
-    await this.client.delete({
+  async follow(username: string): Promise<void> {
+    await this.client.post({
       url: `user/${username}/follow/`,
       needAuthorization: true
     })

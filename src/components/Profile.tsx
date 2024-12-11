@@ -15,7 +15,7 @@ import Icons from '@/src/components/Icons'
 import { Colors } from '@/src/constants/Colors'
 import BackgroundImage from '@/src/assets/images_app/Rectangle 9 (1).png'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { router, useNavigation, useLocalSearchParams } from 'expo-router'
+import { router, useNavigation } from 'expo-router'
 import { usePostsUser, usePostsArchived, usePostsBookmarked } from '@/src/hooks/usePost'
 import PostCard from '@/src/components/PostCard'
 import { PostResponse } from '@/src/types/post'
@@ -24,15 +24,11 @@ import { UserResponse } from '@/src/types/user'
 import { useAuthContext } from '@/src/context/context'
 import Button from '@/src/components/Button'
 
-const Profile = () => {
-  const { username } = useLocalSearchParams()
-  const normalizedUsername = Array.isArray(username) ? username[0] : username
-  const [isFollowing, setIsFollowing] = useState(false)
-
+const Profile = ({ username }: { username: string }) => {
   const { myUsername } = useAuthContext()
-
-  const isMyProfile = normalizedUsername === myUsername
-  const userInfo = isMyProfile ? myUsername : normalizedUsername
+  const isMyProfile = username === myUsername
+  const userInfo = isMyProfile ? myUsername : username
+  const [isFollowing, setIsFollowing] = useState(false)
   const [currentTypePost, setCurrentTypePost] = useState<string>('all')
   const [posts, setPosts] = useState<PostResponse>()
   const userPosts = usePostsUser(1, userInfo)
@@ -48,18 +44,13 @@ const Profile = () => {
       navigation.setOptions({
         headerShown: true,
         title: '',
-        headerTitle: normalizedUsername,
+        headerTitle: username,
         headerTintColor: '#FB9062',
         headerTitleStyle: {
           fontWeight: 'bold'
         },
-        headerRightContainerStyle: {
-          marginRight: '9%',
-          paddingRight: '10%'
-        },
-        headerRight: '',
         headerLeft: () => (
-          <TouchableOpacity onPress={() => router.replace('/(tabs)/home')}>
+          <TouchableOpacity onPress={() => router.back()}>
             <ArrowBack size={35} />
           </TouchableOpacity>
         )
@@ -81,11 +72,6 @@ const Profile = () => {
           <Pressable onPress={() => router.replace('/profile/settings')}>
             <FourLinesIcon size={35} />
           </Pressable>
-        ),
-        headerLeft: () => (
-          <TouchableOpacity onPress={() => router.replace('/(tabs)/home')}>
-            <ArrowBack size={35} />
-          </TouchableOpacity>
         )
       })
     }
@@ -144,6 +130,7 @@ const Profile = () => {
           {/* InfoBox */}
           <View style={{ marginTop: '5%', marginLeft: '5%' }}>
             <InfoBox
+              username={profile?.username}
               title={profile?.username}
               subtitle={profile?.firstName + ' ' + profile?.lastName}
               info={profile?.description}
@@ -259,7 +246,6 @@ const Profile = () => {
             score={item.score}
             id={item.id}
             isArchived={item.isArchived}
-            avatarUri={profile?.avatar}
           />
         )}
         keyExtractor={(item) => item.id}

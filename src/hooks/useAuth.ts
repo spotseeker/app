@@ -68,7 +68,6 @@ export const useAuth = (): UseAuthReturn => {
     await AsyncStorage.removeItem('username')
     setTokens(null)
     setUsername(null)
-    setTokens(null)
     setIsAuthenticated(false)
   }
 

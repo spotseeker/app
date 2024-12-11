@@ -27,9 +27,9 @@ export type UserResponse = {
   isValidated: boolean
   followers: number
   following: number
+  avatar: string
 } & User &
-  Timestamp &
-  avatar
+  Timestamp
 
 export type Notification = {
   user: string
@@ -72,6 +72,7 @@ export type Follower = {
   password: string
   description: string
   avatar: string
+  isFollowing: boolean
 }
 
 export type FollowersResponse = {
