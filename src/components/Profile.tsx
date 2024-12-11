@@ -238,7 +238,7 @@ const Profile = ({ username }: { username: string }) => {
         data={posts?.results}
         renderItem={({ item }) => (
           <PostCard
-            locationId={item.locationId}
+            location={item.location}
             images={item.images}
             user={item.user}
             createdAt={item.createdAt}

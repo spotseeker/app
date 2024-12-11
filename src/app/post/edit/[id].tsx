@@ -101,7 +101,7 @@ const EditPostScreen = () => {
       body: data.comment,
       score: rate,
       isArchived: archived[0] ?? false, // Actualiza si es archivado
-      location_id: formerPostData?.locationId || '', // Ubicación, si está disponible
+      location_id: formerPostData?.location.id || '', // Ubicación, si está disponible
       images: formerPostData?.images || [] // Si hay imágenes asociadas
     })
     setConfirmationVisible(true)
@@ -130,7 +130,7 @@ const EditPostScreen = () => {
           <View className="flex-row mr-[100] pr-[20%] pt-[3px]">
             <MapMarkerIcon size={20} />
             <Text className="font-pbold text-helper text-[14px]">
-              {formerPostData?.locationId}
+              {formerPostData?.location.name}
             </Text>
           </View>
         </View>

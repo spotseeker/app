@@ -5,6 +5,14 @@ export type Image = {
   order: number
 }
 
+export type Location = {
+  id: string
+  name: string
+  latitude: number
+  longitude: number
+  code: string
+}
+
 export type Post = {
   id: string
   likes?: number | null
@@ -14,7 +22,7 @@ export type Post = {
   updatedAt?: string
   deletedAt?: string | null
   body: string
-  locationId: string
+  location: Location
   score: number
   isArchived: boolean
   isLiked: boolean

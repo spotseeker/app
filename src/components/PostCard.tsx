@@ -25,7 +25,7 @@ export default function PostCard({
   body,
   createdAt,
   images,
-  locationId,
+  location,
   score,
   likes,
   user,
@@ -85,7 +85,7 @@ export default function PostCard({
       body: body,
       score: score,
       isArchived: isArchived ? false : true, // Actualiza si es archivado
-      location_id: locationId || '', // Ubicación, si está disponible
+      location_id: location.name || '', // Ubicación, si está disponible
       images: images || [] // Si hay imágenes asociadas
     })
     setModalAction(action)
@@ -207,7 +207,7 @@ export default function PostCard({
       <View className="flex-row py-2 mx-2">
         <View className="flex flex-1 flex-row">
           <AntDesign name="enviromento" size={20} />
-          <Text style={styles.locationText}>{locationId}</Text>
+          <Text style={styles.locationText}>{location.name}</Text>
         </View>
 
         <View className="ml-[-55] mr-[10]">
