@@ -42,7 +42,7 @@ export default function ResetPassword() {
     setNewPassword(newPassword)
   }
 
-  const handleUpdatePassword = async () => {
+  const handleUpdatePassword = () => {
     const response = async () => {
       try {
         await resetPasswordMutation()
@@ -53,7 +53,7 @@ export default function ResetPassword() {
     }
 
     if (newPassword) {
-      await response()
+      response()
     }
     if (!error) {
       reset()

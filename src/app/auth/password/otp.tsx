@@ -24,28 +24,25 @@ export default function ValidateOTP() {
   const onSubmit = (otp: string) => {
     setOTP(otp)
   }
-  const { validateOTPMutation, status, error } = useSendPasswordOTP(otp)
-  const handleValidateOTP = async () => {
+  const { validateOTPMutation, error } = useSendPasswordOTP(otp)
+  const handleValidateOTP = () => {
     const response = async () => {
       try {
         await validateOTPMutation()
-        console.log('OTP validado exitosamente')
       } catch (error) {
         console.error('Error al validar el código:', error)
+        setShowError('Código incorrecto')
       }
     }
 
     if (otp) {
-      await response()
+      response()
     }
-    if (status != 'pending') {
-      if (error) {
-        setShowError('Código incorrecto')
-      } else {
-        setShowError('')
-        reset()
-        router.push('/auth/password/reset')
-      }
+
+    if (!error) {
+      setShowError('')
+      reset()
+      router.push('/auth/password/reset')
     }
   }
 
