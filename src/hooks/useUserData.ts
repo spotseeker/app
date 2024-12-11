@@ -88,7 +88,7 @@ export const useUpdatePassword = (
 }
 
 // NOTIFICATIONS HOOK
-export const useNotificationsList = (page:number, username: string) => {
+export const useNotificationsList = (page: number, username: string) => {
   const { data, isLoading, error } = useQuery({
     queryKey: ['notifications'],
     queryFn: () => api.user.getNotifications(page, username)

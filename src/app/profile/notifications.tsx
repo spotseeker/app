@@ -12,7 +12,7 @@ const NotificationsScreen = () => {
   const { ArrowBack } = Icons
   const navigation = useNavigation()
   const [userName, setUserName] = useState<string | undefined>()
-  const [showMessage, setShowMessage] = useState("")
+  const [showMessage, setShowMessage] = useState('')
   const [notifications, setNotifications] = useState<NotificacionResponse>()
 
   useEffect(() => {
@@ -31,7 +31,7 @@ const NotificationsScreen = () => {
 
   useEffect(() => {
     if (notificationsList?.results.length === 0) {
-      setShowMessage("No tienes notificaciones")
+      setShowMessage('No tienes notificaciones')
     }
     if (notificationsList && userName) {
       console.log(notificationsList)
