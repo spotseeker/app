@@ -24,7 +24,7 @@ export default function ResetPassword() {
   const [username, setUsername] = useState<string | undefined>()
   useEffect(() => {
     const response = async () => {
-      const data = await AsyncStorage.getItem('usernameStorage')
+      const data = await AsyncStorage.getItem('username')
       if (data!) {
         setUsername(data)
       }
