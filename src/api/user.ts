@@ -59,11 +59,11 @@ export class UserService {
     })
   }
 
-  async resetPassword(password: string): Promise<void> {
+  async resetPassword(newPassword: string, username: string): Promise<void> {
     await this.client.post({
-      url: '/user/password/reset/',
+      url: `/user/${username}/password/`,
       needAuthorization: true,
-      data: { password }
+      data: objectToSnake({ newPassword })
     })
   }
 
