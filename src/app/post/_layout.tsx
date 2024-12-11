@@ -12,12 +12,6 @@ const PostingLayout = () => {
           }}
         />
         <Stack.Screen
-          name="[id]"
-          options={{
-            headerShown: false
-          }}
-        />
-        <Stack.Screen
           name="edit"
           options={{
             headerShown: false

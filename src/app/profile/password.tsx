@@ -8,15 +8,18 @@ import Input from '@/src/components/Input'
 import Button from '@/src/components/Button'
 import { Avatar } from '@kolking/react-native-avatar'
 import { Colors } from '@/src/constants/Colors'
-import ProfileImg from '@/src/assets/images_app/avatar_users/image_profile.png'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import ModalAction from '@/src/components/ModalAction'
 import { router, useNavigation } from 'expo-router'
 import Icons from '@/src/components/Icons'
 import { useUpdatePassword } from '@/src/hooks/useUserData'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { useAuthContext } from '@/src/context/context'
+import { useUserProfile } from '@/src/hooks/useProfile'
 
 export default function UpdatePassword() {
+  const { myUsername } = useAuthContext()
+  const { profile } = useUserProfile(myUsername)
   const { ArrowBack } = Icons
   const navigation = useNavigation()
   useEffect(() => {
@@ -108,7 +111,12 @@ export default function UpdatePassword() {
         <Screen>
           <View className="flex justify-center items-center mt-[5%]">
             <View className="mt-[-20%]">
-              <Avatar source={ProfileImg} color={Colors.text} radius={100} size={100} />
+              <Avatar
+                source={{ uri: profile?.avatar }}
+                color={Colors.text}
+                radius={100}
+                size={100}
+              />
             </View>
             <View className="mt-[30px] px-[10%]">
               <Input

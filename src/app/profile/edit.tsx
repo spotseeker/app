@@ -101,9 +101,6 @@ export default function EditProfile() {
 
         if (avatarUploaded) {
           updatedAvatar = avatarUploaded.url // Si la subida fue exitosa, obtenemos la URL actualizada
-        } else {
-          console.error('Error al subir la imagen')
-          return // Salimos si la imagen no se subió correctamente
         }
       }
 
@@ -190,6 +187,7 @@ export default function EditProfile() {
       })
       console.log('Imagen subida con éxito', response.url)
       setAvatarUploaded({ publicID: response.publicID, url: response.url })
+      console.log(avatarUploaded)
       return response
     } catch (error) {
       console.error('Error al subir la imagen', error)

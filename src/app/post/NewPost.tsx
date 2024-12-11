@@ -122,7 +122,7 @@ function NewPost() {
     body: hashtags
       ? 'testeando' + (hashtags.map((hashtag) => ' ' + hashtag).join('') || '')
       : 'test2',
-    location_id: location,
+    location_code: location,
     score: score,
     is_archived: false
   }

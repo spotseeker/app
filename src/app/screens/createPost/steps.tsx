@@ -10,9 +10,10 @@ import * as MediaLibrary from 'expo-media-library'
 import * as ImagePicker from 'expo-image-picker'
 import Rating from '@/src/components/Rating'
 import SearchInput from '@/src/components/SearchInput'
-import { locations } from '@/src/fixtures/locations'
 import { HashtagSchema, postSchema } from '@/src/schemas/hashtagSchema'
 import HashtagInput from '@/src/components/HashtagInput'
+import { useLocations } from '@/src/hooks/useLocations'
+import { LocResponse } from '@/src/types/post'
 
 type createPostScreenProps = {
   image: string[]
@@ -273,6 +274,17 @@ const SelectImageScreen = ({ image, setImage }: SelectImageScreenProps) => {
 
 const SelectLocationScreen = ({ setLocation, setStep }: SelectLocationScreenProps) => {
   const [search, setSearch] = useState('')
+  const { results, isLoading } = useLocations(search)
+  const [locations, setLocations] = useState<LocResponse>()
+
+  useEffect(() => {
+    if (search != '' && results) {
+      setLocations(results)
+    } else {
+      setLocations(undefined)
+    }
+  }, [results])
+
   return (
     <View className="w-full h-full bg-white">
       <View className="flex justify-center items-center">
@@ -282,27 +294,37 @@ const SelectLocationScreen = ({ setLocation, setStep }: SelectLocationScreenProp
           placeholder="Buscar ubicación"
         />
       </View>
-      <View className="ml-[40] items-start">
-        <ScrollView>
-          {locations
-            .filter((location) =>
-              location.text.toLowerCase().includes(search.toLowerCase())
-            )
-            .map((location) => (
-              <TouchableOpacity
-                key={location.id}
-                onPress={() => {
-                  setLocation(location.text)
-                  setStep(1)
-                }}
-              >
-                <Text className="text-lightc font-pbold text-[24px] mt-[10] p-[10]">
-                  {location.text}
-                </Text>
-              </TouchableOpacity>
-            ))}
-        </ScrollView>
-      </View>
+
+      {/* Mostrar indicador de carga */}
+      {isLoading ? (
+        <View className="flex items-center justify-center mt-4">
+          <Text className="text-gray-500">Cargando ubicaciones...</Text>
+          {/* También puedes usar un ActivityIndicator si prefieres */}
+        </View>
+      ) : (
+        <View className="ml-[40] items-start">
+          <ScrollView>
+            {locations &&
+              locations
+                .filter((location) =>
+                  location.name.toLowerCase().includes(search.toLowerCase())
+                )
+                .map((location, index) => (
+                  <TouchableOpacity
+                    key={index}
+                    onPress={() => {
+                      setLocation(location.placeId)
+                      setStep(1)
+                    }}
+                  >
+                    <Text className="text-lightc font-pbold text-[18px] mt-[10] p-[10]">
+                      {location.name}
+                    </Text>
+                  </TouchableOpacity>
+                ))}
+          </ScrollView>
+        </View>
+      )}
     </View>
   )
 }
