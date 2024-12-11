@@ -1,7 +1,7 @@
 import React from 'react'
 import { FlatList, Text, ActivityIndicator } from 'react-native'
 import PostCard from './PostCard'
-import { usePostsList } from '../hooks/usePost' // Importa el hook que implementamos
+import { usePostsList } from '../hooks/usePost'
 
 const PostCardList = () => {
   const { posts, isLoading, error } = usePostsList()
@@ -16,9 +16,9 @@ const PostCardList = () => {
 
   return (
     <FlatList
-      data={posts?.results} // Asegúrate de acceder correctamente a los datos en la respuesta
-      keyExtractor={(item) => item.id} // Usamos el 'id' como key
-      renderItem={({ item }) => <PostCard {...item} />} // Pasamos los datos al componente PostCard
+      data={posts?.results}
+      keyExtractor={(item) => item.id}
+      renderItem={({ item }) => <PostCard {...item} />}
     />
   )
 }

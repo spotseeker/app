@@ -246,6 +246,8 @@ const Profile = ({ username }: { username: string }) => {
             score={item.score}
             id={item.id}
             isArchived={item.isArchived}
+            isLiked={item.isLiked}
+            isBookmarked={item.isBookmarked}
           />
         )}
         keyExtractor={(item) => item.id}
