@@ -9,8 +9,13 @@ export type UpdateUser = {
 }
 
 export type User = {
+  id: string
   email: string
   birthDate: string
+  isValidated: boolean
+  createdAt: string
+  updatedAt?: string
+  deletedAt?: string | null
 } & UpdateUser
 
 export type CreateUser = {

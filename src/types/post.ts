@@ -1,3 +1,5 @@
+import { User } from './user'
+
 export type Image = {
   media: string
   order: number
@@ -15,7 +17,15 @@ export type Post = {
   locationId: string
   score: number
   isArchived: boolean
-  user: string
+  user: User
+}
+
+export type createPost = {
+  images: Image[]
+  body: string
+  location_id: string
+  score: number
+  is_archived: boolean
 }
 
 export type PostUpdate = {
@@ -29,4 +39,17 @@ export type PostResponse = {
   next: string | null
   previous: string | null
   results: Post[]
+}
+
+export type CommentsBody = {
+  id: string
+  user: userData
+  comment: string
+}
+
+export type CommentsResponse = {
+  count: number
+  next: string | null
+  previous: string | null
+  results: CommentsBody[]
 }

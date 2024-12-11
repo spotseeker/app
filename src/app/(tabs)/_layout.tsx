@@ -32,8 +32,7 @@ export default function TabLayout() {
           tabBarInactiveTintColor: Colors.tabIconDefault,
           tabBarActiveTintColor: '#EE5D6C',
           tabBarStyle: {
-            paddingBottom: 10,
-            height: 90,
+            height: 55,
             borderColor: '#EE5D6C',
             borderTopWidth: 3.5
           }
@@ -53,7 +52,7 @@ export default function TabLayout() {
               shadowRadius: 4,
               elevation: 5
             },
-            tabBarIcon: ({ color }) => <HomeIcon color={color} size={38} />,
+            tabBarIcon: ({ color }) => <HomeIcon color={color} size={30} />,
             headerLeft: () => <LogoNomIcon width={200} height={30} mr={10} />,
             headerRight: () => (
               <Pressable onPress={() => router.push('/_sitemap')}>
@@ -77,7 +76,7 @@ export default function TabLayout() {
             headerShown: false,
             title: '',
             tabBarShowLabel: false,
-            tabBarIcon: ({ color }) => <MapMarkerIcon color={color} size={38} />
+            tabBarIcon: ({ color }) => <MapMarkerIcon color={color} size={30} />
           }}
         />
 
@@ -87,7 +86,7 @@ export default function TabLayout() {
             headerShown: false,
             title: '',
             tabBarShowLabel: false,
-            tabBarIcon: ({ color }) => <PlusIcon color={color} size={38} />
+            tabBarIcon: ({ color }) => <PlusIcon color={color} size={30} />
           }}
         />
 
@@ -97,7 +96,7 @@ export default function TabLayout() {
             headerShown: false,
             title: '',
             tabBarShowLabel: false,
-            tabBarIcon: ({ color }) => <SearchIcon color={color} size={38} />
+            tabBarIcon: ({ color }) => <SearchIcon color={color} padding={0} size={30} />
           }}
         />
       </Tabs>

@@ -5,6 +5,7 @@ import React, { useEffect } from 'react'
 import { BackHandler } from 'react-native'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { SessionProvider } from '../context/context'
+const client = new QueryClient()
 
 export default function RootLayout() {
   const [fontsLoaded, error] = useFonts({
@@ -18,8 +19,6 @@ export default function RootLayout() {
     'Poppins-SemiBold': require('../assets/fonts/Poppins-SemiBold.ttf'),
     'Poppins-Thin': require('../assets/fonts/Poppins-Thin.ttf')
   })
-
-  const client = new QueryClient()
 
   const pathname = usePathname()
 
@@ -52,6 +51,13 @@ export default function RootLayout() {
       }
 
       if (pathname == '/profile/edit' || pathname === '/profile/password') {
+        return true
+      }
+
+      const postPattern = /^\/post\/[a-zA-Z0-9_-]+$/
+      if (postPattern.test(pathname)) {
+        router.replace('/home')
+
         return true
       }
 
